@@ -116,6 +116,15 @@ select option {
 	border-color: rgba(230, 126, 34, 0.52);
 }
 
+.theme-wave {
+	position: fixed;
+	z-index: 9999;
+	pointer-events: none;
+	transform: translate(-50%, -50%) scale(0);
+	mix-blend-mode: normal;
+	box-shadow: 0 0 80px rgba(230, 126, 34, 0.18);
+}
+
 label:has(input[type='radio']) {
 	border-color: var(--field-border);
 	background: color-mix(in srgb, var(--panel-bg) 66%, transparent);
@@ -228,13 +237,13 @@ label:has(input[type='radio']) {
 
 .hero-square-grid {
 	pointer-events: auto;
-	opacity: 0.58;
+	opacity: 0.42;
 }
 
 .hero-square-grid .hero-square {
-	fill: rgba(255, 255, 255, 0.14);
-	stroke: rgba(230, 126, 34, 0.08);
-	stroke-width: 0.35;
+	fill: rgba(255, 255, 255, 0.018);
+	stroke: rgba(255, 255, 255, 0.18);
+	stroke-width: 0.75;
 	pointer-events: none;
 	transform-box: fill-box;
 	transform-origin: center;
@@ -247,11 +256,11 @@ label:has(input[type='radio']) {
 }
 
 .hero-square-grid .hero-square:nth-child(3n) {
-	opacity: 0.32;
+	opacity: 0.42;
 }
 
 .hero-square-grid .hero-square:nth-child(5n) {
-	fill: rgba(230, 126, 34, 0.11);
+	stroke: rgba(230, 126, 34, 0.18);
 }
 
 .hero-title-lines {

@@ -10,11 +10,11 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = copy[lang].hero;
-const gridCells = Array.from({ length: 49 * 31 }, (_, index) => {
-	const cols = 49;
+const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
+	const cols = 43;
 	return {
-		x: 8 + (index % cols) * 25,
-		y: 8 + Math.floor(index / cols) * 25,
+		x: 7 + (index % cols) * 28,
+		y: 7 + Math.floor(index / cols) * 28,
 	};
 });
 ---
@@ -36,7 +36,7 @@ const gridCells = Array.from({ length: 49 * 31 }, (_, index) => {
 				<feDropShadow dx="-2" dy="-2" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.16" />
 			</filter>
 		</defs>
-		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="3.8" height="3.8" rx="0.9" data-cx={x + 1.9} data-cy={y + 1.9} />)}
+		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="17" height="17" rx="2.2" data-cx={x + 8.5} data-cy={y + 8.5} />)}
 	</svg>
 	<Container class="relative z-10 flex flex-col items-center text-center">
 		<Badge>{t.badge}</Badge>
@@ -67,6 +67,7 @@ const gridCells = Array.from({ length: 49 * 31 }, (_, index) => {
 			square.style.opacity = '';
 			square.style.fill = '';
 			square.style.filter = '';
+			square.style.strokeWidth = '';
 		}
 	};
 
@@ -78,7 +79,7 @@ const gridCells = Array.from({ length: 49 * 31 }, (_, index) => {
 		point.x = pointer.x;
 		point.y = pointer.y;
 		const local = point.matrixTransform(svg.getScreenCTM().inverse());
-		const radius = 54;
+		const radius = 62;
 
 		for (const square of squares) {
 			const dx = Number(square.dataset.cx) - local.x;
@@ -91,16 +92,18 @@ const gridCells = Array.from({ length: 49 * 31 }, (_, index) => {
 				square.style.opacity = '';
 				square.style.fill = '';
 				square.style.filter = '';
+				square.style.strokeWidth = '';
 				continue;
 			}
 
 			const eased = strength * strength;
-			const scale = 1 + eased * 1.65;
-			const lift = -eased * 1.1;
+			const scale = 1 + eased * 0.38;
+			const lift = -eased * 1.4;
 			square.style.transform = `translateY(${lift}px) scale(${scale})`;
-			square.style.opacity = String(0.36 + eased * 0.64);
-			square.style.fill = `rgba(243, 156, 18, ${0.16 + eased * 0.7})`;
+			square.style.opacity = String(0.42 + eased * 0.5);
+			square.style.fill = `rgba(243, 156, 18, ${0.035 + eased * 0.12})`;
 			square.style.filter = eased > 0.28 ? 'url(#hero-square-shadow)' : '';
+			square.style.strokeWidth = String(0.8 + eased * 1.1);
 		}
 	};
 

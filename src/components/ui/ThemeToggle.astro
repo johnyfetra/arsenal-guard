@@ -19,13 +19,54 @@ import Sun from 'lucide-astro/Sun';
 		document.documentElement.classList.toggle('dark', theme === 'dark');
 		localStorage.setItem('theme', theme);
 	};
+	const animateThemeWave = (button, nextTheme) => {
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			applyTheme(nextTheme);
+			return;
+		}
+
+		const rect = button.getBoundingClientRect();
+		const x = rect.left + rect.width / 2;
+		const y = rect.top + rect.height / 2;
+		const wave = document.createElement('div');
+		const size = Math.hypot(window.innerWidth, window.innerHeight) * 2.1;
+		wave.className = 'theme-wave';
+		wave.style.width = `${size}px`;
+		wave.style.height = `${size}px`;
+		wave.style.left = `${x}px`;
+		wave.style.top = `${y}px`;
+		wave.style.background =
+			nextTheme === 'dark'
+				? 'radial-gradient(circle, #050b1a 0%, #0a1530 56%, #0f1f44 100%)'
+				: 'radial-gradient(circle, #ffffff 0%, #fafaf7 58%, #eef2f8 100%)';
+		document.body.appendChild(wave);
+
+		wave.animate(
+			[
+				{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0.96, borderRadius: '9999px' },
+				{ transform: 'translate(-50%, -50%) scale(1)', opacity: 1, borderRadius: '9999px' },
+			],
+			{ duration: 560, easing: 'cubic-bezier(.2,.75,.2,1)', fill: 'forwards' },
+		);
+
+		window.setTimeout(() => applyTheme(nextTheme), 220);
+		window.setTimeout(() => {
+			wave.animate(
+				[
+					{ opacity: 1 },
+					{ opacity: 0 },
+				],
+				{ duration: 260, easing: 'ease', fill: 'forwards' },
+			).finished.finally(() => wave.remove());
+		}, 560);
+	};
 	const saved = localStorage.getItem('theme');
 	const initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 	applyTheme(initial);
 	document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
 		button.addEventListener('click', () => {
 			const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-			applyTheme(next);
+			animateThemeWave(button, next);
 		});
 	});
 </script>
