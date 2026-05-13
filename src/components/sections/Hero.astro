@@ -24,10 +24,10 @@ const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
 });
 ---
 
-<section class="relative isolate overflow-hidden bg-mesh py-24 md:min-h-[calc(100vh-4rem)] md:py-32" data-hero-grid-scene>
+<section class="hero-shell relative isolate overflow-hidden py-24 md:min-h-[calc(100vh-4rem)] md:py-32" data-hero-grid-scene>
 	<div class="absolute inset-0 -z-10 opacity-30" aria-hidden="true">
 		<div class="hero-glow"></div>
-		<div class="absolute left-8 top-24 h-48 w-px rotate-12 bg-orange-400/40"></div>
+		<div class="hero-line absolute left-8 top-24 h-48 w-px rotate-12"></div>
 	</div>
 	<svg class="hero-square-grid absolute inset-0 z-0 h-full w-full" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
 		<defs>
@@ -46,16 +46,16 @@ const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
 	<Container class="relative z-10 flex flex-col items-center text-center">
 		<Badge>{t.badge}</Badge>
 		<div class="hero-title-wrap scroll-float relative z-10 mt-8 max-w-5xl" data-scroll-depth="-26">
-			<h1 class="text-5xl font-extrabold leading-[1.02] tracking-normal text-white md:text-7xl">
-				<span class="hero-title-lines">{t.title}</span><br /><span class="hero-title-lines text-orange-400">{t.accent}</span>
+			<h1 class="hero-heading text-5xl font-extrabold leading-[1.02] tracking-normal md:text-7xl">
+				<span class="hero-title-lines">{t.title}</span><br /><span class="hero-title-lines hero-heading-accent">{t.accent}</span>
 			</h1>
 		</div>
-		<p class="mt-6 max-w-3xl text-lg leading-8 text-white/80 md:text-xl">{t.subtitle}</p>
+		<p class="hero-subtitle mt-6 max-w-3xl text-lg leading-8 md:text-xl">{t.subtitle}</p>
 		<div class="mt-10 flex flex-col gap-3 sm:flex-row">
 			<Button href={routeMap.quote} lang={lang}>{t.primary}<ArrowRight class="size-4" /></Button>
 			<Button href={routeMap.services} lang={lang} variant="secondary">{t.secondary}</Button>
 		</div>
-		<p class="mt-10 max-w-3xl rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-semibold text-white/85">★★★★★ {t.trust}</p>
+		<p class="hero-trust mt-10 max-w-3xl rounded-full px-5 py-3 text-sm font-semibold">★★★★★ {t.trust}</p>
 	</Container>
 </section>
 
@@ -108,8 +108,8 @@ const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
 			const lift = -eased * 1.6;
 			square.style.transform = `translateY(${lift}px) scale(${scale})`;
 			square.style.opacity = String(0.5 + eased * 0.32);
-			square.style.fill = `rgba(255, 255, 255, ${0.018 + eased * 0.035})`;
-			square.style.stroke = `rgba(243, 156, 18, ${0.14 + eased * 0.24})`;
+			square.style.fill = `rgba(var(--hero-square-hover-fill), ${0.018 + eased * 0.04})`;
+			square.style.stroke = `rgba(var(--hero-square-hover-stroke), ${0.16 + eased * 0.26})`;
 			square.style.filter = eased > 0.18 ? 'url(#hero-square-shadow)' : '';
 			square.style.strokeWidth = String(0.75 + eased * 0.85);
 		}
