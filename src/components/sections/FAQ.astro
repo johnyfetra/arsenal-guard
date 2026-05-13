@@ -5,7 +5,7 @@ import { faq } from '../../lib/site';
 interface Props { lang: Lang; items?: string[][] }
 const { lang, items = faq } = Astro.props;
 ---
-<section class="border-y border-white/10 bg-navy-900/40 py-24 md:py-32">
+<section class="section-band border-y py-24 md:py-32">
 	<Container>
 		<h2 class="text-3xl font-extrabold md:text-5xl">{copy[lang].sections.faq}</h2>
 		<div class="mt-10 grid gap-4 md:grid-cols-2">

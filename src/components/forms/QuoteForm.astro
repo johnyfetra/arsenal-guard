@@ -8,35 +8,35 @@ const budgets = ['< 1 000 EUR', '1 000 - 2 500 EUR', '2 500 - 5 000 EUR', '> 5 0
 	<section data-step="0" class="grid gap-4">
 		<h2 class="text-2xl font-extrabold">1. Type de projet</h2>
 		<div class="grid gap-3 sm:grid-cols-2">
-			{projectTypes.map((type) => <label class="rounded-lg border border-white/10 p-4 font-semibold"><input class="mr-2" type="radio" name="project_type" value={type} required />{type}</label>)}
+			{projectTypes.map((type) => <label class="rounded-lg border p-4 font-semibold"><input class="mr-2" type="radio" name="project_type" value={type} required />{type}</label>)}
 		</div>
 	</section>
 	<section data-step="1" class="hidden grid gap-4">
 		<h2 class="text-2xl font-extrabold">2. Informations projet</h2>
-		<label class="grid gap-2 text-sm font-semibold">Entreprise<input required name="company" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Site web<input name="website" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Stack technique<input name="stack" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Couverture actuelle<select name="coverage" class="rounded-lg border border-white/10 bg-navy-900 px-4 py-3"><option>Inconnue</option><option>0-20%</option><option>20-50%</option><option>50%+</option></select></label>
+		<label class="grid gap-2 text-sm font-semibold">Entreprise<input required name="company" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Site web<input name="website" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Stack technique<input name="stack" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Couverture actuelle<select name="coverage" class="rounded-lg px-4 py-3"><option>Inconnue</option><option>0-20%</option><option>20-50%</option><option>50%+</option></select></label>
 	</section>
 	<section data-step="2" class="hidden grid gap-4">
 		<h2 class="text-2xl font-extrabold">3. Delai et budget</h2>
-		<label class="grid gap-2 text-sm font-semibold">Date de demarrage souhaitee<input type="date" name="start_date" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Budget<select name="budget" class="rounded-lg border border-white/10 bg-navy-900 px-4 py-3">{budgets.map((budget) => <option>{budget}</option>)}</select></label>
-		<label class="grid gap-2 text-sm font-semibold">Engagement<select name="engagement" class="rounded-lg border border-white/10 bg-navy-900 px-4 py-3"><option>One-shot</option><option>Recurring</option></select></label>
+		<label class="grid gap-2 text-sm font-semibold">Date de demarrage souhaitee<input type="date" name="start_date" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Budget<select name="budget" class="rounded-lg px-4 py-3">{budgets.map((budget) => <option>{budget}</option>)}</select></label>
+		<label class="grid gap-2 text-sm font-semibold">Engagement<select name="engagement" class="rounded-lg px-4 py-3"><option>One-shot</option><option>Recurring</option></select></label>
 	</section>
 	<section data-step="3" class="hidden grid gap-4">
 		<h2 class="text-2xl font-extrabold">4. Contact</h2>
-		<label class="grid gap-2 text-sm font-semibold">Nom<input required name="name" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Email<input required type="email" name="email" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Telephone<input name="phone" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Commentaires<textarea name="comments" rows="4" class="rounded-lg border border-white/10 bg-white/5 px-4 py-3"></textarea></label>
+		<label class="grid gap-2 text-sm font-semibold">Nom<input required name="name" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Email<input required type="email" name="email" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Telephone<input name="phone" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Commentaires<textarea name="comments" rows="4" class="rounded-lg px-4 py-3"></textarea></label>
 	</section>
 	<div class="mt-8 flex justify-between gap-3">
 		<button type="button" class="rounded-lg border border-white/10 px-5 py-3 font-bold" data-prev>Retour</button>
 		<button type="button" class="rounded-lg bg-orange-500 px-5 py-3 font-bold text-white" data-next>Continuer</button>
 		<button type="submit" class="hidden rounded-lg bg-orange-500 px-5 py-3 font-bold text-white" data-submit>Envoyer</button>
 	</div>
-	<p class="mt-4 hidden text-sm text-orange-300" data-form-status></p>
+	<p class="mt-4 hidden text-sm text-orange-400" data-form-status></p>
 </form>
 <script is:inline>
 	document.querySelectorAll('[data-quote-form]').forEach((form) => {

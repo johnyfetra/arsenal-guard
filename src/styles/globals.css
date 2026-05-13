@@ -13,6 +13,14 @@
 	--page-bg: #050b1a;
 	--page-text: #fafaf7;
 	--muted-text: #b8c0d3;
+	--border-soft: rgba(255, 255, 255, 0.13);
+	--panel-bg: rgba(255, 255, 255, 0.06);
+	--panel-strong: rgba(10, 21, 48, 0.68);
+	--field-bg: rgba(255, 255, 255, 0.055);
+	--field-border: rgba(255, 255, 255, 0.18);
+	--nav-bg: rgba(5, 11, 26, 0.9);
+	--section-band: rgba(10, 21, 48, 0.48);
+	--section-band-border: rgba(255, 255, 255, 0.1);
 }
 
 :root[data-theme='light'] {
@@ -20,12 +28,23 @@
 	--page-bg: #fafaf7;
 	--page-text: #182033;
 	--muted-text: #526070;
+	--border-soft: rgba(15, 31, 68, 0.14);
+	--panel-bg: rgba(255, 255, 255, 0.92);
+	--panel-strong: rgba(255, 255, 255, 0.82);
+	--field-bg: #ffffff;
+	--field-border: rgba(15, 31, 68, 0.2);
+	--nav-bg: rgba(250, 250, 247, 0.82);
+	--section-band: #eef2f8;
+	--section-band-border: rgba(15, 31, 68, 0.12);
 }
 
 html {
 	scroll-behavior: smooth;
 	background: var(--page-bg);
 	color: var(--page-text);
+	transition:
+		background-color 260ms ease,
+		color 260ms ease;
 }
 
 body {
@@ -35,8 +54,16 @@ body {
 		linear-gradient(120deg, rgba(230, 126, 34, 0.08), transparent 28rem),
 		var(--page-bg);
 	transition:
-		background-color 180ms ease,
-		color 180ms ease;
+		background-color 260ms ease,
+		color 260ms ease;
+}
+
+*,
+*::before,
+*::after {
+	transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+	transition-duration: 220ms;
+	transition-timing-function: ease;
 }
 
 a,
@@ -45,18 +72,125 @@ input,
 select,
 textarea {
 	@apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400;
+	color: var(--page-text);
+	background: var(--field-bg);
+	border-color: var(--field-border);
+	transition:
+		background-color 260ms ease,
+		border-color 260ms ease,
+		box-shadow 180ms ease,
+		color 260ms ease;
+}
+
+input:not([type='hidden']),
+select,
+textarea {
+	border: 1px solid var(--field-border);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+input:not([type='hidden']):focus,
+select:focus,
+textarea:focus {
+	border-color: #e67e22;
+	box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.14);
+}
+
+select option {
+	color: #182033;
+	background: #ffffff;
+}
+
+.theme-control {
+	border: 1px solid var(--field-border);
+	background: color-mix(in srgb, var(--panel-bg) 84%, transparent);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.theme-control:hover {
+	border-color: rgba(230, 126, 34, 0.52);
+}
+
+label:has(input[type='radio']) {
+	border-color: var(--field-border);
+	background: color-mix(in srgb, var(--panel-bg) 66%, transparent);
 }
 
 .surface {
-	@apply border border-white/10 bg-white/[0.055] shadow-soft backdrop-blur;
+	border: 1px solid var(--border-soft);
+	background: var(--panel-bg);
+	box-shadow: 0 18px 60px rgba(5, 11, 26, 0.14);
+	backdrop-filter: blur(16px);
+	transition:
+		background-color 260ms ease,
+		border-color 260ms ease,
+		box-shadow 260ms ease,
+		color 260ms ease,
+		transform 180ms ease;
 }
 
 :root[data-theme='light'] .surface {
-	@apply border-navy-800/10 bg-white text-gray-900;
+	color: var(--page-text);
+	box-shadow: 0 18px 55px rgba(15, 31, 68, 0.1);
 }
 
 .text-muted {
 	color: var(--muted-text);
+}
+
+.site-header {
+	background: var(--nav-bg);
+	border-color: var(--section-band-border);
+	color: var(--page-text);
+	transition:
+		background-color 260ms ease,
+		border-color 260ms ease,
+		color 260ms ease,
+		box-shadow 260ms ease;
+}
+
+.section-band {
+	background: var(--section-band);
+	border-color: var(--section-band-border);
+	transition:
+		background-color 260ms ease,
+		border-color 260ms ease,
+		color 260ms ease;
+}
+
+.step-card {
+	border: 1px solid var(--border-soft);
+	background: color-mix(in srgb, var(--panel-bg) 72%, transparent);
+	color: var(--page-text);
+	transition:
+		background-color 260ms ease,
+		border-color 260ms ease,
+		color 260ms ease,
+		transform 180ms ease;
+}
+
+.hero-glow {
+	position: absolute;
+	left: 7%;
+	top: 16%;
+	width: min(34rem, 45vw);
+	height: min(22rem, 36vw);
+	border-radius: 45%;
+	background: radial-gradient(circle, rgba(230, 126, 34, 0.2), rgba(230, 126, 34, 0.05) 44%, transparent 70%);
+	filter: blur(20px);
+	transform: translate3d(0, 0, 0) rotate(-8deg);
+	animation: drift-glow 13s ease-in-out infinite alternate;
+}
+
+@keyframes drift-glow {
+	from {
+		transform: translate3d(-3%, 0, 0) rotate(-8deg) scale(0.96);
+		opacity: 0.55;
+	}
+	to {
+		transform: translate3d(18%, 12%, 0) rotate(4deg) scale(1.08);
+		opacity: 0.82;
+	}
 }
 
 .reveal {
