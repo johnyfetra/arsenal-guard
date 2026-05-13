@@ -124,12 +124,16 @@ select option {
 	transform: translate(-50%, -50%) scale(0);
 	background: radial-gradient(
 		circle,
-		rgba(243, 156, 18, 0.2) 0%,
-		rgba(243, 156, 18, 0.12) 18%,
-		rgba(255, 255, 255, 0.08) 34%,
-		transparent 62%
+		transparent 0%,
+		rgba(243, 156, 18, 0.1) 18%,
+		rgba(243, 156, 18, 0.36) 25%,
+		rgba(255, 255, 255, 0.22) 27%,
+		rgba(243, 156, 18, 0.18) 31%,
+		transparent 48%
 	);
-	box-shadow: 0 0 90px rgba(230, 126, 34, 0.16);
+	box-shadow:
+		0 0 80px rgba(230, 126, 34, 0.18),
+		inset 0 0 120px rgba(243, 156, 18, 0.1);
 	mix-blend-mode: screen;
 	will-change: transform, opacity;
 }
@@ -137,10 +141,12 @@ select option {
 .theme-wave--light {
 	background: radial-gradient(
 		circle,
-		rgba(243, 156, 18, 0.18) 0%,
-		rgba(255, 255, 255, 0.16) 24%,
-		rgba(230, 238, 248, 0.08) 42%,
-		transparent 64%
+		transparent 0%,
+		rgba(230, 126, 34, 0.08) 18%,
+		rgba(230, 126, 34, 0.28) 25%,
+		rgba(255, 255, 255, 0.38) 28%,
+		rgba(15, 31, 68, 0.08) 34%,
+		transparent 52%
 	);
 	mix-blend-mode: normal;
 }
@@ -148,10 +154,12 @@ select option {
 .theme-wave--dark {
 	background: radial-gradient(
 		circle,
-		rgba(243, 156, 18, 0.18) 0%,
-		rgba(35, 64, 124, 0.12) 30%,
-		rgba(5, 11, 26, 0.06) 48%,
-		transparent 66%
+		transparent 0%,
+		rgba(243, 156, 18, 0.1) 18%,
+		rgba(243, 156, 18, 0.34) 25%,
+		rgba(83, 126, 210, 0.2) 29%,
+		rgba(255, 255, 255, 0.1) 33%,
+		transparent 52%
 	);
 	mix-blend-mode: screen;
 }
