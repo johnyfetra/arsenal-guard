@@ -66,6 +66,7 @@ const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
 			square.style.transform = '';
 			square.style.opacity = '';
 			square.style.fill = '';
+			square.style.stroke = '';
 			square.style.filter = '';
 			square.style.strokeWidth = '';
 		}
@@ -79,7 +80,7 @@ const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
 		point.x = pointer.x;
 		point.y = pointer.y;
 		const local = point.matrixTransform(svg.getScreenCTM().inverse());
-		const radius = 62;
+		const radius = 82;
 
 		for (const square of squares) {
 			const dx = Number(square.dataset.cx) - local.x;
@@ -91,19 +92,21 @@ const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
 				square.style.transform = '';
 				square.style.opacity = '';
 				square.style.fill = '';
+				square.style.stroke = '';
 				square.style.filter = '';
 				square.style.strokeWidth = '';
 				continue;
 			}
 
-			const eased = strength * strength;
-			const scale = 1 + eased * 0.38;
-			const lift = -eased * 1.4;
+			const eased = 1 - Math.pow(1 - strength, 3);
+			const scale = 1 + eased * 0.72;
+			const lift = -eased * 2.4;
 			square.style.transform = `translateY(${lift}px) scale(${scale})`;
-			square.style.opacity = String(0.42 + eased * 0.5);
-			square.style.fill = `rgba(243, 156, 18, ${0.035 + eased * 0.12})`;
-			square.style.filter = eased > 0.28 ? 'url(#hero-square-shadow)' : '';
-			square.style.strokeWidth = String(0.8 + eased * 1.1);
+			square.style.opacity = String(0.52 + eased * 0.48);
+			square.style.fill = `rgba(243, 156, 18, ${0.03 + eased * 0.16})`;
+			square.style.stroke = `rgba(243, 156, 18, ${0.26 + eased * 0.56})`;
+			square.style.filter = eased > 0.12 ? 'url(#hero-square-shadow)' : '';
+			square.style.strokeWidth = String(0.9 + eased * 1.9);
 		}
 	};
 

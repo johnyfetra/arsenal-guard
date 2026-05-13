@@ -29,36 +29,23 @@ import Sun from 'lucide-astro/Sun';
 		const x = rect.left + rect.width / 2;
 		const y = rect.top + rect.height / 2;
 		const wave = document.createElement('div');
-		const size = Math.hypot(window.innerWidth, window.innerHeight) * 2.1;
-		wave.className = 'theme-wave';
+		const size = Math.hypot(window.innerWidth, window.innerHeight) * 2.2;
+		wave.className = `theme-wave theme-wave--${nextTheme}`;
 		wave.style.width = `${size}px`;
 		wave.style.height = `${size}px`;
 		wave.style.left = `${x}px`;
 		wave.style.top = `${y}px`;
-		wave.style.background =
-			nextTheme === 'dark'
-				? 'radial-gradient(circle, #050b1a 0%, #0a1530 56%, #0f1f44 100%)'
-				: 'radial-gradient(circle, #ffffff 0%, #fafaf7 58%, #eef2f8 100%)';
 		document.body.appendChild(wave);
+		applyTheme(nextTheme);
 
 		wave.animate(
 			[
-				{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0.96, borderRadius: '9999px' },
-				{ transform: 'translate(-50%, -50%) scale(1)', opacity: 1, borderRadius: '9999px' },
+				{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0.58 },
+				{ transform: 'translate(-50%, -50%) scale(0.48)', opacity: 0.28, offset: 0.42 },
+				{ transform: 'translate(-50%, -50%) scale(1)', opacity: 0 },
 			],
-			{ duration: 560, easing: 'cubic-bezier(.2,.75,.2,1)', fill: 'forwards' },
-		);
-
-		window.setTimeout(() => applyTheme(nextTheme), 220);
-		window.setTimeout(() => {
-			wave.animate(
-				[
-					{ opacity: 1 },
-					{ opacity: 0 },
-				],
-				{ duration: 260, easing: 'ease', fill: 'forwards' },
-			).finished.finally(() => wave.remove());
-		}, 560);
+			{ duration: 760, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'forwards' },
+		).finished.finally(() => wave.remove());
 	};
 	const saved = localStorage.getItem('theme');
 	const initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
