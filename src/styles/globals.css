@@ -149,6 +149,19 @@ label:has(input[type='radio']) {
 		box-shadow 260ms ease;
 }
 
+.site-header .brand-link,
+.site-header .brand-link > span:not(.logo-mark),
+.site-header .nav-link {
+	background: transparent !important;
+	box-shadow: none;
+	text-decoration: none;
+}
+
+.site-header .nav-link {
+	padding: 0;
+	border-radius: 0;
+}
+
 .section-band {
 	background: var(--section-band);
 	border-color: var(--section-band-border);
