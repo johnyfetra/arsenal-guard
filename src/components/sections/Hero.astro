@@ -10,11 +10,16 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = copy[lang].hero;
-const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
-	const cols = 43;
+const squareSize = 13;
+const squareStep = 19;
+const gridCols = 64;
+const gridRows = 41;
+const gridOffset = 3;
+const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
+	const cols = gridCols;
 	return {
-		x: 7 + (index % cols) * 28,
-		y: 7 + Math.floor(index / cols) * 28,
+		x: gridOffset + (index % cols) * squareStep,
+		y: gridOffset + Math.floor(index / cols) * squareStep,
 	};
 });
 ---
@@ -31,12 +36,12 @@ const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
 				<stop offset="42%" stop-color="#f39c12" stop-opacity="0.72" />
 				<stop offset="100%" stop-color="#0f1f44" stop-opacity="0.38" />
 			</radialGradient>
-			<filter id="hero-square-shadow" x="-160%" y="-160%" width="420%" height="420%">
-				<feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#e67e22" flood-opacity="0.34" />
-				<feDropShadow dx="-2" dy="-2" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.16" />
+			<filter id="hero-square-shadow" x="-130%" y="-130%" width="360%" height="360%">
+				<feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#e67e22" flood-opacity="0.18" />
+				<feDropShadow dx="-1" dy="-1" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.1" />
 			</filter>
 		</defs>
-		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="17" height="17" rx="2.2" data-cx={x + 8.5} data-cy={y + 8.5} />)}
+		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width={squareSize} height={squareSize} rx="2" data-cx={x + squareSize / 2} data-cy={y + squareSize / 2} />)}
 	</svg>
 	<Container class="relative z-10 flex flex-col items-center text-center">
 		<Badge>{t.badge}</Badge>
@@ -80,7 +85,7 @@ const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
 		point.x = pointer.x;
 		point.y = pointer.y;
 		const local = point.matrixTransform(svg.getScreenCTM().inverse());
-		const radius = 82;
+		const radius = 56;
 
 		for (const square of squares) {
 			const dx = Number(square.dataset.cx) - local.x;
@@ -98,15 +103,15 @@ const gridCells = Array.from({ length: 43 * 27 }, (_, index) => {
 				continue;
 			}
 
-			const eased = 1 - Math.pow(1 - strength, 3);
-			const scale = 1 + eased * 0.72;
-			const lift = -eased * 2.4;
+			const eased = 1 - Math.pow(1 - strength, 2);
+			const scale = 1 + eased * 0.46;
+			const lift = -eased * 1.6;
 			square.style.transform = `translateY(${lift}px) scale(${scale})`;
-			square.style.opacity = String(0.52 + eased * 0.48);
-			square.style.fill = `rgba(243, 156, 18, ${0.03 + eased * 0.16})`;
-			square.style.stroke = `rgba(243, 156, 18, ${0.26 + eased * 0.56})`;
-			square.style.filter = eased > 0.12 ? 'url(#hero-square-shadow)' : '';
-			square.style.strokeWidth = String(0.9 + eased * 1.9);
+			square.style.opacity = String(0.5 + eased * 0.32);
+			square.style.fill = `rgba(255, 255, 255, ${0.018 + eased * 0.035})`;
+			square.style.stroke = `rgba(243, 156, 18, ${0.14 + eased * 0.24})`;
+			square.style.filter = eased > 0.18 ? 'url(#hero-square-shadow)' : '';
+			square.style.strokeWidth = String(0.75 + eased * 0.85);
 		}
 	};
 

@@ -268,13 +268,13 @@ label:has(input[type='radio']) {
 
 .hero-square-grid {
 	pointer-events: auto;
-	opacity: 0.56;
+	opacity: 0.48;
 }
 
 .hero-square-grid .hero-square {
-	fill: rgba(255, 255, 255, 0.02);
-	stroke: rgba(255, 255, 255, 0.24);
-	stroke-width: 0.85;
+	fill: rgba(255, 255, 255, 0.014);
+	stroke: rgba(255, 255, 255, 0.18);
+	stroke-width: 0.72;
 	pointer-events: none;
 	transform-box: fill-box;
 	transform-origin: center;
@@ -285,16 +285,16 @@ label:has(input[type='radio']) {
 		stroke-width 180ms ease,
 		opacity 180ms ease,
 		filter 180ms ease;
-	opacity: 0.62;
+	opacity: 0.52;
 	will-change: transform, opacity, filter;
 }
 
 .hero-square-grid .hero-square:nth-child(3n) {
-	opacity: 0.48;
+	opacity: 0.42;
 }
 
 .hero-square-grid .hero-square:nth-child(5n) {
-	stroke: rgba(230, 126, 34, 0.24);
+	stroke: rgba(230, 126, 34, 0.14);
 }
 
 .hero-title-lines {

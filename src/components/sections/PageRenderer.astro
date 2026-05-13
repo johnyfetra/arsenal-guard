@@ -15,6 +15,7 @@ import LogoCloud from './LogoCloud.astro';
 import Testimonials from './Testimonials.astro';
 import QuoteForm from '../forms/QuoteForm.astro';
 import ContactForm from '../forms/ContactForm.astro';
+import johnyPortrait from '../../assets/images/johny-fetramalala.jpg';
 import { copy, getPageTitle, routeMap, type Lang } from '../../lib/i18n';
 import { dedicated, localizedServiceIntro, plans, punctualOffers, services, site } from '../../lib/site';
 
@@ -122,7 +123,7 @@ const title = page === 'service' && service ? service.title : page === 'notFound
 						<div class="absolute -inset-4 rounded-[2rem] bg-orange-400/20 blur-2xl" aria-hidden="true"></div>
 						<div class="relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-3 shadow-glow backdrop-blur">
 							<img
-								src="/johny-fetramalala.jpg"
+								src={johnyPortrait.src}
 								alt="Portrait de Johny Fetramalala, fondateur d Arsenal Guard"
 								width="1066"
 								height="1026"
