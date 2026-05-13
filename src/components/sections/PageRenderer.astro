@@ -118,7 +118,23 @@ const title = page === 'service' && service ? service.title : page === 'notFound
 			<section class="bg-mesh py-24 md:py-32">
 				<Container class="grid gap-10 lg:grid-cols-[1fr_.75fr] lg:items-center">
 					<div><h1 class="text-5xl font-extrabold text-white md:text-7xl">Johny Fetramalala</h1><p class="mt-6 text-xl text-white/80">Senior QA Engineer, fondateur d Arsenal Guard. 5+ ans sur SaaS, e-commerce et plateformes web europeennes.</p></div>
-					<div class="aspect-square rounded-2xl border border-orange-400/30 bg-[linear-gradient(135deg,#0F1F44,#E67E22)] p-8 shadow-glow"><div class="grid h-full place-items-center rounded-xl border border-white/20 text-6xl font-extrabold text-white">JF</div></div>
+					<div class="relative mx-auto w-full max-w-md lg:ml-auto">
+						<div class="absolute -inset-4 rounded-[2rem] bg-orange-400/20 blur-2xl" aria-hidden="true"></div>
+						<div class="relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-3 shadow-glow backdrop-blur">
+							<img
+								src="/johny-fetramalala.jpg"
+								alt="Portrait de Johny Fetramalala, fondateur d Arsenal Guard"
+								width="1066"
+								height="1026"
+								decoding="async"
+								class="aspect-[4/5] w-full rounded-xl object-cover object-[50%_24%]"
+							/>
+							<div class="absolute inset-x-6 bottom-6 rounded-xl border border-white/15 bg-slate-950/72 p-4 text-white shadow-lg backdrop-blur">
+								<p class="text-lg font-extrabold">Johny Fetramalala</p>
+								<p class="mt-1 text-sm font-semibold text-orange-300">Senior QA Engineer · Arsenal Guard</p>
+							</div>
+						</div>
+					</div>
 				</Container>
 			</section>
 			<section class="py-24"><Container class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]"><h2 class="text-3xl font-extrabold md:text-5xl">De developpeur a expert qualite</h2><div class="space-y-5 text-lg text-muted"><p>Arsenal Guard nait d une conviction simple: la qualite ne doit pas etre un frein a la livraison. Elle doit devenir un filet clair, maintenable et utile aux equipes produit.</p><p>Johny accompagne des equipes francophones et europeennes sur l automatisation E2E, la stabilisation de suites existantes, l integration CI/CD et la priorisation des risques.</p><p>Depuis Antananarivo, l avantage offshore est concret: cout optimise, communication francophone, recouvrement horaire Europe et exigence senior.</p></div></Container></section>
