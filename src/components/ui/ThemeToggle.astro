@@ -35,18 +35,21 @@ import Sun from 'lucide-astro/Sun';
 		wave.style.height = `${size}px`;
 		wave.style.left = `${x}px`;
 		wave.style.top = `${y}px`;
+		document.documentElement.classList.add('theme-switching');
 		document.body.appendChild(wave);
 		applyTheme(nextTheme);
 
 		wave.animate(
 			[
-				{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0.82 },
-				{ transform: 'translate(-50%, -50%) scale(0.34)', opacity: 0.62, offset: 0.32 },
-				{ transform: 'translate(-50%, -50%) scale(0.68)', opacity: 0.38, offset: 0.68 },
+				{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0.78 },
+				{ transform: 'translate(-50%, -50%) scale(0.42)', opacity: 0.5, offset: 0.38 },
 				{ transform: 'translate(-50%, -50%) scale(1)', opacity: 0 },
 			],
-			{ duration: 980, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'forwards' },
-		).finished.finally(() => wave.remove());
+			{ duration: 560, easing: 'cubic-bezier(.2,.85,.2,1)', fill: 'forwards' },
+		).finished.finally(() => {
+			wave.remove();
+			document.documentElement.classList.remove('theme-switching');
+		});
 	};
 	const saved = localStorage.getItem('theme');
 	const initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
