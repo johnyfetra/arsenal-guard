@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import PageRenderer from '../components/sections/PageRenderer.astro';
+import Layout from '../components/layout/Layout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import { languages, localizedPath, routeMap, type Lang } from '../lib/i18n';
+import { services, site } from '../lib/site';
+
+type PageKind = 'home' | 'services' | 'service' | 'about' | 'cases' | 'blog' | 'quote' | 'contact' | 'legal' | 'privacy' | 'article';
+
+export async function getStaticPaths() {
+	const allPosts = await getCollection('blog');
+	const staticRoutes: [string, PageKind][] = [
+		[routeMap.services, 'services'],
+		[routeMap.about, 'about'],
+		[routeMap.cases, 'cases'],
+		[routeMap.blog, 'blog'],
+		[routeMap.quote, 'quote'],
+		[routeMap.contact, 'contact'],
+		[routeMap.legal, 'legal'],
+		[routeMap.privacy, 'privacy'],
+	];
+	const paths: { params: { slug: string }; props: { lang: Lang; path: string; page: PageKind; serviceId?: string; blogSlug?: string } }[] = [];
+	for (const lang of languages) {
+		if (lang !== 'fr') paths.push({ params: { slug: lang }, props: { lang, path: '/', page: 'home' } });
+		for (const [path, page] of staticRoutes) {
+			const slug = localizedPath(lang, path).replace(/^\//, '');
+			paths.push({ params: { slug }, props: { lang, path, page } });
+		}
+		for (const service of services) {
+			const path = `services/${service.id}`;
+			const slug = localizedPath(lang, path).replace(/^\//, '');
+			paths.push({ params: { slug }, props: { lang, path, page: 'service', serviceId: service.id } });
+		}
+		for (const post of allPosts.filter((item) => item.data.lang === 'fr')) {
+			const cleanSlug = post.slug.replace(/^\d+-/, '');
+			const path = `blog/${cleanSlug}`;
+			const slug = localizedPath(lang, path).replace(/^\//, '');
+			paths.push({ params: { slug }, props: { lang, path, page: 'article', blogSlug: post.slug } });
+		}
+	}
+	return paths;
+}
+
+const allPosts = await getCollection('blog');
+const { lang, path, page, serviceId, blogSlug } = Astro.props;
+const posts = allPosts.filter((item) => item.data.lang === 'fr');
+const post = blogSlug ? allPosts.find((item) => item.slug === blogSlug) : undefined;
+const renderedPost = post ? await post.render() : undefined;
+const Content = renderedPost?.Content;
+const renderPage = page === 'article' ? 'notFound' : page;
+---
+
+{
+	page === 'article' && post ? (
+		<Layout
+			lang={lang}
+			path={path}
+			type="article"
+			title={post.data.title}
+			description={post.data.description}
+			schema={{
+				'@context': 'https://schema.org',
+				'@type': 'Article',
+				headline: post.data.title,
+				description: post.data.description,
+				author: { '@type': 'Person', name: site.founder },
+				datePublished: post.data.date.toISOString(),
+			}}
+		>
+			<section class="bg-mesh py-20 md:py-28">
+				<Container class="max-w-4xl">
+					<p class="font-mono text-sm text-orange-300">{post.data.author} · {post.data.readTime}</p>
+					<h1 class="mt-5 text-4xl font-extrabold text-white md:text-6xl">{post.data.title}</h1>
+					<p class="mt-6 text-lg text-white/76">{post.data.description}</p>
+				</Container>
+			</section>
+			<section class="py-16">
+				<Container class="max-w-4xl">
+					<div class="mb-10 rounded-2xl border border-white/10 bg-gradient-to-br from-navy-800 to-orange-500/60 p-12 text-white">
+						<p class="font-bold">Hero image placeholder · Arsenal Guard QA insights</p>
+					</div>
+					<article class="prose-ag">
+						{Content && <Content />}
+					</article>
+					<div class="mt-14 rounded-2xl border border-orange-400/30 bg-orange-400/10 p-8">
+						<h2 class="text-2xl font-extrabold">Besoin de fiabiliser vos tests ?</h2>
+						<p class="mt-3 text-muted">Demandez un audit court et repartez avec une priorisation claire.</p>
+						<Button class="mt-6" href={routeMap.quote} lang={lang}>Demander un devis</Button>
+					</div>
+				</Container>
+			</section>
+		</Layout>
+	) : (
+  <PageRenderer lang={lang} path={path} page={renderPage} serviceId={serviceId} posts={posts} />
+	)
+}

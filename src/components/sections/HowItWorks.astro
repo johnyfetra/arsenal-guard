@@ -1,0 +1,20 @@
+---
+import Container from '../ui/Container.astro';
+import { copy, type Lang } from '../../lib/i18n';
+import { steps } from '../../lib/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<section class="border-y border-white/10 bg-navy-900/50 py-24 md:py-32">
+	<Container>
+		<h2 class="text-3xl font-extrabold md:text-5xl">{copy[lang].sections.how}</h2>
+		<div class="mt-10 grid gap-4 md:grid-cols-4">
+			{steps.map((step, index) => (
+				<div class="reveal rounded-2xl border border-white/10 p-6">
+					<p class="font-mono text-sm text-orange-300">0{index + 1}</p>
+					<p class="mt-5 font-bold">{step}</p>
+				</div>
+			))}
+		</div>
+	</Container>
+</section>

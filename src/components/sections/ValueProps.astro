@@ -1,0 +1,33 @@
+---
+import ShieldCheck from 'lucide-astro/ShieldCheck';
+import Workflow from 'lucide-astro/Workflow';
+import TrendingUp from 'lucide-astro/TrendingUp';
+import Card from '../ui/Card.astro';
+import Container from '../ui/Container.astro';
+import { copy, type Lang } from '../../lib/i18n';
+import { valueProps } from '../../lib/site';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const icons = { ShieldCheck, Workflow, TrendingUp };
+---
+
+<section class="py-24 md:py-32">
+	<Container>
+		<h2 class="max-w-3xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.value}</h2>
+		<div class="mt-10 grid gap-5 md:grid-cols-3">
+			{valueProps.map((item) => {
+				const Icon = icons[item.icon as keyof typeof icons];
+				return (
+					<Card class="reveal">
+						<Icon class="size-9 text-orange-400" />
+						<h3 class="mt-6 text-xl font-bold">{item.title}</h3>
+						<p class="mt-3 text-muted">{item.text}</p>
+					</Card>
+				);
+			})}
+		</div>
+	</Container>
+</section>

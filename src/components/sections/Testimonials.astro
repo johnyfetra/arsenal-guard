@@ -1,0 +1,16 @@
+---
+import Card from '../ui/Card.astro';
+import Container from '../ui/Container.astro';
+---
+<section class="py-24 md:py-32">
+	<Container>
+		<h2 class="text-3xl font-extrabold md:text-5xl">Retours clients</h2>
+		<div class="mt-10 grid gap-5 md:grid-cols-3">
+			{['Chanel', 'Sodexo', 'SaaS Europe'].map((client) => (
+				<Card>
+					<p class="text-muted">Temoignage a venir — premier projet livre chez {client} en cours de validation.</p>
+				</Card>
+			))}
+		</div>
+	</Container>
+</section>

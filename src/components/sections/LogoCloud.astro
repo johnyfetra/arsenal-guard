@@ -1,0 +1,12 @@
+---
+import Container from '../ui/Container.astro';
+import { clientRefs } from '../../lib/site';
+---
+<section class="py-12">
+	<Container>
+		<p class="text-center text-sm font-bold uppercase tracking-[0.18em] text-muted">References via missions offshore</p>
+		<div class="mt-7 grid grid-cols-2 gap-3 md:grid-cols-5">
+			{clientRefs.map((client) => <div class="rounded-lg border border-white/10 px-4 py-4 text-center font-bold text-white/70">{client}</div>)}
+		</div>
+	</Container>
+</section>

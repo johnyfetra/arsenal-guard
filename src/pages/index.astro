@@ -1,0 +1,8 @@
+---
+import PageRenderer from '../components/sections/PageRenderer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => data.lang === 'fr');
+---
+
+<PageRenderer lang="fr" path="/" page="home" posts={posts} />

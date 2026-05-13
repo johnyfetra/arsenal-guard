@@ -1,0 +1,15 @@
+---
+import ArrowRight from 'lucide-astro/ArrowRight';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import { copy, routeMap, type Lang } from '../../lib/i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<section class="bg-mesh py-20">
+	<Container class="text-center">
+		<h2 class="mx-auto max-w-3xl text-3xl font-extrabold text-white md:text-5xl">{copy[lang].sections.cta}</h2>
+		<p class="mx-auto mt-5 max-w-2xl text-white/76">Discutons de votre projet en 15 minutes et identifions les tests qui reduisent vraiment votre risque release.</p>
+		<div class="mt-8"><Button href={routeMap.quote} lang={lang}>Demander un devis <ArrowRight class="size-4" /></Button></div>
+	</Container>
+</section>

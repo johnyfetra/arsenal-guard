@@ -1,0 +1,18 @@
+---
+import Container from '../ui/Container.astro';
+import { copy, type Lang } from '../../lib/i18n';
+import { stack } from '../../lib/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<section class="py-24 md:py-32">
+	<Container>
+		<div class="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+			<h2 class="max-w-2xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.stack}</h2>
+			<p class="max-w-md text-muted">Cypress, Playwright, CI/CD et TypeScript pour des suites lisibles, rapides a diagnostiquer et utiles au produit.</p>
+		</div>
+		<div class="mt-10 flex flex-wrap gap-3">
+			{stack.map((item) => <span class="rounded-lg border border-white/10 bg-white/[0.055] px-4 py-3 font-mono text-sm text-white/86">{item}</span>)}
+		</div>
+	</Container>
+</section>

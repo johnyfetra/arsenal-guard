@@ -1,0 +1,20 @@
+---
+import Container from '../ui/Container.astro';
+import { copy, type Lang } from '../../lib/i18n';
+import { faq } from '../../lib/site';
+interface Props { lang: Lang; items?: string[][] }
+const { lang, items = faq } = Astro.props;
+---
+<section class="border-y border-white/10 bg-navy-900/40 py-24 md:py-32">
+	<Container>
+		<h2 class="text-3xl font-extrabold md:text-5xl">{copy[lang].sections.faq}</h2>
+		<div class="mt-10 grid gap-4 md:grid-cols-2">
+			{items.map(([question, answer]) => (
+				<details class="surface rounded-2xl p-6">
+					<summary class="cursor-pointer font-bold">{question}</summary>
+					<p class="mt-4 text-muted">{answer}</p>
+				</details>
+			))}
+		</div>
+	</Container>
+</section>
