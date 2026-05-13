@@ -19,7 +19,7 @@ const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
 });
 ---
 
-<section class="relative isolate overflow-hidden bg-mesh py-24 md:min-h-[calc(100vh-4rem)] md:py-32">
+<section class="relative isolate overflow-hidden bg-mesh py-24 md:min-h-[calc(100vh-4rem)] md:py-32" data-hero-grid-scene>
 	<div class="absolute inset-0 -z-10 opacity-30" aria-hidden="true">
 		<div class="hero-glow"></div>
 		<div class="absolute left-8 top-24 h-48 w-px rotate-12 bg-orange-400/40"></div>
@@ -36,7 +36,7 @@ const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
 				<feDropShadow dx="-2" dy="-2" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.16" />
 			</filter>
 		</defs>
-		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="7" height="7" rx="1.4" />)}
+		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="7" height="7" rx="1.4" data-cx={x + 3.5} data-cy={y + 3.5} />)}
 	</svg>
 	<Container class="relative z-10 flex flex-col items-center text-center">
 		<Badge>{t.badge}</Badge>
@@ -53,3 +53,69 @@ const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
 		<p class="mt-10 max-w-3xl rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-semibold text-white/85">★★★★★ {t.trust}</p>
 	</Container>
 </section>
+
+<script is:inline>
+	const scene = document.querySelector('[data-hero-grid-scene]');
+	const svg = scene?.querySelector('.hero-square-grid');
+	const squares = svg ? [...svg.querySelectorAll('.hero-square')] : [];
+	let frame = 0;
+	let pointer = null;
+
+	const resetSquares = () => {
+		for (const square of squares) {
+			square.style.transform = '';
+			square.style.opacity = '';
+			square.style.fill = '';
+			square.style.filter = '';
+		}
+	};
+
+	const animateSquares = () => {
+		frame = 0;
+		if (!pointer || !svg) return;
+
+		const point = svg.createSVGPoint();
+		point.x = pointer.x;
+		point.y = pointer.y;
+		const local = point.matrixTransform(svg.getScreenCTM().inverse());
+		const radius = 92;
+
+		for (const square of squares) {
+			const dx = Number(square.dataset.cx) - local.x;
+			const dy = Number(square.dataset.cy) - local.y;
+			const distance = Math.hypot(dx, dy);
+			const strength = Math.max(0, 1 - distance / radius);
+
+			if (strength <= 0) {
+				square.style.transform = '';
+				square.style.opacity = '';
+				square.style.fill = '';
+				square.style.filter = '';
+				continue;
+			}
+
+			const eased = strength * strength;
+			const scale = 1 + eased * 3.15;
+			const lift = -eased * 2;
+			square.style.transform = `translateY(${lift}px) scale(${scale})`;
+			square.style.opacity = String(0.36 + eased * 0.64);
+			square.style.fill = `rgba(243, 156, 18, ${0.16 + eased * 0.7})`;
+			square.style.filter = eased > 0.28 ? 'url(#hero-square-shadow)' : '';
+		}
+	};
+
+	const schedule = (event) => {
+		pointer = { x: event.clientX, y: event.clientY };
+		if (!frame) frame = requestAnimationFrame(animateSquares);
+	};
+
+	if (scene && svg && squares.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		scene.addEventListener('pointermove', schedule, { passive: true });
+		scene.addEventListener('pointerleave', () => {
+			pointer = null;
+			if (frame) cancelAnimationFrame(frame);
+			frame = 0;
+			resetSquares();
+		});
+	}
+</script>
