@@ -1,0 +1,28 @@
+---
+import { languageFlags, languageLabels, languages, localizedPath, type Lang } from '../../lib/i18n';
+
+interface Props {
+	lang: Lang;
+	path: string;
+}
+
+const { lang, path } = Astro.props;
+---
+
+<label class="sr-only" for="language-switcher">Language</label>
+<select
+	id="language-switcher"
+	class="h-10 rounded-lg border border-white/10 bg-white/5 px-2 text-sm font-semibold text-current"
+	aria-label="Select language"
+	data-language-switcher
+>
+	{languages.map((item) => <option value={localizedPath(item, path)} selected={item === lang}>{languageFlags[item]} {languageLabels[item]}</option>)}
+</select>
+
+<script is:inline>
+	document.querySelectorAll('[data-language-switcher]').forEach((select) => {
+		select.addEventListener('change', (event) => {
+			window.location.href = event.currentTarget.value;
+		});
+	});
+</script>

@@ -1,0 +1,46 @@
+---
+import '../../styles/globals.css';
+import BaseHead from '../seo/BaseHead.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import type { Lang } from '../../lib/i18n';
+
+interface Props {
+	title: string;
+	description: string;
+	lang: Lang;
+	path: string;
+	type?: 'website' | 'article';
+	schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, lang, path, type, schema } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang} data-theme="dark" class="dark">
+	<head>
+		<script is:inline>
+			const savedTheme = localStorage.getItem('theme');
+			const preferredTheme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			document.documentElement.dataset.theme = preferredTheme;
+			document.documentElement.classList.toggle('dark', preferredTheme === 'dark');
+		</script>
+		<BaseHead title={title} description={description} lang={lang} path={path} type={type} schema={schema} />
+	</head>
+	<body>
+		<Header lang={lang} path={path} />
+		<main id="main">
+			<slot />
+		</main>
+		<Footer lang={lang} />
+		<script is:inline>
+			const observer = new IntersectionObserver((entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) entry.target.classList.add('is-visible');
+				}
+			}, { threshold: 0.12 });
+			document.querySelectorAll('.reveal').forEach((node) => observer.observe(node));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,43 @@
+---
+import { languages, localizedPath, type Lang } from '../../lib/i18n';
+import { site } from '../../lib/site';
+
+interface Props {
+	title: string;
+	description: string;
+	lang: Lang;
+	path: string;
+	type?: 'website' | 'article';
+	schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, lang, path, type = 'website', schema } = Astro.props;
+const canonical = new URL(localizedPath(lang, path), site.url).toString();
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content="index,follow" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={new URL('/og-image.svg', site.url).toString()} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="theme-color" content="#050B1A" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+{languages.map((item) => <link rel="alternate" hreflang={item} href={new URL(localizedPath(item, path), site.url).toString()} />)}
+<link rel="alternate" hreflang="x-default" href={new URL(localizedPath('fr', path), site.url).toString()} />
+{
+	schema && (
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+	)
+}

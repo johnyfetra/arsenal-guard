@@ -1,0 +1,31 @@
+---
+import Moon from 'lucide-astro/Moon';
+import Sun from 'lucide-astro/Sun';
+---
+
+<button
+	type="button"
+	class="inline-flex size-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-current transition hover:border-orange-400/50 hover:text-orange-300"
+	aria-label="Toggle dark and light theme"
+	data-theme-toggle
+>
+	<Sun class="hidden size-4 dark:inline" aria-hidden="true" />
+	<Moon class="size-4 dark:hidden" aria-hidden="true" />
+</button>
+
+<script is:inline>
+	const applyTheme = (theme) => {
+		document.documentElement.dataset.theme = theme;
+		document.documentElement.classList.toggle('dark', theme === 'dark');
+		localStorage.setItem('theme', theme);
+	};
+	const saved = localStorage.getItem('theme');
+	const initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+	applyTheme(initial);
+	document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+		button.addEventListener('click', () => {
+			const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+			applyTheme(next);
+		});
+	});
+</script>
