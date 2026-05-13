@@ -1,10 +1,11 @@
 ---
 interface Props {
 	class?: string;
+	'data-scroll-depth'?: string;
 }
-const { class: className = '' } = Astro.props as Props;
+const { class: className = '', 'data-scroll-depth': scrollDepth } = Astro.props as Props;
 ---
 
-<div class={`surface rounded-2xl p-6 transition hover:-translate-y-1 hover:border-orange-400/40 hover:shadow-glow ${className}`}>
+<div class={`surface rounded-2xl p-6 transition hover:-translate-y-1 hover:border-orange-400/40 hover:shadow-glow ${className}`} data-scroll-depth={scrollDepth}>
 	<slot />
 </div>

@@ -18,8 +18,8 @@ const items = mode === 'pricing'
 			<Button href={routeMap.services} lang={lang} variant="ghost">Voir le detail <ArrowRight class="size-4" /></Button>
 		</div>
 		<div class="mt-10 grid gap-5 md:grid-cols-3">
-			{items.map((item) => (
-				<Card class={`reveal ${item.featured ? 'border-orange-400/60' : ''}`}>
+			{items.map((item, index) => (
+				<Card class={`reveal scroll-float ${item.featured ? 'border-orange-400/60' : ''}`} data-scroll-depth={String(index === 1 ? -16 : 10)}>
 					<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">{item.eyebrow}</p>
 					<h3 class="mt-4 text-2xl font-extrabold">{item.title}</h3>
 					<p class="mt-3 text-muted">{item.description}</p>

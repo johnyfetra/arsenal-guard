@@ -72,6 +72,11 @@ input,
 select,
 textarea {
 	@apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400;
+}
+
+input,
+select,
+textarea {
 	color: var(--page-text);
 	background: var(--field-bg);
 	border-color: var(--field-border);
@@ -221,6 +226,47 @@ label:has(input[type='radio']) {
 	animation: drift-glow 13s ease-in-out infinite alternate;
 }
 
+.cv-grid-accent {
+	position: absolute;
+	inset: -2.25rem auto auto 50%;
+	z-index: -1;
+	width: min(24rem, 58vw);
+	aspect-ratio: 1;
+	border: 1px solid rgba(230, 126, 34, 0.16);
+	border-radius: 1.25rem;
+	background:
+		linear-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+		linear-gradient(135deg, rgba(15, 31, 68, 0.76), rgba(5, 11, 26, 0.46));
+	background-size:
+		24px 24px,
+		24px 24px,
+		auto;
+	box-shadow: 0 26px 90px rgba(5, 11, 26, 0.34);
+	opacity: 0.62;
+	transform: translate3d(-50%, 0, 0) rotate(-5deg);
+	transition:
+		transform 520ms ease,
+		opacity 520ms ease,
+		box-shadow 520ms ease;
+}
+
+.hero-title-wrap:hover .cv-grid-accent {
+	opacity: 0.82;
+	transform: translate3d(-48%, -0.45rem, 0) rotate(-2deg) scale(1.03);
+	box-shadow: 0 34px 110px rgba(230, 126, 34, 0.12);
+}
+
+.hero-title-lines {
+	display: inline;
+}
+
+.scroll-float {
+	will-change: transform;
+	transform: translate3d(0, var(--scroll-shift, 0px), 0);
+	transition: transform 120ms linear;
+}
+
 @keyframes drift-glow {
 	from {
 		transform: translate3d(-3%, 0, 0) rotate(-8deg) scale(0.96);
@@ -245,11 +291,23 @@ label:has(input[type='radio']) {
 	transform: translateY(0);
 }
 
+.reveal.scroll-float {
+	transform: translate3d(0, calc(16px + var(--scroll-shift, 0px)), 0);
+}
+
+.reveal.scroll-float.is-visible {
+	transform: translate3d(0, var(--scroll-shift, 0px), 0);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	* {
 		animation-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
 		transition-duration: 0.01ms !important;
+	}
+
+	.scroll-float {
+		transform: none !important;
 	}
 }
 

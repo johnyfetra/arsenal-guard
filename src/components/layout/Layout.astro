@@ -41,6 +41,23 @@ const { title, description, lang, path, type, schema } = Astro.props;
 				}
 			}, { threshold: 0.12 });
 			document.querySelectorAll('.reveal').forEach((node) => observer.observe(node));
+
+			const scrollFloatNodes = [...document.querySelectorAll('.scroll-float[data-scroll-depth]')];
+			const updateScrollFloat = () => {
+				const viewport = window.innerHeight || 1;
+				for (const node of scrollFloatNodes) {
+					const depth = Number(node.dataset.scrollDepth || 0);
+					const rect = node.getBoundingClientRect();
+					const progress = (rect.top + rect.height / 2 - viewport / 2) / viewport;
+					const clamped = Math.max(-1, Math.min(1, progress));
+					node.style.setProperty('--scroll-shift', `${clamped * depth}px`);
+				}
+			};
+			if (!matchMedia('(prefers-reduced-motion: reduce)').matches && scrollFloatNodes.length) {
+				updateScrollFloat();
+				addEventListener('scroll', updateScrollFloat, { passive: true });
+				addEventListener('resize', updateScrollFloat);
+			}
 		</script>
 	</body>
 </html>

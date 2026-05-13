@@ -10,7 +10,7 @@ const { lang } = Astro.props;
 		<h2 class="text-3xl font-extrabold md:text-5xl">{copy[lang].sections.how}</h2>
 		<div class="mt-10 grid gap-4 md:grid-cols-4">
 			{steps.map((step, index) => (
-				<div class="step-card reveal rounded-2xl p-6">
+				<div class="step-card reveal scroll-float rounded-2xl p-6" data-scroll-depth={String(index % 2 === 0 ? -14 : 14)}>
 					<p class="font-mono text-sm text-orange-400">0{index + 1}</p>
 					<p class="mt-5 font-bold">{step}</p>
 				</div>

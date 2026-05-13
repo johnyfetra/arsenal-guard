@@ -22,9 +22,12 @@ const t = copy[lang].hero;
 	</div>
 	<Container class="flex flex-col items-center text-center">
 		<Badge>{t.badge}</Badge>
-		<h1 class="mt-8 max-w-5xl text-5xl font-extrabold leading-[1.02] tracking-normal text-white md:text-7xl">
-			{t.title}<br /><span class="text-orange-400">{t.accent}</span>
-		</h1>
+		<div class="hero-title-wrap scroll-float relative z-10 mt-8 max-w-5xl" data-scroll-depth="-26">
+			<div class="cv-grid-accent" aria-hidden="true"></div>
+			<h1 class="text-5xl font-extrabold leading-[1.02] tracking-normal text-white md:text-7xl">
+				<span class="hero-title-lines">{t.title}</span><br /><span class="hero-title-lines text-orange-400">{t.accent}</span>
+			</h1>
+		</div>
 		<p class="mt-6 max-w-3xl text-lg leading-8 text-white/80 md:text-xl">{t.subtitle}</p>
 		<div class="mt-10 flex flex-col gap-3 sm:flex-row">
 			<Button href={routeMap.quote} lang={lang}>{t.primary}<ArrowRight class="size-4" /></Button>
