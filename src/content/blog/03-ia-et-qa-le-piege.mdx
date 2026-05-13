@@ -1,0 +1,41 @@
+---
+title: "L IA generative en QA : le piege que personne ne voit venir"
+description: L IA peut accelerer la QA, mais elle peut aussi produire une illusion de couverture si elle n est pas pilotee par le risque produit.
+date: 2026-03-18
+author: Johny Fetramalala
+readTime: 10 min
+lang: fr
+tags: [ia, qa, automation, strategy]
+---
+
+## L IA accelere, mais ne remplace pas le jugement QA
+
+L IA generative est utile pour ecrire des variantes de scenarios, reformuler des cas de test, analyser des logs, proposer des assertions ou produire un squelette Playwright. Elle fait gagner du temps, surtout lorsque le besoin est bien cadre.
+
+Le piege est de confondre volume et couverture. Generer vingt tests n a aucune valeur si ces tests ne couvrent pas les risques importants, si les donnees sont mal controlees ou si les assertions verifient seulement que la page ne plante pas.
+
+## L illusion de couverture
+
+Une suite produite trop vite peut donner une impression rassurante: beaucoup de fichiers, beaucoup de steps, beaucoup de rapports verts. Mais une couverture pertinente part des parcours metier, pas du DOM.
+
+Tester que le bouton existe est parfois utile. Tester que le bon utilisateur peut finaliser une commande, obtenir une facture, recevoir une confirmation et retrouver l operation dans son espace compte est beaucoup plus important.
+
+L IA ne connait pas automatiquement votre modele economique, vos clients sensibles, vos incidents passes ni vos compromis produit. Sans ce contexte, elle optimise la syntaxe, pas le risque.
+
+## Les usages vraiment efficaces
+
+L IA est excellente comme accelerateur d analyse. Donnez-lui un incident, des logs CI et un test instable: elle peut proposer des hypotheses. Donnez-lui une user story bien ecrite: elle peut lister des cas limites. Donnez-lui une convention de test: elle peut produire un premier draft coherent.
+
+Mais le QA senior doit garder la decision: quels parcours meritent l automatisation, quelles assertions prouvent une vraie valeur, quels tests doivent bloquer la release et quels tests peuvent rester manuels.
+
+## Mettre des garde-fous
+
+Chaque test assiste par IA doit passer par une revue humaine. Les selectors doivent respecter les conventions. Les donnees doivent etre isolees. Les assertions doivent correspondre a un comportement metier. Les prompts utiles doivent etre versionnes comme une documentation vivante.
+
+Il faut aussi mesurer. Combien de tests IA detectent de vraies regressions ? Combien deviennent flaky ? Combien sont compris par l equipe apres un mois ? Sans ces questions, l IA devient une fabrique de dette.
+
+## Conclusion
+
+L IA en QA est puissante quand elle sert une strategie. Elle devient dangereuse quand elle remplace la strategie. Le meilleur usage consiste a combiner vitesse de generation, expertise produit, priorisation du risque et discipline d engineering.
+
+La promesse n est pas de produire plus de tests. La promesse est de produire plus vite les bons tests.
