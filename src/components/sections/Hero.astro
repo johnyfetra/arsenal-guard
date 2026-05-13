@@ -10,20 +10,37 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = copy[lang].hero;
+const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
+	const cols = 31;
+	return {
+		x: 12 + (index % cols) * 40,
+		y: 10 + Math.floor(index / cols) * 40,
+	};
+});
 ---
 
 <section class="relative isolate overflow-hidden bg-mesh py-24 md:min-h-[calc(100vh-4rem)] md:py-32">
 	<div class="absolute inset-0 -z-10 opacity-30" aria-hidden="true">
 		<div class="hero-glow"></div>
 		<div class="absolute left-8 top-24 h-48 w-px rotate-12 bg-orange-400/40"></div>
-		<div class="absolute right-10 top-32 grid grid-cols-6 gap-2">
-			{Array.from({ length: 48 }).map(() => <span class="size-1 rounded-full bg-white/20"></span>)}
-		</div>
 	</div>
-	<Container class="flex flex-col items-center text-center">
+	<svg class="hero-square-grid absolute inset-0 z-0 h-full w-full" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
+		<defs>
+			<radialGradient id="hero-square-bulge" cx="38%" cy="30%" r="78%">
+				<stop offset="0%" stop-color="#fff2d6" stop-opacity="0.95" />
+				<stop offset="42%" stop-color="#f39c12" stop-opacity="0.72" />
+				<stop offset="100%" stop-color="#0f1f44" stop-opacity="0.38" />
+			</radialGradient>
+			<filter id="hero-square-shadow" x="-160%" y="-160%" width="420%" height="420%">
+				<feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#e67e22" flood-opacity="0.34" />
+				<feDropShadow dx="-2" dy="-2" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.16" />
+			</filter>
+		</defs>
+		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="7" height="7" rx="1.4" />)}
+	</svg>
+	<Container class="relative z-10 flex flex-col items-center text-center">
 		<Badge>{t.badge}</Badge>
 		<div class="hero-title-wrap scroll-float relative z-10 mt-8 max-w-5xl" data-scroll-depth="-26">
-			<div class="cv-grid-accent" aria-hidden="true"></div>
 			<h1 class="text-5xl font-extrabold leading-[1.02] tracking-normal text-white md:text-7xl">
 				<span class="hero-title-lines">{t.title}</span><br /><span class="hero-title-lines text-orange-400">{t.accent}</span>
 			</h1>
