@@ -162,6 +162,32 @@ label:has(input[type='radio']) {
 	border-radius: 0;
 }
 
+.site-footer {
+	background: #050b1a;
+	border-color: rgba(255, 255, 255, 0.12);
+	color: #fafaf7;
+}
+
+.site-footer .footer-muted {
+	color: #b8c0d3;
+}
+
+.site-footer .footer-link {
+	display: inline-block;
+	color: inherit;
+	background: transparent !important;
+	box-shadow: none !important;
+	text-decoration: none;
+}
+
+.site-footer .footer-link:hover {
+	color: #f39c12;
+}
+
+.site-footer .footer-accent {
+	color: #f6a94a;
+}
+
 .section-band {
 	background: var(--section-band);
 	border-color: var(--section-band-border);
