@@ -10,11 +10,11 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = copy[lang].hero;
-const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
-	const cols = 31;
+const gridCells = Array.from({ length: 49 * 31 }, (_, index) => {
+	const cols = 49;
 	return {
-		x: 12 + (index % cols) * 40,
-		y: 10 + Math.floor(index / cols) * 40,
+		x: 8 + (index % cols) * 25,
+		y: 8 + Math.floor(index / cols) * 25,
 	};
 });
 ---
@@ -36,7 +36,7 @@ const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
 				<feDropShadow dx="-2" dy="-2" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.16" />
 			</filter>
 		</defs>
-		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="7" height="7" rx="1.4" data-cx={x + 3.5} data-cy={y + 3.5} />)}
+		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width="3.8" height="3.8" rx="0.9" data-cx={x + 1.9} data-cy={y + 1.9} />)}
 	</svg>
 	<Container class="relative z-10 flex flex-col items-center text-center">
 		<Badge>{t.badge}</Badge>
@@ -78,7 +78,7 @@ const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
 		point.x = pointer.x;
 		point.y = pointer.y;
 		const local = point.matrixTransform(svg.getScreenCTM().inverse());
-		const radius = 92;
+		const radius = 54;
 
 		for (const square of squares) {
 			const dx = Number(square.dataset.cx) - local.x;
@@ -95,8 +95,8 @@ const gridCells = Array.from({ length: 31 * 20 }, (_, index) => {
 			}
 
 			const eased = strength * strength;
-			const scale = 1 + eased * 3.15;
-			const lift = -eased * 2;
+			const scale = 1 + eased * 1.65;
+			const lift = -eased * 1.1;
 			square.style.transform = `translateY(${lift}px) scale(${scale})`;
 			square.style.opacity = String(0.36 + eased * 0.64);
 			square.style.fill = `rgba(243, 156, 18, ${0.16 + eased * 0.7})`;
