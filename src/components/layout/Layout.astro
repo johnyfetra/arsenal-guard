@@ -25,6 +25,9 @@ const { title, description, lang, path, type, schema } = Astro.props;
 			const preferredTheme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 			document.documentElement.dataset.theme = preferredTheme;
 			document.documentElement.classList.toggle('dark', preferredTheme === 'dark');
+			if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				document.documentElement.classList.add('reveal-ready');
+			}
 		</script>
 		<BaseHead title={title} description={description} lang={lang} path={path} type={type} schema={schema} />
 	</head>
@@ -35,15 +38,58 @@ const { title, description, lang, path, type, schema } = Astro.props;
 		</main>
 		<Footer lang={lang} />
 		<script is:inline>
-			const observer = new IntersectionObserver((entries) => {
-				for (const entry of entries) {
-					if (entry.isIntersecting) entry.target.classList.add('is-visible');
-				}
-			}, { threshold: 0.12 });
-			document.querySelectorAll('.reveal').forEach((node) => observer.observe(node));
+			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+			const revealSelectors = [
+				'main section:not(.hero-shell) h1',
+				'main section:not(.hero-shell) h2',
+				'main section:not(.hero-shell) .surface',
+				'main section:not(.hero-shell) .step-card',
+				'main section:not(.hero-shell) form',
+				'main section:not(.hero-shell) .logo-marquee',
+				'main section:not(.hero-shell) .about-portrait-group',
+				'main section:not(.hero-shell) .prose-ag',
+				'main [data-reveal]',
+			].join(',');
+			const revealNodes = [...document.querySelectorAll(revealSelectors)].filter((node) => {
+				if (node.closest('[data-no-reveal]')) return false;
+				if (node.matches('h1, h2') && node.closest('.surface, .step-card, form, .logo-marquee, .prose-ag')) return false;
+				return true;
+			});
+			const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+
+			revealNodes.forEach((node) => {
+				if (!node.classList.contains('reveal')) node.classList.add('reveal');
+				const siblings = revealNodes.filter((item) => item.closest('section') === node.closest('section'));
+				const index = siblings.indexOf(node);
+				node.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 45}ms`);
+			});
+
+			if (reduceMotion.matches) {
+				document.documentElement.classList.remove('reveal-ready');
+				revealNodes.forEach((node) => node.classList.add('is-visible'));
+			} else {
+				const observer = new IntersectionObserver((entries, currentObserver) => {
+					for (const entry of entries) {
+						if (!entry.isIntersecting) continue;
+						entry.target.classList.add('is-visible');
+						currentObserver.unobserve(entry.target);
+					}
+				}, { rootMargin: '0px 0px -8% 0px', threshold: 0.14 });
+
+				revealNodes.forEach((node) => {
+					const rect = node.getBoundingClientRect();
+					if (rect.top < viewportHeight * 0.9) {
+						node.classList.add('is-visible');
+					} else {
+						observer.observe(node);
+					}
+				});
+			}
 
 			const scrollFloatNodes = [...document.querySelectorAll('.scroll-float[data-scroll-depth]')];
+			let scrollFloatFrame = 0;
 			const updateScrollFloat = () => {
+				scrollFloatFrame = 0;
 				const viewport = window.innerHeight || 1;
 				for (const node of scrollFloatNodes) {
 					const depth = Number(node.dataset.scrollDepth || 0);
@@ -53,10 +99,13 @@ const { title, description, lang, path, type, schema } = Astro.props;
 					node.style.setProperty('--scroll-shift', `${clamped * depth}px`);
 				}
 			};
-			if (!matchMedia('(prefers-reduced-motion: reduce)').matches && scrollFloatNodes.length) {
+			const requestScrollFloat = () => {
+				if (!scrollFloatFrame) scrollFloatFrame = requestAnimationFrame(updateScrollFloat);
+			};
+			if (!reduceMotion.matches && scrollFloatNodes.length) {
 				updateScrollFloat();
-				addEventListener('scroll', updateScrollFloat, { passive: true });
-				addEventListener('resize', updateScrollFloat);
+				addEventListener('scroll', requestScrollFloat, { passive: true });
+				addEventListener('resize', requestScrollFloat);
 			}
 		</script>
 	</body>
