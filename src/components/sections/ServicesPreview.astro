@@ -9,27 +9,76 @@ import { plans, services } from '../../lib/site';
 interface Props { lang: Lang; mode?: 'services' | 'pricing' }
 const { lang, mode = 'services' } = Astro.props;
 
+const planDetails = {
+	Starter: {
+		description: {
+			fr: 'Pour maintenir les parcours critiques et obtenir un signal QA régulier sans alourdir votre équipe.',
+			en: 'For maintaining critical journeys and keeping a steady QA signal without adding team overhead.',
+		},
+		perks: {
+			fr: [
+				'2 à 3 tests E2E ciblés/mois',
+				'Maintenance légère des tests instables',
+				'Revue CI mensuelle',
+				'Synthèse priorisée des risques',
+			],
+			en: [
+				'2 to 3 targeted E2E tests/month',
+				'Light flaky test maintenance',
+				'Monthly CI review',
+				'Prioritized risk summary',
+			],
+		},
+	},
+	Growth: {
+		description: {
+			fr: 'Pour les équipes qui livrent souvent et veulent accélérer la couverture E2E avec un suivi QA actif.',
+			en: 'For teams shipping often that need to grow E2E coverage with active QA follow-up.',
+		},
+		perks: {
+			fr: [
+				'5 à 8 tests E2E/mois',
+				'Stabilisation continue des flakies',
+				'Tests bloquants intégrés en CI/CD',
+				'Reporting qualité et arbitrage release',
+			],
+			en: [
+				'5 to 8 E2E tests/month',
+				'Continuous flaky test stabilization',
+				'Blocking tests integrated in CI/CD',
+				'Quality reporting and release arbitration',
+			],
+		},
+	},
+	Pro: {
+		description: {
+			fr: 'Pour les produits à forte cadence qui ont besoin d’un ownership QA plus complet sur plusieurs squads.',
+			en: 'For high-velocity products that need broader QA ownership across several squads.',
+		},
+		perks: {
+			fr: [
+				'8 à 12 tests E2E/mois',
+				'Maintenance avancée et refactor de suite',
+				'Support CI/CD prioritaire',
+				'Roadmap QA mensuelle avec métriques',
+			],
+			en: [
+				'8 to 12 E2E tests/month',
+				'Advanced maintenance and suite refactoring',
+				'Priority CI/CD support',
+				'Monthly QA roadmap with metrics',
+			],
+		},
+	},
+};
+
 const pricingItems = plans.map((item) => ({
 	eyebrow: item.volume,
 	title: item.name,
-	description: lang === 'fr'
-		? 'Maintenance E2E, nouveaux scénarios, support CI/CD et reporting qualité mensuel.'
-		: 'E2E maintenance, new scenarios, CI/CD support and monthly quality reporting.',
+	description: planDetails[item.name as keyof typeof planDetails].description[lang],
 	price: item.price,
 	featured: item.featured,
-	perks: lang === 'fr'
-		? [
-			'3 à 5 nouveaux tests E2E/mois',
-			'Maintenance suite existante',
-			'Support pipelines CI/CD',
-			'Reporting qualité mensuel',
-		]
-		: [
-			'3 to 5 new E2E tests/month',
-			'Existing suite maintenance',
-			'CI/CD pipeline support',
-			'Monthly quality reporting',
-		],
+	perks: planDetails[item.name as keyof typeof planDetails].perks[lang],
 }));
 
 const serviceItems = services.slice(0, 3).map((item) => ({
@@ -47,7 +96,7 @@ const labels = lang === 'fr'
 	: { pricing: 'Pricing', offers: 'Offers', detail: 'View details', recommended: 'Recommended', start: 'Start' };
 ---
 
-<section class="section-skew-top section-band relative z-10">
+<section class="pricing-section section-skew-top section-band relative z-20">
 	<Container>
 		<div class="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end reveal">
 			<div>
@@ -61,12 +110,11 @@ const labels = lang === 'fr'
 			</Button>
 		</div>
 
-		<div class="grid gap-5 md:grid-cols-3 md:items-stretch">
+		<div class="pricing-grid grid gap-5 md:grid-cols-3 md:items-stretch">
 			{items.map((item, index) => (
 				<div
-					class={`pricing-card reveal flex flex-col scroll-float ${item.featured ? 'pricing-card--featured' : ''}`}
+					class={`pricing-card reveal flex flex-col ${item.featured ? 'pricing-card--featured' : ''}`}
 					style={`--reveal-delay:${index * 80}ms`}
-					data-scroll-depth={String(index === 1 ? -14 : 10)}
 				>
 					{item.featured && (
 						<div class="mb-4 flex items-center justify-between">
