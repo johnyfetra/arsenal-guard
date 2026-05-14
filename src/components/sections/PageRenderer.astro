@@ -118,30 +118,98 @@ const title = page === 'service' && service ? service.title : page === 'notFound
 		<>
 			<section class="bg-mesh py-24 md:py-32">
 				<Container class="grid gap-10 lg:grid-cols-[1fr_.75fr] lg:items-center">
-					<div><h1 class="text-5xl font-extrabold text-white md:text-7xl">Johny Fetramalala</h1><p class="mt-6 text-xl text-white/80">Senior QA Engineer, fondateur d Arsenal Guard. 5+ ans sur SaaS, e-commerce et plateformes web europeennes.</p></div>
-					<div class="about-portrait-group relative mx-auto w-full max-w-md lg:ml-auto">
-						<div class="about-portrait-cage" aria-hidden="true"></div>
-						<div class="about-portrait-glow absolute -inset-4 rounded-[2rem] bg-orange-400/20 blur-2xl" aria-hidden="true"></div>
-						<div class="about-portrait-card relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-3 shadow-glow backdrop-blur">
-							<img
-								src={johnyPortrait.src}
-								alt="Portrait de Johny Fetramalala, fondateur d Arsenal Guard"
-								width="1066"
-								height="1026"
-								decoding="async"
-								class="about-portrait-img aspect-[4/5] w-full rounded-xl object-cover object-[50%_24%]"
-							/>
-							<div class="absolute inset-x-6 bottom-6 rounded-xl border border-white/15 bg-slate-950/72 p-4 text-white shadow-lg backdrop-blur">
-								<p class="text-lg font-extrabold">Johny Fetramalala</p>
-								<p class="mt-1 text-sm font-semibold text-orange-300">Senior QA Engineer · Arsenal Guard</p>
-							</div>
+					<div>
+						<p class="font-bold uppercase tracking-[0.16em] text-orange-400">Service QA premium</p>
+						<h1 class="mt-5 text-5xl font-extrabold text-white md:text-7xl">A propos d Arsenal Guard</h1>
+						<p class="mt-6 max-w-3xl text-xl text-white/80">Service QA premium pour produits SaaS, e-commerce et plateformes web europeens.</p>
+					</div>
+					<div class="relative mx-auto grid aspect-square w-full max-w-md place-items-center rounded-2xl border border-white/15 bg-white/10 p-8 shadow-glow backdrop-blur">
+						<div class="absolute inset-6 rounded-xl border border-orange-400/25"></div>
+						<div class="absolute inset-14 rounded-xl border border-white/15"></div>
+						<div class="relative text-center">
+							<p class="text-6xl font-extrabold text-white">QA</p>
+							<p class="mt-3 text-sm font-bold uppercase tracking-[0.18em] text-orange-300">Automation · CI/CD · Risk</p>
 						</div>
 					</div>
 				</Container>
 			</section>
-			<section class="py-24"><Container class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]"><h2 class="text-3xl font-extrabold md:text-5xl">De developpeur a expert qualite</h2><div class="space-y-5 text-lg text-muted"><p>Arsenal Guard nait d une conviction simple: la qualite ne doit pas etre un frein a la livraison. Elle doit devenir un filet clair, maintenable et utile aux equipes produit.</p><p>Johny accompagne des equipes francophones et europeennes sur l automatisation E2E, la stabilisation de suites existantes, l integration CI/CD et la priorisation des risques.</p><p>Depuis Antananarivo, l avantage offshore est concret: cout optimise, communication francophone, recouvrement horaire Europe et exigence senior.</p></div></Container></section>
-			<section class="section-band border-y py-24"><Container><h2 class="text-3xl font-extrabold">Valeurs</h2><div class="mt-8 grid gap-5 md:grid-cols-4">{['Quality', 'Transparency', 'Evolution', 'Reliability'].map((value) => <Card><h3 class="text-xl font-bold">{value}</h3><p class="mt-3 text-muted">Des decisions visibles, mesurables et utiles a votre equipe.</p></Card>)}</div></Container></section>
-			<Stack lang={lang} /><CTASection lang={lang} />
+			<section class="py-24">
+				<Container class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
+					<h2 class="text-3xl font-extrabold md:text-5xl">Notre mission</h2>
+					<div class="space-y-5 text-lg text-muted">
+						<p>Arsenal Guard est ne d une conviction : la qualite logicielle ne doit pas etre un frein a la livraison. Elle doit devenir un filet clair, maintenable et utile aux equipes produit.</p>
+						<p>Nous accompagnons des startups et scale-ups europeennes sur l automatisation des tests E2E, la stabilisation des suites existantes, l integration CI/CD et la priorisation des risques qualite, depuis nos bureaux a Antananarivo, Madagascar.</p>
+					</div>
+				</Container>
+			</section>
+			<section class="section-band border-y py-24">
+				<Container>
+					<h2 class="text-3xl font-extrabold md:text-5xl">Pourquoi Arsenal Guard ?</h2>
+					<div class="mt-10 grid gap-5 md:grid-cols-2">
+						{[
+							['Specialisation QA pure', 'Nous ne sommes pas un cabinet generaliste. La QA est notre seul metier : Cypress, Playwright, CI/CD, strategie de test. Une expertise pointue, pas de dilution.'],
+							['Expertise francophone', 'Nos equipes parlent francais nativement, comprennent vos enjeux metier et communiquent comme une extension de votre equipe interne.'],
+							['Cout offshore optimise', 'Beneficiez d une qualite d expertise equivalente au marche europeen, avec un avantage tarifaire significatif grace a notre implantation a Madagascar.'],
+							['Evolution sur le long-terme', 'Nos tests sont concus pour grandir avec votre produit. Votre equipe peut reprendre la main a tout moment, sans dependance.'],
+						].map(([title, text]) => <Card><h3 class="text-xl font-bold">{title}</h3><p class="mt-3 text-muted">{text}</p></Card>)}
+					</div>
+				</Container>
+			</section>
+			<section class="py-24">
+				<Container>
+					<h2 class="text-3xl font-extrabold md:text-5xl">Nos valeurs</h2>
+					<div class="mt-8 grid gap-5 md:grid-cols-4">
+						{[
+							['Qualite', 'La qualite est notre obsession. Chaque test que nous ecrivons doit apporter une vraie valeur business, jamais cocher une case sans impact.'],
+							['Transparence', 'Nous facturons a la valeur, nous communiquons sans detour. Vous savez ce que vous payez, vous savez ce qui est livre.'],
+							['Evolution', 'Vos tests d aujourd hui doivent rester utiles demain. Nous construisons des suites qui grandissent avec votre produit, pas qui finissent a la corbeille.'],
+							['Fiabilite', 'Aucune regression critique ne doit atteindre votre production. C est notre engagement et notre raison d etre.'],
+						].map(([value, text]) => <Card><h3 class="text-xl font-bold">{value}</h3><p class="mt-3 text-muted">{text}</p></Card>)}
+					</div>
+				</Container>
+			</section>
+			<section class="section-band border-y py-24">
+				<Container class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
+					<h2 class="text-3xl font-extrabold md:text-5xl">Pourquoi Madagascar ?</h2>
+					<div class="grid gap-4 md:grid-cols-2">
+						{[
+							['Equipe francophone native', 'Communication claire avec vos equipes produit, tech et management.'],
+							['Recouvrement Europe', 'Le fuseau UTC+3 offre un overlap confortable avec la France, la Belgique, la Suisse et l Europe.'],
+							['Cout optimise', 'Une expertise QA premium avec 40 a 50% d economie par rapport a un staffing local equivalent.'],
+							['Talents techniques formes', 'Un vivier d ingenieurs issus notamment de formations informatiques reconnues comme l ENI.'],
+						].map(([title, text]) => <Card><h3 class="text-xl font-bold">{title}</h3><p class="mt-3 text-muted">{text}</p></Card>)}
+					</div>
+				</Container>
+			</section>
+			<Stack lang={lang} />
+			<section class="py-24">
+				<Container class="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+					<div class="about-portrait-group relative mx-auto w-full max-w-sm lg:mx-0">
+						<div class="about-portrait-cage" aria-hidden="true"></div>
+						<div class="about-portrait-glow absolute -inset-4 rounded-[2rem] bg-orange-400/20 blur-2xl" aria-hidden="true"></div>
+						<div class="about-portrait-card relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-3 shadow-glow backdrop-blur">
+							<img src={johnyPortrait.src} alt="Portrait de Johny Fetramalala, fondateur d Arsenal Guard" width="1066" height="1026" decoding="async" class="about-portrait-img aspect-[4/5] w-full rounded-xl object-cover object-[50%_24%]" />
+						</div>
+					</div>
+					<div>
+						<p class="font-bold uppercase tracking-[0.16em] text-orange-400">Notre fondateur</p>
+						<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">Johny Fetramalala</h2>
+						<p class="mt-3 text-lg font-semibold">Fondateur & Lead QA Engineer</p>
+						<div class="mt-6 space-y-4 text-lg text-muted">
+							<p>Senior QA Engineer avec 5+ ans d experience sur des produits a fort enjeu. Diplome en informatique, Master ENI Fianarantsoa.</p>
+							<p>Johny a accompagne des plateformes utilisees par Chanel, Sodexo et plusieurs scale-ups SaaS europeennes avant de fonder Arsenal Guard avec la mission de democratiser la QA premium pour les equipes produit.</p>
+						</div>
+						<a class="mt-6 inline-flex rounded-xl border border-orange-400/40 px-5 py-3 font-bold text-orange-400 hover:bg-orange-400/10" href="https://linkedin.com/in/johny-qa">LinkedIn</a>
+					</div>
+				</Container>
+			</section>
+			<section class="bg-mesh py-20">
+				<Container class="text-center">
+					<h2 class="mx-auto max-w-3xl text-3xl font-extrabold text-white md:text-5xl">Faisons connaissance autour de votre projet.</h2>
+					<p class="mx-auto mt-5 max-w-2xl text-white/80">Nous identifions vos risques release, vos parcours critiques et les premiers tests qui apporteront un vrai impact.</p>
+					<div class="mt-8"><Button href={routeMap.quote} lang={lang}>Demander un devis</Button></div>
+				</Container>
+			</section>
 		</>
 	)}
 
@@ -153,7 +221,7 @@ const title = page === 'service' && service ? service.title : page === 'notFound
 
 	{page === 'contact' && <section class="py-24 md:py-32"><Container class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><h1 class="text-5xl font-extrabold md:text-7xl">Contact</h1><p class="mt-6 text-lg text-muted">{t.descriptions.contact}</p><p class="mt-6 font-mono text-orange-400">{site.email}</p><div class="surface mt-8 rounded-2xl p-6 text-muted">Calendly placeholder: ajoutez votre lien de prise de rendez-vous.</div></div><ContactForm /></Container></section>}
 
-	{(page === 'legal' || page === 'privacy') && <section class="py-24 md:py-32"><Container class="max-w-3xl"><h1 class="text-5xl font-extrabold">{page === 'legal' ? 'Mentions legales' : 'Politique de confidentialite'}</h1><div class="prose-ag mt-8"><p>Editeur: Arsenal Guard, service freelance QA represente par Johny Fetramalala, Antananarivo, Madagascar.</p><p>Contact: {site.email}. Les donnees transmises via les formulaires sont utilisees uniquement pour repondre aux demandes commerciales. Vous pouvez demander leur suppression a tout moment.</p><p>Hebergement recommande: Vercel ou Cloudflare Pages. Analytics prevu: Cloudflare Web Analytics ou Plausible, sans cookies publicitaires.</p></div></Container></section>}
+	{(page === 'legal' || page === 'privacy') && <section class="py-24 md:py-32"><Container class="max-w-3xl"><h1 class="text-5xl font-extrabold">{page === 'legal' ? 'Mentions legales' : 'Politique de confidentialite'}</h1><div class="prose-ag mt-8"><p>Editeur: Arsenal Guard, service QA premium base a Antananarivo, Madagascar.</p><p>Contact: {site.email}. Les donnees transmises via les formulaires sont utilisees uniquement pour repondre aux demandes commerciales. Vous pouvez demander leur suppression a tout moment.</p><p>Hebergement recommande: Vercel ou Cloudflare Pages. Analytics prevu: Cloudflare Web Analytics ou Plausible, sans cookies publicitaires.</p></div></Container></section>}
 
 	{page === 'notFound' && <section class="grid min-h-[70vh] place-items-center py-24"><Container class="text-center"><h1 class="text-6xl font-extrabold">404</h1><p class="mt-4 text-muted">Cette page n existe pas encore.</p><Button class="mt-8" href="/" lang={lang}>Retour accueil</Button></Container></section>}
 </Layout>

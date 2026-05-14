@@ -2,7 +2,7 @@ import type { Lang } from './i18n';
 
 export const site = {
 	name: 'Arsenal Guard',
-	tagline: 'Qualite. Automatisation. Impact.',
+	tagline: 'Service QA premium pour produits SaaS europeens',
 	url: 'https://arsenalguard.com',
 	email: 'contact@arsenalguard.com',
 	founder: 'Johny Fetramalala',
@@ -54,7 +54,7 @@ export const services = [
 		process: ['Choix outil selon contexte', 'Installation et conventions', 'Implementation des scenarios', 'Passage de relais equipe'],
 		faq: [
 			['Cypress ou Playwright ?', 'Le choix depend du produit, de la CI, des navigateurs cibles et des competences internes.'],
-			['Les tests seront-ils repris par mon equipe ?', 'Oui, la structure et la documentation sont concues pour etre appropriees par vos devs.'],
+			['Les tests seront-ils repris par notre equipe ?', 'Oui, la structure et la documentation sont concues pour etre appropriees par vos devs.'],
 		],
 	},
 	{
@@ -108,7 +108,7 @@ export const dedicated = [
 ];
 
 export const faq = [
-	['Pourquoi un QA freelance plutot qu un recrutement ?', 'Vous obtenez un impact rapide, une expertise senior et une flexibilite budgetaire sans cycle de recrutement long.'],
+	['Pourquoi un service QA plutot qu un recrutement ?', 'Vous obtenez un impact rapide, une expertise senior et une flexibilite budgetaire sans cycle de recrutement long.'],
 	['Comment se passe la collaboration a distance avec Madagascar ?', 'Avec un recouvrement Europe confortable, des points hebdomadaires, un backlog transparent et des livrables visibles dans vos outils.'],
 	['Quel est le delai de mise en place ?', 'Un audit peut demarrer en quelques jours. Un forfait mensuel demande generalement une semaine d onboarding.'],
 	['Vos tests sont-ils maintenables ?', 'Oui. Les conventions, selectors, fixtures et rapports sont penses pour etre repris par vos developpeurs.'],
