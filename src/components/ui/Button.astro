@@ -18,11 +18,16 @@ const variants = {
 	ghost: 'text-current underline decoration-orange-400/50 underline-offset-8 hover:text-orange-400',
 };
 const classes = `${base} ${variants[variant]} ${className}`;
+const resolvedHref = href
+	? /^(https?:|mailto:|tel:|#)/.test(href)
+		? href
+		: localizedPath(lang, href)
+	: undefined;
 ---
 
 {
-	href ? (
-		<a class={classes} href={href.startsWith('/') ? localizedPath(lang, href) : href}>
+	resolvedHref ? (
+		<a class={classes} href={resolvedHref}>
 			<slot />
 		</a>
 	) : (

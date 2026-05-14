@@ -56,6 +56,9 @@ const { title, description, lang, path, type, schema } = Astro.props;
 				return true;
 			});
 			const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+			const showAllReveals = () => {
+				for (const node of revealNodes) node.classList.add('is-visible');
+			};
 
 			revealNodes.forEach((node) => {
 				if (!node.classList.contains('reveal')) node.classList.add('reveal');
@@ -64,9 +67,9 @@ const { title, description, lang, path, type, schema } = Astro.props;
 				node.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 45}ms`);
 			});
 
-			if (reduceMotion.matches) {
+			if (reduceMotion.matches || !('IntersectionObserver' in window)) {
 				document.documentElement.classList.remove('reveal-ready');
-				revealNodes.forEach((node) => node.classList.add('is-visible'));
+				showAllReveals();
 			} else {
 				const observer = new IntersectionObserver((entries, currentObserver) => {
 					for (const entry of entries) {
@@ -84,6 +87,7 @@ const { title, description, lang, path, type, schema } = Astro.props;
 						observer.observe(node);
 					}
 				});
+				setTimeout(showAllReveals, 1400);
 			}
 
 			const scrollFloatNodes = [...document.querySelectorAll('.scroll-float[data-scroll-depth]')];
