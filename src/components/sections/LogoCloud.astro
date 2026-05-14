@@ -1,12 +1,26 @@
 ---
 import Container from '../ui/Container.astro';
 import { clientRefs } from '../../lib/site';
+const logoColors: Record<string, string> = {
+	Chanel: '#111111',
+	Sodexo: '#263c89',
+	Hexaglobe: '#178fcf',
+	Ecomundo: '#2f9f5b',
+	'Les Aligneurs Francais': '#d9252a',
+};
+const loopItems = [...clientRefs, ...clientRefs, ...clientRefs];
 ---
-<section class="py-12">
+<section class="overflow-hidden py-14">
 	<Container>
-		<p class="text-center text-sm font-bold uppercase tracking-[0.18em] text-muted">Ils nous ont fait confiance</p>
-		<div class="mt-7 grid grid-cols-2 gap-3 md:grid-cols-5">
-			{clientRefs.map((client) => <div class="surface rounded-lg px-4 py-4 text-center font-bold text-current opacity-75">{client}</div>)}
-		</div>
+		<p class="text-center text-xl font-extrabold uppercase tracking-[0.24em] text-current md:text-2xl">Ils nous ont fait confiance</p>
 	</Container>
+	<div class="logo-marquee mt-9" aria-label="References clients Arsenal Guard">
+		<div class="logo-marquee-track">
+			{loopItems.map((client) => (
+				<div class="client-logo" style={`--logo-color: ${logoColors[client] ?? '#f39c12'}`}>
+					<span>{client}</span>
+				</div>
+			))}
+		</div>
+	</div>
 </section>
