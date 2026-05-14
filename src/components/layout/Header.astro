@@ -20,11 +20,14 @@ const nav = [
 	[t.nav.blog, routeMap.blog],
 	[t.nav.contact, routeMap.contact],
 ];
+const a11y = lang === 'fr'
+	? { skip: 'Aller au contenu', nav: 'Navigation principale', menuOpen: 'Ouvrir le menu' }
+	: { skip: 'Skip to content', nav: 'Main navigation', menuOpen: 'Open menu' };
 ---
 
-<a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-orange-500 focus:px-4 focus:py-2 focus:text-white" href="#main">Skip to content</a>
+<a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-orange-500 focus:px-4 focus:py-2 focus:text-white" href="#main">{a11y.skip}</a>
 <header class="site-header sticky top-0 z-40 border-b" data-site-header>
-	<nav class="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8" aria-label="Main navigation">
+	<nav class="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8" aria-label={a11y.nav}>
 		<a href={localizedPath(lang, '/')} class="brand-link flex items-center gap-3 font-extrabold">
 			<span class="logo-mark grid size-12 place-items-center bg-transparent">
 				<img
@@ -46,7 +49,7 @@ const nav = [
 			<div class="hidden sm:block"><LanguageSwitcher lang={lang} path={path} /></div>
 			<ThemeToggle />
 			<div class="hidden md:block"><Button href={routeMap.quote} lang={lang}>{t.nav.quote}</Button></div>
-			<button class="mobile-menu-toggle lg:hidden" type="button" aria-label="Open menu" aria-expanded="false" data-mobile-menu-toggle>
+			<button class="mobile-menu-toggle lg:hidden" type="button" aria-label={a11y.menuOpen} aria-expanded="false" data-mobile-menu-toggle>
 				<Menu class="mobile-menu-icon-open size-5" aria-hidden="true" />
 				<X class="mobile-menu-icon-close hidden size-5" aria-hidden="true" />
 			</button>

@@ -1,16 +1,26 @@
 ---
 import Container from '../ui/Container.astro';
 import { copy, type Lang } from '../../lib/i18n';
-import { stack } from '../../lib/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 
 const categories = [
-	{ label: 'Test automation', items: ['Cypress', 'Playwright'] },
-	{ label: 'Languages', items: ['TypeScript', 'Angular', 'RxJS', 'NgRx'] },
+	{ label: lang === 'fr' ? 'Automatisation QA' : 'Test automation', items: ['Cypress', 'Playwright'] },
+	{ label: lang === 'fr' ? 'Langages et front' : 'Languages and frontend', items: ['TypeScript', 'Angular', 'RxJS', 'NgRx'] },
 	{ label: 'CI/CD', items: ['GitLab CI', 'GitHub Actions'] },
-	{ label: 'AI-assisted', items: ['AI-assisted QA'] },
+	{ label: lang === 'fr' ? 'QA assistée par IA' : 'AI-assisted QA', items: ['AI-assisted QA'] },
 ];
+const stats = lang === 'fr'
+	? [
+		['5+', "années d'expérience QA senior"],
+		['40-50%', "d'économie vs staffing local équivalent"],
+		['UTC+3', "recouvrement confortable avec l'Europe"],
+	]
+	: [
+		['5+', 'years of senior QA experience'],
+		['40-50%', 'savings vs equivalent local staffing'],
+		['UTC+3', 'comfortable overlap with Europe'],
+	];
 ---
 
 <section class="relative py-24 md:py-32 overflow-hidden">
@@ -24,11 +34,13 @@ const categories = [
 	<Container>
 		<div class="mb-14 grid gap-6 md:grid-cols-[1fr_auto] md:items-end reveal">
 			<div>
-				<p class="section-eyebrow">Outillage</p>
+				<p class="section-eyebrow">{lang === 'fr' ? 'Outillage' : 'Tooling'}</p>
 				<h2 class="mt-4 max-w-2xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.stack}</h2>
 			</div>
 			<p class="max-w-xs text-sm text-muted leading-relaxed">
-				Des choix techniques pragmatiques pour des suites lisibles, rapides à diagnostiquer et utiles au produit.
+				{lang === 'fr'
+					? 'Des choix techniques pragmatiques pour des suites lisibles, rapides à diagnostiquer et utiles au produit.'
+					: 'Pragmatic technical choices for readable suites that are fast to diagnose and useful to the product.'}
 			</p>
 		</div>
 
@@ -50,11 +62,7 @@ const categories = [
 
 		<!-- stats row -->
 		<div class="mt-16 grid gap-6 border-t border-white/10 pt-12 md:grid-cols-3 reveal">
-			{[
-				['5+', "années d'expérience QA senior"],
-				['40–50%', "d'économie vs staffing local équivalent"],
-				['UTC+3', "overlap confortable avec l'Europe"],
-			].map(([num, label]) => (
+			{stats.map(([num, label]) => (
 				<div class="flex items-center gap-4">
 					<p class="stat-number">{num}</p>
 					<p class="text-sm text-muted leading-snug max-w-[12rem]">{label}</p>

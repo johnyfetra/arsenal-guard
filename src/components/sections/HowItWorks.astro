@@ -4,6 +4,14 @@ import { copy, type Lang } from '../../lib/i18n';
 import { steps } from '../../lib/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
+const localizedSteps = lang === 'fr'
+	? steps
+	: [
+		'Fast audit and risk mapping',
+		'Framework setup and CI/CD integration',
+		'E2E tests on critical user journeys',
+		'Monthly run: new scenarios and maintenance',
+	];
 ---
 <section class="relative py-24 md:py-32 overflow-hidden">
 	<!-- subtle diagonal background stripe -->
@@ -15,11 +23,11 @@ const { lang } = Astro.props;
 	</div>
 	<Container>
 		<div class="mb-14 reveal">
-			<p class="section-eyebrow">Méthodologie</p>
+			<p class="section-eyebrow">{lang === 'fr' ? 'Méthodologie' : 'Method'}</p>
 			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.how}</h2>
 		</div>
 		<div class="grid gap-0 md:grid-cols-4 md:gap-0">
-			{steps.map((step, index) => (
+			{localizedSteps.map((step, index) => (
 				<div class="timeline-step reveal" style={`--reveal-delay:${index * 90}ms`}>
 					<div class="flex items-start gap-4 md:flex-col md:items-start md:gap-0">
 						<!-- number badge -->

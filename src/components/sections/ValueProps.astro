@@ -11,16 +11,23 @@ interface Props {
 }
 const { lang } = Astro.props;
 const icons = { ShieldCheck, Workflow, TrendingUp };
+const localizedValueProps = lang === 'fr'
+	? valueProps
+	: [
+		{ icon: 'ShieldCheck', title: 'Reliable quality', text: 'Fewer bugs. More confidence on every critical release.' },
+		{ icon: 'Workflow', title: 'Automated testing', text: 'Scalable E2E suites with Cypress, Playwright and CI/CD.' },
+		{ icon: 'TrendingUp', title: 'Business impact', text: 'Better ROI, delivery efficiency and release confidence.' },
+	];
 ---
 
 <section class="section-skew-both section-band relative z-10">
 	<Container>
 		<div class="mx-auto mb-12 max-w-2xl text-center reveal">
-			<p class="section-eyebrow justify-center">Notre valeur</p>
+			<p class="section-eyebrow justify-center">{lang === 'fr' ? 'Notre valeur' : 'Our value'}</p>
 			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.value}</h2>
 		</div>
 		<div class="grid gap-6 md:grid-cols-3">
-			{valueProps.map((item, index) => {
+			{localizedValueProps.map((item, index) => {
 				const Icon = icons[item.icon as keyof typeof icons];
 				return (
 					<div class="value-prop-card reveal" style={`--reveal-delay:${index * 80}ms`}>

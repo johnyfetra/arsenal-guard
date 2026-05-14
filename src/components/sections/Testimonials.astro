@@ -1,7 +1,11 @@
 ---
 import Container from '../ui/Container.astro';
+import type { Lang } from '../../lib/i18n';
 
-const placeholders = [
+interface Props { lang?: Lang }
+const { lang = 'fr' } = Astro.props;
+
+const placeholders = lang === 'fr' ? [
 	{
 		initials: 'C',
 		company: 'Chanel',
@@ -23,20 +27,42 @@ const placeholders = [
 		quote: 'Témoignage en cours de validation — audit QA et mise en place de la couverture critique produit.',
 		stars: 5,
 	},
+] : [
+	{
+		initials: 'C',
+		company: 'Chanel',
+		role: 'Lead Engineer',
+		quote: 'Testimonial pending approval — QA mission successfully delivered on the e-commerce platform.',
+		stars: 5,
+	},
+	{
+		initials: 'S',
+		company: 'Sodexo',
+		role: 'CTO',
+		quote: 'Testimonial pending approval — E2E suite stabilized and integrated into our CI/CD pipeline.',
+		stars: 5,
+	},
+	{
+		initials: 'H',
+		company: 'Hexaglobe',
+		role: 'Product Manager',
+		quote: 'Testimonial pending approval — QA audit and critical product coverage implemented.',
+		stars: 5,
+	},
 ];
 ---
 
 <section class="section-skew-both section-band relative z-10">
 	<Container>
 		<div class="mb-14 text-center reveal">
-			<p class="section-eyebrow justify-center">Retours clients</p>
-			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">Ils nous font confiance</h2>
+			<p class="section-eyebrow justify-center">{lang === 'fr' ? 'Retours clients' : 'Client feedback'}</p>
+			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{lang === 'fr' ? 'Ils nous font confiance' : 'Trusted by product teams'}</h2>
 		</div>
 
 		<div class="grid gap-6 md:grid-cols-3">
 			{placeholders.map((item, index) => (
 				<div class="quote-card reveal" style={`--reveal-delay:${index * 80}ms`}>
-					<div class="quote-stars mb-4" aria-label={`${item.stars} étoiles`}>
+					<div class="quote-stars mb-4" aria-label={lang === 'fr' ? `${item.stars} étoiles` : `${item.stars} stars`}>
 						{'★'.repeat(item.stars)}
 					</div>
 					<p class="text-sm leading-relaxed text-muted italic">"{item.quote}"</p>
@@ -52,7 +78,9 @@ const placeholders = [
 		</div>
 
 		<p class="mt-8 text-center text-xs text-muted opacity-60 reveal">
-			Témoignages en cours de collecte — publications après validation client.
+			{lang === 'fr'
+				? 'Témoignages en cours de collecte — publications après validation client.'
+				: 'Testimonials are being collected and will be published after client approval.'}
 		</p>
 	</Container>
 </section>

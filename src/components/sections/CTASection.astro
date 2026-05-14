@@ -5,6 +5,25 @@ import Container from '../ui/Container.astro';
 import { copy, routeMap, type Lang } from '../../lib/i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
+const ctaMeta = lang === 'fr'
+	? {
+		eyebrow: 'Prêt à démarrer ?',
+		secondary: 'Discuter en 15 min',
+		stats: [
+			['24h', 'Délai de réponse'],
+			['5+', "Ans d'expérience"],
+			['Sans engagement', 'Forfaits mensuels'],
+		],
+	}
+	: {
+		eyebrow: 'Ready to start?',
+		secondary: 'Book a 15-min call',
+		stats: [
+			['24h', 'Response time'],
+			['5+', 'Years of experience'],
+			['Flexible', 'Monthly plans'],
+		],
+	};
 ---
 
 <section class="cta-section relative overflow-hidden py-28 md:py-36">
@@ -15,7 +34,7 @@ const { lang } = Astro.props;
 	<div class="cta-grid-overlay" aria-hidden="true"></div>
 
 	<Container class="relative z-10 text-center">
-		<p class="section-eyebrow justify-center reveal">Prêt à démarrer ?</p>
+		<p class="section-eyebrow justify-center reveal">{ctaMeta.eyebrow}</p>
 		<h2 class="cta-title mx-auto mt-5 max-w-3xl text-3xl font-extrabold md:text-5xl reveal"
 			style="--reveal-delay:60ms">
 			{copy[lang].sections.cta}
@@ -29,17 +48,13 @@ const { lang } = Astro.props;
 				{copy[lang].nav.quote} <ArrowRight class="size-4" />
 			</Button>
 			<Button href={routeMap.contact} lang={lang} variant="secondary">
-				Discuter en 15 min
+				{ctaMeta.secondary}
 			</Button>
 		</div>
 
 		<!-- micro-stats -->
 		<div class="mt-16 flex flex-wrap justify-center gap-x-12 gap-y-6 border-t border-white/15 pt-12 reveal" style="--reveal-delay:220ms">
-			{[
-				['24h', 'Délai de réponse'],
-				['5+', "Ans d'expérience"],
-				['Sans engagement', 'Forfaits mensuels'],
-			].map(([val, label]) => (
+			{ctaMeta.stats.map(([val, label]) => (
 				<div class="text-center">
 					<p class="text-2xl font-extrabold text-white">{val}</p>
 					<p class="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>

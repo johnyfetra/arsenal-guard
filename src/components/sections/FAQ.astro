@@ -3,7 +3,21 @@ import Container from '../ui/Container.astro';
 import { copy, type Lang } from '../../lib/i18n';
 import { faq } from '../../lib/site';
 interface Props { lang: Lang; items?: string[][] }
-const { lang, items = faq } = Astro.props;
+const { lang, items: passedItems } = Astro.props;
+const localizedFaq = lang === 'fr'
+	? faq
+	: [
+		['Why use a QA service instead of hiring?', 'You get faster impact, senior expertise and budget flexibility without a long recruitment cycle.'],
+		['How does remote collaboration with Madagascar work?', 'We use comfortable European overlap, weekly checkpoints, transparent backlogs and visible deliverables in your tools.'],
+		['How fast can we start?', 'An audit can start within a few days. A monthly plan usually needs one onboarding week.'],
+		['Are your tests maintainable?', 'Yes. Conventions, selectors, fixtures and reports are designed so your developers can own them.'],
+		['How do you protect confidentiality?', 'NDA available, limited access, least-privilege principles and no sharing of client data.'],
+		['How does billing work?', 'Tax-inclusive invoicing, bank transfer and optional deposit for one-off missions.'],
+		['Do you work with early-stage startups?', 'Yes when the scope is clear: audit, critical MVP journey or lightweight E2E setup.'],
+		['How do we choose one-off or monthly?', 'One-off is best for a targeted issue. Monthly is best for continuous release cadence.'],
+	];
+const items = passedItems ?? localizedFaq;
+const contactHref = lang === 'fr' ? 'contact' : '/en/contact';
 ---
 
 <section class="relative py-24 md:py-32 overflow-hidden">
@@ -21,7 +35,7 @@ const { lang, items = faq } = Astro.props;
 				<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.faq}</h2>
 			</div>
 			<p class="max-w-xs text-sm text-muted leading-relaxed">
-				Une question non couverte ? <a href="contact" class="text-orange-400 hover:underline">Écrivez-nous.</a>
+				{lang === 'fr' ? 'Une question non couverte ?' : 'Question not covered?'} <a href={contactHref} class="text-orange-400 hover:underline">{lang === 'fr' ? 'Écrivez-nous.' : 'Contact us.'}</a>
 			</p>
 		</div>
 

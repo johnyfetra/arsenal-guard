@@ -14,28 +14,41 @@ const links = [
 	[t.nav.about, routeMap.about],
 	[t.nav.blog, routeMap.blog],
 	[t.nav.contact, routeMap.contact],
-	['Mentions légales', routeMap.legal],
-	['Politique de confidentialité', routeMap.privacy],
+	[lang === 'fr' ? 'Mentions légales' : 'Legal notice', routeMap.legal],
+	[lang === 'fr' ? 'Politique de confidentialité' : 'Privacy policy', routeMap.privacy],
 ];
+const footerCopy = lang === 'fr'
+	? {
+		tagline: `${site.tagline}. Antananarivo, Madagascar — clients dans toute l’Europe.`,
+		nav: 'Navigation',
+		contact: 'Contact',
+		rights: 'Tous droits réservés.',
+	}
+	: {
+		tagline: 'Premium QA service for European SaaS products. Antananarivo, Madagascar — clients across Europe.',
+		nav: 'Navigation',
+		contact: 'Contact',
+		rights: 'All rights reserved.',
+	};
 ---
 
 <footer class="site-footer border-t py-12">
 	<Container class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
 		<div>
 			<p class="text-lg font-extrabold text-white">{site.name}</p>
-			<p class="footer-muted mt-3 max-w-md text-sm">{site.tagline}. Antananarivo, Madagascar — clients dans toute l’Europe.</p>
+			<p class="footer-muted mt-3 max-w-md text-sm">{footerCopy.tagline}</p>
 		</div>
 		<div>
-			<p class="font-bold text-white">Navigation</p>
+			<p class="font-bold text-white">{footerCopy.nav}</p>
 			<ul class="footer-muted mt-4 space-y-2 text-sm">
 				{links.map(([label, href]) => <li><a class="footer-link" href={localizedPath(lang, href)}>{label}</a></li>)}
 			</ul>
 		</div>
 		<div>
-			<p class="font-bold text-white">Contact</p>
+			<p class="font-bold text-white">{footerCopy.contact}</p>
 			<a class="footer-link footer-accent mt-4 block text-sm" href={`mailto:${site.email}`}>{site.email}</a>
 			<p class="footer-muted mt-2 text-sm">linkedin.com/company/arsenal-guard</p>
-			<p class="footer-muted mt-2 text-sm">© 2026 Arsenal Guard. Tous droits réservés.</p>
+			<p class="footer-muted mt-2 text-sm">© 2026 Arsenal Guard. {footerCopy.rights}</p>
 		</div>
 	</Container>
 </footer>

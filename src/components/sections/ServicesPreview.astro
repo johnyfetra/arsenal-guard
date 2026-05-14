@@ -12,15 +12,24 @@ const { lang, mode = 'services' } = Astro.props;
 const pricingItems = plans.map((item) => ({
 	eyebrow: item.volume,
 	title: item.name,
-	description: 'Maintenance E2E, nouveaux scénarios, support CI/CD et reporting qualité mensuel.',
+	description: lang === 'fr'
+		? 'Maintenance E2E, nouveaux scénarios, support CI/CD et reporting qualité mensuel.'
+		: 'E2E maintenance, new scenarios, CI/CD support and monthly quality reporting.',
 	price: item.price,
 	featured: item.featured,
-	perks: [
-		'3 à 5 nouveaux tests E2E/mois',
-		'Maintenance suite existante',
-		'Support pipelines CI/CD',
-		'Reporting qualité mensuel',
-	],
+	perks: lang === 'fr'
+		? [
+			'3 à 5 nouveaux tests E2E/mois',
+			'Maintenance suite existante',
+			'Support pipelines CI/CD',
+			'Reporting qualité mensuel',
+		]
+		: [
+			'3 to 5 new E2E tests/month',
+			'Existing suite maintenance',
+			'CI/CD pipeline support',
+			'Monthly quality reporting',
+		],
 }));
 
 const serviceItems = services.slice(0, 3).map((item) => ({
@@ -33,19 +42,22 @@ const serviceItems = services.slice(0, 3).map((item) => ({
 }));
 
 const items = mode === 'pricing' ? pricingItems : serviceItems;
+const labels = lang === 'fr'
+	? { pricing: 'Tarification', offers: 'Offres', detail: 'Voir le détail', recommended: 'Recommandé', start: 'Démarrer' }
+	: { pricing: 'Pricing', offers: 'Offers', detail: 'View details', recommended: 'Recommended', start: 'Start' };
 ---
 
 <section class="section-skew-top section-band relative z-10">
 	<Container>
 		<div class="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end reveal">
 			<div>
-				<p class="section-eyebrow">{mode === 'pricing' ? 'Tarification' : 'Offres'}</p>
+				<p class="section-eyebrow">{mode === 'pricing' ? labels.pricing : labels.offers}</p>
 				<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">
 					{mode === 'pricing' ? copy[lang].sections.pricing : copy[lang].nav.services}
 				</h2>
 			</div>
 			<Button href={routeMap.services} lang={lang} variant="ghost">
-				Voir le détail <ArrowRight class="size-4" />
+				{labels.detail} <ArrowRight class="size-4" />
 			</Button>
 		</div>
 
@@ -58,7 +70,7 @@ const items = mode === 'pricing' ? pricingItems : serviceItems;
 				>
 					{item.featured && (
 						<div class="mb-4 flex items-center justify-between">
-							<span class="pricing-badge">Recommandé</span>
+							<span class="pricing-badge">{labels.recommended}</span>
 						</div>
 					)}
 					<p class="text-xs font-bold uppercase tracking-[0.16em] text-orange-400">{item.eyebrow}</p>
@@ -83,7 +95,7 @@ const items = mode === 'pricing' ? pricingItems : serviceItems;
 					{item.featured && (
 						<div class="mt-6">
 							<Button href={routeMap.quote} lang={lang} class="w-full justify-center">
-								Démarrer
+								{labels.start}
 							</Button>
 						</div>
 					)}

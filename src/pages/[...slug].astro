@@ -33,7 +33,7 @@ export async function getStaticPaths() {
 			const slug = localizedPath(lang, path).replace(/^\//, '');
 			paths.push({ params: { slug }, props: { lang, path, page: 'service', serviceId: service.id } });
 		}
-		for (const post of allPosts.filter((item) => item.data.lang === 'fr')) {
+		for (const post of allPosts.filter((item) => item.data.lang === lang)) {
 			const cleanSlug = post.slug.replace(/^\d+-/, '');
 			const path = `blog/${cleanSlug}`;
 			const slug = localizedPath(lang, path).replace(/^\//, '');
@@ -45,11 +45,24 @@ export async function getStaticPaths() {
 
 const allPosts = await getCollection('blog');
 const { lang, path, page, serviceId, blogSlug } = Astro.props;
-const posts = allPosts.filter((item) => item.data.lang === 'fr');
+const posts = allPosts.filter((item) => item.data.lang === lang);
 const post = blogSlug ? allPosts.find((item) => item.slug === blogSlug) : undefined;
 const renderedPost = post ? await post.render() : undefined;
 const Content = renderedPost?.Content;
 const renderPage = page === 'article' ? 'notFound' : page;
+const articleCopy = lang === 'fr'
+	? {
+		visual: 'Insight QA · risques, stabilité, CI/CD',
+		ctaTitle: 'Besoin de fiabiliser vos tests ?',
+		ctaLead: 'Demandez un audit court et repartez avec une priorisation claire.',
+		cta: 'Demander un devis',
+	}
+	: {
+		visual: 'QA insight · risk, stability, CI/CD',
+		ctaTitle: 'Need to make your tests reliable?',
+		ctaLead: 'Request a short audit and leave with clear priorities.',
+		cta: 'Request a quote',
+	};
 ---
 
 {
@@ -65,7 +78,7 @@ const renderPage = page === 'article' ? 'notFound' : page;
 				'@type': 'Article',
 				headline: post.data.title,
 				description: post.data.description,
-				author: { '@type': 'Person', name: site.founder },
+				author: { '@type': 'Organization', name: site.name },
 				datePublished: post.data.date.toISOString(),
 			}}
 		>
@@ -79,15 +92,15 @@ const renderPage = page === 'article' ? 'notFound' : page;
 			<section class="py-16">
 				<Container class="max-w-4xl">
 					<div class="mb-10 rounded-2xl border border-white/10 bg-gradient-to-br from-navy-800 to-orange-500/60 p-12 text-white">
-						<p class="font-bold">Hero image placeholder · Arsenal Guard QA insights</p>
+						<p class="font-bold">{articleCopy.visual}</p>
 					</div>
 					<article class="prose-ag">
 						{Content && <Content />}
 					</article>
 					<div class="mt-14 rounded-2xl border border-orange-400/30 bg-orange-400/10 p-8">
-						<h2 class="text-2xl font-extrabold">Besoin de fiabiliser vos tests ?</h2>
-						<p class="mt-3 text-muted">Demandez un audit court et repartez avec une priorisation claire.</p>
-						<Button class="mt-6" href={routeMap.quote} lang={lang}>Demander un devis</Button>
+						<h2 class="text-2xl font-extrabold">{articleCopy.ctaTitle}</h2>
+						<p class="mt-3 text-muted">{articleCopy.ctaLead}</p>
+						<Button class="mt-6" href={routeMap.quote} lang={lang}>{articleCopy.cta}</Button>
 					</div>
 				</Container>
 			</section>
