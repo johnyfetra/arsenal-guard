@@ -1,14 +1,19 @@
 ---
 import Container from '../ui/Container.astro';
-import { clientRefs } from '../../lib/site';
-const logoColors: Record<string, string> = {
-	Chanel: '#111111',
-	Sodexo: '#263c89',
-	Hexaglobe: '#178fcf',
-	Ecomundo: '#2f9f5b',
-	'Les Aligneurs Francais': '#d9252a',
-};
-const loopItems = [...clientRefs, ...clientRefs, ...clientRefs];
+import chanelLogo from '../../assets/logos/chanel.png';
+import ecomundoLogo from '../../assets/logos/ecomundo.png';
+import hexaglobeLogo from '../../assets/logos/hexaglobe.png';
+import lafLogo from '../../assets/logos/les-aligneurs-francais.png';
+import sodexoLogo from '../../assets/logos/sodexo.png';
+
+const clients = [
+	{ name: 'Chanel', logo: chanelLogo, color: '#111111' },
+	{ name: 'Sodexo', logo: sodexoLogo, color: '#263c89' },
+	{ name: 'Hexaglobe', logo: hexaglobeLogo, color: '#178fcf' },
+	{ name: 'Ecomundo', logo: ecomundoLogo, color: '#2f9f5b' },
+	{ name: 'Les Aligneurs Francais', logo: lafLogo, color: '#d9252a' },
+];
+const loopItems = [...clients, ...clients, ...clients];
 ---
 <section class="overflow-hidden py-14">
 	<Container>
@@ -17,8 +22,17 @@ const loopItems = [...clientRefs, ...clientRefs, ...clientRefs];
 	<div class="logo-marquee mt-9" aria-label="References clients Arsenal Guard">
 		<div class="logo-marquee-track">
 			{loopItems.map((client) => (
-				<div class="client-logo" style={`--logo-color: ${logoColors[client] ?? '#f39c12'}`}>
-					<span>{client}</span>
+				<div class="client-logo" style={`--logo-color: ${client.color}`}>
+					<img class="client-logo-image" src={client.logo.src} alt={`Logo ${client.name}`} loading="lazy" decoding="async" />
+				</div>
+			))}
+		</div>
+	</div>
+	<div class="logo-marquee logo-marquee--reverse mt-4" aria-hidden="true">
+		<div class="logo-marquee-track">
+			{loopItems.map((client) => (
+				<div class="client-logo" style={`--logo-color: ${client.color}`}>
+					<img class="client-logo-image" src={client.logo.src} alt="" loading="lazy" decoding="async" />
 				</div>
 			))}
 		</div>
