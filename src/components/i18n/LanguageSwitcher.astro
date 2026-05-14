@@ -1,4 +1,5 @@
 ---
+import ChevronDown from 'lucide-astro/ChevronDown';
 import { languageFlags, languageLabels, languages, localizedPath, type Lang } from '../../lib/i18n';
 
 interface Props {
@@ -9,15 +10,14 @@ interface Props {
 const { lang, path } = Astro.props;
 ---
 
-<label class="sr-only" for="language-switcher">Language</label>
-<select
-	id="language-switcher"
-	class="theme-control h-10 rounded-lg px-3 text-sm font-semibold text-current"
-	aria-label="Select language"
-	data-language-switcher
->
-	{languages.map((item) => <option value={localizedPath(item, path)} selected={item === lang}>{languageFlags[item]} {languageLabels[item]}</option>)}
-</select>
+<div class="language-select-wrap relative">
+	<label class="sr-only" for="language-switcher">Language</label>
+	<span class="language-select-flag" aria-hidden="true">{languageFlags[lang]}</span>
+	<select id="language-switcher" class="language-select" aria-label="Select language" data-language-switcher>
+		{languages.map((item) => <option value={localizedPath(item, path)} selected={item === lang}>{languageLabels[item]}</option>)}
+	</select>
+	<ChevronDown class="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 opacity-60" aria-hidden="true" />
+</div>
 
 <script is:inline>
 	document.querySelectorAll('[data-language-switcher]').forEach((select) => {
