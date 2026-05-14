@@ -10,19 +10,40 @@ interface Props {
 const { lang, path } = Astro.props;
 ---
 
-<div class="language-select-wrap relative">
-	<label class="sr-only" for="language-switcher">Language</label>
-	<span class="language-select-flag" aria-hidden="true">{languageFlags[lang]}</span>
-	<select id="language-switcher" class="language-select" aria-label="Select language" data-language-switcher>
-		{languages.map((item) => <option value={localizedPath(item, path)} selected={item === lang}>{languageLabels[item]}</option>)}
-	</select>
-	<ChevronDown class="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 opacity-60" aria-hidden="true" />
+<div class="language-menu relative" data-language-menu>
+	<button class="language-menu-button" type="button" aria-label="Select language" aria-haspopup="listbox" aria-expanded="false" data-language-menu-button>
+		<span class="language-menu-flag" aria-hidden="true">{languageFlags[lang]}</span>
+		<ChevronDown class="size-3.5 opacity-60" aria-hidden="true" />
+	</button>
+	<div class="language-menu-list" role="listbox" aria-label="Select language" data-language-menu-list>
+		{languages.map((item) => (
+			<a class="language-menu-option" href={localizedPath(item, path)} role="option" aria-selected={item === lang}>
+				<span class="language-menu-flag" aria-hidden="true">{languageFlags[item]}</span>
+				<span>{languageLabels[item]}</span>
+			</a>
+		))}
+	</div>
 </div>
 
 <script is:inline>
-	document.querySelectorAll('[data-language-switcher]').forEach((select) => {
-		select.addEventListener('change', (event) => {
-			window.location.href = event.currentTarget.value;
+	document.querySelectorAll('[data-language-menu]').forEach((menu) => {
+		const button = menu.querySelector('[data-language-menu-button]');
+		const list = menu.querySelector('[data-language-menu-list]');
+		const setOpen = (open) => {
+			menu.classList.toggle('is-open', open);
+			button?.setAttribute('aria-expanded', String(open));
+		};
+
+		button?.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
+		menu.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') {
+				setOpen(false);
+				button?.focus();
+			}
+		});
+		list?.addEventListener('click', () => setOpen(false));
+		document.addEventListener('click', (event) => {
+			if (!menu.contains(event.target)) setOpen(false);
 		});
 	});
 </script>
