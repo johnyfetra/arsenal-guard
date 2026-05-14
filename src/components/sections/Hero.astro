@@ -37,8 +37,8 @@ const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
 				<stop offset="100%" stop-color="#0f1f44" stop-opacity="0.38" />
 			</radialGradient>
 			<filter id="hero-square-shadow" x="-130%" y="-130%" width="360%" height="360%">
-				<feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#e67e22" flood-opacity="0.18" />
-				<feDropShadow dx="-1" dy="-1" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.1" />
+				<feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#e67e22" flood-opacity="0.13" />
+				<feDropShadow dx="-1" dy="-1" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.12" />
 			</filter>
 		</defs>
 		{gridCells.map(({ x, y }) => <rect class="hero-square" x={x} y={y} width={squareSize} height={squareSize} rx="2" data-cx={x + squareSize / 2} data-cy={y + squareSize / 2} />)}
@@ -62,12 +62,28 @@ const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
 <script is:inline>
 	const scene = document.querySelector('[data-hero-grid-scene]');
 	const svg = scene?.querySelector('.hero-square-grid');
-	const squares = svg ? [...svg.querySelectorAll('.hero-square')] : [];
+	const squares = svg
+		? [...svg.querySelectorAll('.hero-square')].map((square) => ({
+				el: square,
+				cx: Number(square.dataset.cx),
+				cy: Number(square.dataset.cy),
+			}))
+		: [];
 	let frame = 0;
 	let pointer = null;
+	let activeSquares = new Set();
 
-	const resetSquares = () => {
-		for (const square of squares) {
+	const resetSquare = (square) => {
+		square.style.transform = '';
+		square.style.opacity = '';
+		square.style.fill = '';
+		square.style.stroke = '';
+		square.style.filter = '';
+		square.style.strokeWidth = '';
+	};
+
+	const resetSquares = (items = activeSquares) => {
+		for (const square of items) {
 			square.style.transform = '';
 			square.style.opacity = '';
 			square.style.fill = '';
@@ -75,6 +91,7 @@ const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
 			square.style.filter = '';
 			square.style.strokeWidth = '';
 		}
+		activeSquares.clear();
 	};
 
 	const animateSquares = () => {
@@ -85,34 +102,40 @@ const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
 		point.x = pointer.x;
 		point.y = pointer.y;
 		const local = point.matrixTransform(svg.getScreenCTM().inverse());
-		const radius = 56;
+		const radius = 72;
+		const nextActive = new Set();
 
-		for (const square of squares) {
-			const dx = Number(square.dataset.cx) - local.x;
-			const dy = Number(square.dataset.cy) - local.y;
+		for (const { el: square, cx, cy } of squares) {
+			const dx = cx - local.x;
+			const dy = cy - local.y;
 			const distance = Math.hypot(dx, dy);
 			const strength = Math.max(0, 1 - distance / radius);
 
 			if (strength <= 0) {
-				square.style.transform = '';
-				square.style.opacity = '';
-				square.style.fill = '';
-				square.style.stroke = '';
-				square.style.filter = '';
-				square.style.strokeWidth = '';
 				continue;
 			}
 
+			nextActive.add(square);
 			const eased = 1 - Math.pow(1 - strength, 2);
-			const scale = 1 + eased * 0.46;
-			const lift = -eased * 1.6;
-			square.style.transform = `translateY(${lift}px) scale(${scale})`;
-			square.style.opacity = String(0.5 + eased * 0.32);
-			square.style.fill = `rgba(var(--hero-square-hover-fill), ${0.018 + eased * 0.04})`;
-			square.style.stroke = `rgba(var(--hero-square-hover-stroke), ${0.16 + eased * 0.26})`;
-			square.style.filter = eased > 0.18 ? 'url(#hero-square-shadow)' : '';
-			square.style.strokeWidth = String(0.75 + eased * 0.85);
+			const directionX = distance ? dx / distance : 0;
+			const directionY = distance ? dy / distance : -1;
+			const push = eased * 2.2;
+			const scale = 1 + eased * 0.5;
+			const lift = -eased * 1.1;
+			const translateX = directionX * push;
+			const translateY = directionY * push + lift;
+			square.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+			square.style.opacity = String(0.48 + eased * 0.3);
+			square.style.fill = `rgba(var(--hero-square-hover-fill), ${0.012 + eased * 0.024})`;
+			square.style.stroke = `rgba(var(--hero-square-hover-stroke), ${0.08 + eased * 0.14})`;
+			square.style.filter = eased > 0.24 ? 'url(#hero-square-shadow)' : '';
+			square.style.strokeWidth = String(0.72 + eased * 0.58);
 		}
+
+		for (const square of activeSquares) {
+			if (!nextActive.has(square)) resetSquare(square);
+		}
+		activeSquares = nextActive;
 	};
 
 	const schedule = (event) => {

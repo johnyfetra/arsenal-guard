@@ -5,7 +5,7 @@ import Sun from 'lucide-astro/Sun';
 
 <button
 	type="button"
-	class="theme-control inline-flex size-10 items-center justify-center rounded-lg text-current transition hover:text-orange-400"
+	class="theme-toggle-icon inline-flex size-10 items-center justify-center rounded-xl text-current"
 	aria-label="Toggle dark and light theme"
 	data-theme-toggle
 >
@@ -19,37 +19,12 @@ import Sun from 'lucide-astro/Sun';
 		document.documentElement.classList.toggle('dark', theme === 'dark');
 		localStorage.setItem('theme', theme);
 	};
-	const animateThemeWave = (button, nextTheme) => {
-		if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			applyTheme(nextTheme);
-			return;
-		}
-
-		const rect = button.getBoundingClientRect();
-		const x = rect.left + rect.width / 2;
-		const y = rect.top + rect.height / 2;
-		const wave = document.createElement('div');
-		const size = Math.hypot(window.innerWidth, window.innerHeight) * 2.2;
-		wave.className = `theme-wave theme-wave--${nextTheme}`;
-		wave.style.width = `${size}px`;
-		wave.style.height = `${size}px`;
-		wave.style.left = `${x}px`;
-		wave.style.top = `${y}px`;
+	const animateThemeWave = (nextTheme) => {
 		document.documentElement.classList.add('theme-switching');
-		document.body.appendChild(wave);
 		applyTheme(nextTheme);
-
-		wave.animate(
-			[
-				{ transform: 'translate(-50%, -50%) scale(0)', opacity: 0.78 },
-				{ transform: 'translate(-50%, -50%) scale(0.42)', opacity: 0.5, offset: 0.38 },
-				{ transform: 'translate(-50%, -50%) scale(1)', opacity: 0 },
-			],
-			{ duration: 560, easing: 'cubic-bezier(.2,.85,.2,1)', fill: 'forwards' },
-		).finished.finally(() => {
-			wave.remove();
+		window.setTimeout(() => {
 			document.documentElement.classList.remove('theme-switching');
-		});
+		}, 120);
 	};
 	const saved = localStorage.getItem('theme');
 	const initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -57,7 +32,7 @@ import Sun from 'lucide-astro/Sun';
 	document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
 		button.addEventListener('click', () => {
 			const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-			animateThemeWave(button, next);
+			animateThemeWave(next);
 		});
 	});
 </script>
