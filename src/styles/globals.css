@@ -497,6 +497,41 @@ label:has(input[type='radio']) {
 		transform 180ms ease;
 }
 
+.cta-section {
+	background:
+		radial-gradient(circle at 18% 18%, rgba(230, 126, 34, 0.2), transparent 24rem),
+		radial-gradient(circle at 82% 10%, rgba(42, 66, 117, 0.5), transparent 28rem),
+		linear-gradient(135deg, #050b1a 0%, #0a1530 52%, #0f1f44 100%);
+	color: #ffffff;
+}
+
+.cta-title {
+	color: #ffffff;
+}
+
+.cta-copy {
+	color: rgba(255, 255, 255, 0.78);
+	font-size: 1.05rem;
+	line-height: 1.8;
+}
+
+:root[data-theme='light'] .cta-section {
+	background:
+		radial-gradient(circle at 16% 0%, rgba(230, 126, 34, 0.16), transparent 22rem),
+		radial-gradient(circle at 88% 22%, rgba(42, 66, 117, 0.14), transparent 26rem),
+		linear-gradient(135deg, #fffaf2 0%, #f7f9fc 46%, #edf3fb 100%);
+	color: var(--page-text);
+	border-block: 1px solid rgba(15, 31, 68, 0.08);
+}
+
+:root[data-theme='light'] .cta-title {
+	color: #182033;
+}
+
+:root[data-theme='light'] .cta-copy {
+	color: #526070;
+}
+
 .hero-shell {
 	--hero-title: #ffffff;
 	--hero-accent: #f39c12;
