@@ -8,7 +8,7 @@ import { plans, services } from '../../lib/site';
 interface Props { lang: Lang; mode?: 'services' | 'pricing' }
 const { lang, mode = 'services' } = Astro.props;
 const items = mode === 'pricing'
-	? plans.map((item) => ({ eyebrow: item.volume, title: item.name, description: 'Maintenance E2E, nouveaux scenarios, support CI/CD et reporting qualite mensuel.', price: item.price, featured: item.featured }))
+	? plans.map((item) => ({ eyebrow: item.volume, title: item.name, description: 'Maintenance E2E, nouveaux scénarios, support CI/CD et reporting qualité mensuel.', price: item.price, featured: item.featured }))
 	: services.slice(0, 3).map((item) => ({ eyebrow: item.kicker, title: item.title, description: item.description, price: item.price, featured: false }));
 ---
 <section class="py-24 md:py-32">

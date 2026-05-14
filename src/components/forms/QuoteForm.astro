@@ -20,7 +20,7 @@ const budgets = ['< 1 000 EUR', '1 000 - 2 500 EUR', '2 500 - 5 000 EUR', '> 5 0
 	</section>
 	<section data-step="2" class="hidden grid gap-4">
 		<h2 class="text-2xl font-extrabold">3. Delai et budget</h2>
-		<label class="grid gap-2 text-sm font-semibold">Date de demarrage souhaitee<input type="date" name="start_date" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Date de démarrage souhaitée<input type="date" name="start_date" class="rounded-lg px-4 py-3" /></label>
 		<label class="grid gap-2 text-sm font-semibold">Budget<select name="budget" class="rounded-lg px-4 py-3">{budgets.map((budget) => <option>{budget}</option>)}</select></label>
 		<label class="grid gap-2 text-sm font-semibold">Engagement<select name="engagement" class="rounded-lg px-4 py-3"><option>One-shot</option><option>Recurring</option></select></label>
 	</section>
@@ -70,10 +70,10 @@ const budgets = ['< 1 000 EUR', '1 000 - 2 500 EUR', '2 500 - 5 000 EUR', '> 5 0
 					body: JSON.stringify(data),
 				});
 				if (!response.ok) throw new Error('Submission failed');
-				status.textContent = 'Demande recue ! Vous recevrez une proposition sous 24h ouvrees.';
+				status.textContent = 'Demande reçue ! Vous recevrez une proposition sous 24h ouvrées.';
 				form.reset();
 			} catch {
-				status.textContent = 'Demande recue localement. Ajoutez PUBLIC_WEB3FORMS_KEY pour activer l envoi.';
+				status.textContent = 'Demande reçue localement. Ajoutez PUBLIC_WEB3FORMS_KEY pour activer l’envoi.';
 			}
 		});
 		render();
