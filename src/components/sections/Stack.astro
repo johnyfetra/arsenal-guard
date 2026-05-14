@@ -23,7 +23,7 @@ const stats = lang === 'fr'
 	];
 ---
 
-<section class="relative py-24 md:py-32 overflow-hidden">
+<section class="relative overflow-hidden py-16 md:py-32">
 	<!-- decorative angled band -->
 	<div
 		class="absolute inset-0 -z-10"
@@ -32,7 +32,7 @@ const stats = lang === 'fr'
 	></div>
 
 	<Container>
-		<div class="mb-14 grid gap-6 md:grid-cols-[1fr_auto] md:items-end reveal">
+		<div class="mb-10 grid gap-6 md:mb-14 md:grid-cols-[1fr_auto] md:items-end reveal">
 			<div>
 				<p class="section-eyebrow">{lang === 'fr' ? 'Outillage' : 'Tooling'}</p>
 				<h2 class="mt-4 max-w-2xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.stack}</h2>
@@ -61,7 +61,7 @@ const stats = lang === 'fr'
 		</div>
 
 		<!-- stats row -->
-		<div class="mt-16 grid gap-6 border-t border-white/10 pt-12 md:grid-cols-3 reveal">
+		<div class="mt-10 grid gap-6 border-t border-white/10 pt-8 md:mt-16 md:grid-cols-3 md:pt-12 reveal">
 			{stats.map(([num, label]) => (
 				<div class="flex items-center gap-4">
 					<p class="stat-number">{num}</p>

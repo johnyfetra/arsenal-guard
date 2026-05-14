@@ -867,6 +867,31 @@ label:has(input[type='radio']) {
 		line-height: 1.5;
 		letter-spacing: 0.15em;
 	}
+
+	.section-skew-top {
+		padding-top: calc(2.8vw + 3.75rem);
+	}
+
+	.pricing-section.section-skew-top {
+		padding-bottom: calc(2.8vw + 4.75rem);
+	}
+
+	.section-skew-bottom {
+		padding-bottom: calc(2.8vw + 3.75rem);
+	}
+
+	.section-skew-both {
+		padding-block: calc(2.8vw + 3.6rem);
+	}
+
+	.section-eyebrow {
+		font-size: 0.68rem;
+		letter-spacing: 0.16em;
+	}
+
+	.section-eyebrow::before {
+		width: 1.75rem;
+	}
 }
 
 .hero-title-lines {
@@ -1007,12 +1032,13 @@ label:has(input[type='radio']) {
 .timeline-step::before {
 	content: '';
 	position: absolute;
-	top: 2.6rem;
-	left: calc(50% - 0.5px);
+	top: 3.25rem;
+	left: 1.6rem;
 	width: 1px;
-	bottom: -1.5rem;
-	background: linear-gradient(to bottom, rgba(230, 126, 34, 0.5), rgba(230, 126, 34, 0.08));
+	bottom: 0.35rem;
+	background: linear-gradient(to bottom, rgba(230, 126, 34, 0.42), rgba(230, 126, 34, 0.06));
 	pointer-events: none;
+	transform: translateX(-0.5px);
 }
 
 .timeline-step:last-child::before {
@@ -1035,6 +1061,8 @@ label:has(input[type='radio']) {
 }
 
 .timeline-num {
+	position: relative;
+	z-index: 1;
 	display: inline-flex;
 	width: 3.2rem;
 	height: 3.2rem;
@@ -1050,6 +1078,21 @@ label:has(input[type='radio']) {
 	letter-spacing: 0.06em;
 	box-shadow: 0 0 18px rgba(230, 126, 34, 0.12);
 	flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+	.timeline-step {
+		padding-bottom: 0.35rem;
+	}
+
+	.timeline-step::before {
+		top: 3.55rem;
+		bottom: -0.35rem;
+	}
+
+	.timeline-step:last-child {
+		padding-bottom: 0;
+	}
 }
 
 /* ── Pricing cards ──────────────────────────────────────────── */

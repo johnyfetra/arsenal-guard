@@ -20,7 +20,7 @@ const items = passedItems ?? localizedFaq;
 const contactHref = lang === 'fr' ? 'contact' : '/en/contact';
 ---
 
-<section class="relative py-24 md:py-32 overflow-hidden">
+<section class="relative overflow-hidden py-16 md:py-32">
 	<!-- diagonal accent -->
 	<div
 		class="absolute inset-0 -z-10 opacity-30"
@@ -29,7 +29,7 @@ const contactHref = lang === 'fr' ? 'contact' : '/en/contact';
 	></div>
 
 	<Container>
-		<div class="mb-14 grid gap-6 md:grid-cols-[1fr_auto] md:items-end reveal">
+		<div class="mb-10 grid gap-6 md:mb-14 md:grid-cols-[1fr_auto] md:items-end reveal">
 			<div>
 				<p class="section-eyebrow">FAQ</p>
 				<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.faq}</h2>
