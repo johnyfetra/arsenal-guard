@@ -4,15 +4,62 @@ import { copy, type Lang } from '../../lib/i18n';
 import { stack } from '../../lib/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
+
+const categories = [
+	{ label: 'Test automation', items: ['Cypress', 'Playwright'] },
+	{ label: 'Languages', items: ['TypeScript', 'Angular', 'RxJS', 'NgRx'] },
+	{ label: 'CI/CD', items: ['GitLab CI', 'GitHub Actions'] },
+	{ label: 'AI-assisted', items: ['AI-assisted QA'] },
+];
 ---
-<section class="py-24 md:py-32">
+
+<section class="relative py-24 md:py-32 overflow-hidden">
+	<!-- decorative angled band -->
+	<div
+		class="absolute inset-0 -z-10"
+		aria-hidden="true"
+		style="background: linear-gradient(168deg, transparent 0%, transparent 44%, rgba(15,31,68,0.38) 44%, rgba(15,31,68,0.38) 100%);"
+	></div>
+
 	<Container>
-		<div class="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-			<h2 class="max-w-2xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.stack}</h2>
-			<p class="max-w-md text-muted">Cypress, Playwright, CI/CD et TypeScript pour des suites lisibles, rapides à diagnostiquer et utiles au produit.</p>
+		<div class="mb-14 grid gap-6 md:grid-cols-[1fr_auto] md:items-end reveal">
+			<div>
+				<p class="section-eyebrow">Outillage</p>
+				<h2 class="mt-4 max-w-2xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.stack}</h2>
+			</div>
+			<p class="max-w-xs text-sm text-muted leading-relaxed">
+				Des choix techniques pragmatiques pour des suites lisibles, rapides à diagnostiquer et utiles au produit.
+			</p>
 		</div>
-		<div class="mt-10 flex flex-wrap gap-3">
-			{stack.map((item) => <span class="surface rounded-lg px-4 py-3 font-mono text-sm text-current">{item}</span>)}
+
+		<div class="grid gap-8 md:grid-cols-4">
+			{categories.map((cat, ci) => (
+				<div class="reveal" style={`--reveal-delay:${ci * 70}ms`}>
+					<p class="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-muted">{cat.label}</p>
+					<div class="flex flex-wrap gap-2">
+						{cat.items.map((item) => (
+							<span class="stack-pill">
+								<span class="stack-pill-dot" aria-hidden="true"></span>
+								{item}
+							</span>
+						))}
+					</div>
+				</div>
+			))}
+		</div>
+
+		<!-- stats row -->
+		<div class="mt-16 grid gap-6 border-t border-white/10 pt-12 md:grid-cols-3 reveal">
+			{[
+				['5+', "années d'expérience QA senior"],
+				['40–50%', "d'économie vs staffing local équivalent"],
+				['UTC+3', "overlap confortable avec l'Europe"],
+			].map(([num, label]) => (
+				<div class="flex items-center gap-4">
+					<p class="stat-number">{num}</p>
+					<p class="text-sm text-muted leading-snug max-w-[12rem]">{label}</p>
+				</div>
+			))}
 		</div>
 	</Container>
 </section>

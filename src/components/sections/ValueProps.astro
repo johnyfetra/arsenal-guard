@@ -2,7 +2,6 @@
 import ShieldCheck from 'lucide-astro/ShieldCheck';
 import Workflow from 'lucide-astro/Workflow';
 import TrendingUp from 'lucide-astro/TrendingUp';
-import Card from '../ui/Card.astro';
 import Container from '../ui/Container.astro';
 import { copy, type Lang } from '../../lib/i18n';
 import { valueProps } from '../../lib/site';
@@ -14,18 +13,26 @@ const { lang } = Astro.props;
 const icons = { ShieldCheck, Workflow, TrendingUp };
 ---
 
-<section class="py-24 md:py-32">
+<section class="section-skew-both section-band relative z-10">
 	<Container>
-		<h2 class="max-w-3xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.value}</h2>
-		<div class="mt-10 grid gap-5 md:grid-cols-3">
-			{valueProps.map((item) => {
+		<div class="mx-auto mb-12 max-w-2xl text-center reveal">
+			<p class="section-eyebrow justify-center">Notre valeur</p>
+			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.value}</h2>
+		</div>
+		<div class="grid gap-6 md:grid-cols-3">
+			{valueProps.map((item, index) => {
 				const Icon = icons[item.icon as keyof typeof icons];
 				return (
-					<Card class="reveal">
-						<Icon class="size-9 text-orange-400" />
-						<h3 class="mt-6 text-xl font-bold">{item.title}</h3>
-						<p class="mt-3 text-muted">{item.text}</p>
-					</Card>
+					<div class="value-prop-card reveal" style={`--reveal-delay:${index * 80}ms`}>
+						<div class="value-prop-icon-wrap">
+							<Icon class="size-6 text-orange-400" />
+						</div>
+						<p class="mt-2 font-mono text-xs font-bold tracking-[0.18em] text-orange-400 opacity-60">
+							0{index + 1}
+						</p>
+						<h3 class="mt-3 text-xl font-bold">{item.title}</h3>
+						<p class="mt-3 text-muted leading-relaxed">{item.text}</p>
+					</div>
 				);
 			})}
 		</div>

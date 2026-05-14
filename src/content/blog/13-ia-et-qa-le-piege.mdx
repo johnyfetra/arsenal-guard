@@ -1,0 +1,31 @@
+---
+title: "Generative AI in QA: the trap most teams miss"
+description: AI can accelerate QA, but it can also create an illusion of coverage when it is not driven by product risk.
+date: 2026-03-18
+author: Arsenal Guard
+readTime: 9 min
+lang: en
+tags: [ai, qa, automation, strategy]
+---
+
+## AI accelerates, but it does not replace QA judgment
+
+Generative AI is useful for drafting test scenarios, reformulating cases, analyzing logs, proposing assertions or creating a first Playwright skeleton. It saves time when the need is clearly framed.
+
+The trap is confusing volume with coverage. Twenty generated tests have little value if they miss the important risks, use uncontrolled data or assert only that a page does not crash.
+
+## The illusion of coverage
+
+A suite created too quickly can look reassuring: many files, many steps, many green reports. But meaningful coverage starts from business journeys, not the DOM.
+
+Checking that a button exists can be useful. Proving that the right user can complete an order, receive confirmation and find it in their account is far more important.
+
+AI does not automatically know your business model, sensitive customers, past incidents or product trade-offs. Without that context, it optimizes syntax, not risk.
+
+## The useful pattern
+
+Use AI as an analysis accelerator. Give it an incident, CI logs and an unstable test: it can suggest hypotheses. Give it a well-written user story: it can list edge cases. Give it your test conventions: it can draft coherent scenarios.
+
+But senior QA must keep the decision: which journeys deserve automation, which assertions prove value, which tests block release and which checks should remain manual.
+
+AI is powerful when it serves a strategy. It becomes dangerous when it replaces one.

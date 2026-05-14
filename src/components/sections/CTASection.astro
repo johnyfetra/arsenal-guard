@@ -6,10 +6,45 @@ import { copy, routeMap, type Lang } from '../../lib/i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 ---
-<section class="cta-section py-20">
-	<Container class="text-center">
-		<h2 class="cta-title mx-auto max-w-3xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.cta}</h2>
-		<p class="cta-copy mx-auto mt-5 max-w-2xl">{copy[lang].sections.ctaLead}</p>
-		<div class="mt-8"><Button href={routeMap.quote} lang={lang}>{copy[lang].nav.quote} <ArrowRight class="size-4" /></Button></div>
+
+<section class="cta-section relative overflow-hidden py-28 md:py-36">
+	<!-- animated orbs -->
+	<div class="cta-orb cta-orb--left" aria-hidden="true"></div>
+	<div class="cta-orb cta-orb--right" aria-hidden="true"></div>
+	<!-- grid overlay -->
+	<div class="cta-grid-overlay" aria-hidden="true"></div>
+
+	<Container class="relative z-10 text-center">
+		<p class="section-eyebrow justify-center reveal">Prêt à démarrer ?</p>
+		<h2 class="cta-title mx-auto mt-5 max-w-3xl text-3xl font-extrabold md:text-5xl reveal"
+			style="--reveal-delay:60ms">
+			{copy[lang].sections.cta}
+		</h2>
+		<p class="cta-copy mx-auto mt-5 max-w-2xl reveal" style="--reveal-delay:120ms">
+			{copy[lang].sections.ctaLead}
+		</p>
+
+		<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row reveal" style="--reveal-delay:180ms">
+			<Button href={routeMap.quote} lang={lang}>
+				{copy[lang].nav.quote} <ArrowRight class="size-4" />
+			</Button>
+			<Button href={routeMap.contact} lang={lang} variant="secondary">
+				Discuter en 15 min
+			</Button>
+		</div>
+
+		<!-- micro-stats -->
+		<div class="mt-16 flex flex-wrap justify-center gap-x-12 gap-y-6 border-t border-white/15 pt-12 reveal" style="--reveal-delay:220ms">
+			{[
+				['24h', 'Délai de réponse'],
+				['5+', "Ans d'expérience"],
+				['Sans engagement', 'Forfaits mensuels'],
+			].map(([val, label]) => (
+				<div class="text-center">
+					<p class="text-2xl font-extrabold text-white">{val}</p>
+					<p class="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>
+				</div>
+			))}
+		</div>
 	</Container>
 </section>

@@ -1,0 +1,37 @@
+---
+title: "Why flaky tests cost more than production bugs"
+description: A practical guide to understand the real cost of unstable tests and stabilize them without starting from scratch.
+date: 2026-01-12
+author: Arsenal Guard
+readTime: 8 min
+lang: en
+tags: [flaky tests, cypress, playwright, ci]
+---
+
+## The problem is not only technical
+
+A production bug has a visible cost: incident response, hotfix, communication and sometimes a commercial gesture. A flaky test is quieter. It passes on Monday, fails on Tuesday, passes again after a rerun and leaves the team with a toxic question: should we trust CI?
+
+When that question takes root, the test suite stops acting as a safety net. Developers rerun jobs, reviewers ignore signals and product managers see releases slip without a clear reason.
+
+## The real cost of instability
+
+The first cost is human time. Ten minutes lost per pipeline sounds acceptable until it is multiplied by pull requests, developers and weeks of delivery.
+
+The second cost is trust. A reliable failing test triggers investigation. A flaky failing test triggers a rerun. That difference turns quality signal into administrative noise.
+
+The third cost is product risk. The more a team ignores tests, the more likely it becomes to ship a real regression.
+
+## Stabilize without throwing everything away
+
+Start by ranking the failures. Which tests fail most often? On which browsers? After which changes? At which CI step? Without this triage, the team fixes symptoms at random.
+
+Then isolate critical journeys. Login, checkout, payment, billing or account creation do not carry the same risk as a secondary filter. Treat the critical paths like product infrastructure.
+
+Finally, repair the foundations: stable selectors, clear fixtures, isolated data, controlled network dependencies, limited retries and useful reporting.
+
+## What to measure
+
+Track rerun frequency, diagnosis time, the most unstable tests, pipeline duration and regressions caught before production. These indicators translate QA work into business language.
+
+Stable tests are not a technical luxury. They reduce release risk and protect delivery focus.

@@ -1,7 +1,7 @@
 ---
-title: Coming soon
-description: Les cas clients seront publies apres validation.
+title: À venir
+description: Les cas clients seront publiés après validation.
 status: planned
 ---
 
-Publication a venir.
+Publication à venir.

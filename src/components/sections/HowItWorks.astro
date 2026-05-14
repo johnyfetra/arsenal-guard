@@ -5,14 +5,30 @@ import { steps } from '../../lib/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 ---
-<section class="section-band border-y py-24 md:py-32">
+<section class="relative py-24 md:py-32 overflow-hidden">
+	<!-- subtle diagonal background stripe -->
+	<div class="absolute inset-0 -z-10 opacity-40" aria-hidden="true">
+		<div
+			class="absolute inset-0"
+			style="background: linear-gradient(112deg, transparent 0%, transparent 38%, rgba(10,21,48,0.55) 38%, rgba(10,21,48,0.55) 62%, transparent 62%);"
+		></div>
+	</div>
 	<Container>
-		<h2 class="text-3xl font-extrabold md:text-5xl">{copy[lang].sections.how}</h2>
-		<div class="mt-10 grid gap-4 md:grid-cols-4">
+		<div class="mb-14 reveal">
+			<p class="section-eyebrow">Méthodologie</p>
+			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.how}</h2>
+		</div>
+		<div class="grid gap-0 md:grid-cols-4 md:gap-0">
 			{steps.map((step, index) => (
-				<div class="step-card reveal scroll-float rounded-2xl p-6" data-scroll-depth={String(index % 2 === 0 ? -14 : 14)}>
-					<p class="font-mono text-sm text-orange-400">0{index + 1}</p>
-					<p class="mt-5 font-bold">{step}</p>
+				<div class="timeline-step reveal" style={`--reveal-delay:${index * 90}ms`}>
+					<div class="flex items-start gap-4 md:flex-col md:items-start md:gap-0">
+						<!-- number badge -->
+						<div class="timeline-num md:mb-5">0{index + 1}</div>
+						<!-- connector line visible on mobile (vertical) handled by ::before -->
+						<div class="pb-8 md:pb-0 md:pr-8">
+							<h3 class="font-bold text-base leading-snug">{step}</h3>
+						</div>
+					</div>
 				</div>
 			))}
 		</div>

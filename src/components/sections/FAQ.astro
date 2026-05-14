@@ -5,15 +5,34 @@ import { faq } from '../../lib/site';
 interface Props { lang: Lang; items?: string[][] }
 const { lang, items = faq } = Astro.props;
 ---
-<section class="section-band border-y py-24 md:py-32">
+
+<section class="relative py-24 md:py-32 overflow-hidden">
+	<!-- diagonal accent -->
+	<div
+		class="absolute inset-0 -z-10 opacity-30"
+		aria-hidden="true"
+		style="background: linear-gradient(155deg, rgba(10,21,48,0.6) 0%, transparent 45%);"
+	></div>
+
 	<Container>
-		<h2 class="text-3xl font-extrabold md:text-5xl">{copy[lang].sections.faq}</h2>
-		<div class="mt-10 grid gap-4 md:grid-cols-2">
-			{items.map(([question, answer]) => (
-				<details class="surface rounded-2xl p-6">
-					<summary class="cursor-pointer font-bold">{question}</summary>
-					<p class="mt-4 text-muted">{answer}</p>
-				</details>
+		<div class="mb-14 grid gap-6 md:grid-cols-[1fr_auto] md:items-end reveal">
+			<div>
+				<p class="section-eyebrow">FAQ</p>
+				<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.faq}</h2>
+			</div>
+			<p class="max-w-xs text-sm text-muted leading-relaxed">
+				Une question non couverte ? <a href="contact" class="text-orange-400 hover:underline">Écrivez-nous.</a>
+			</p>
+		</div>
+
+		<div class="grid gap-3 md:grid-cols-2">
+			{items.map(([question, answer], index) => (
+				<div class="faq-item reveal" style={`--reveal-delay:${index * 40}ms`}>
+					<details>
+						<summary class="faq-item summary">{question}</summary>
+						<p class="faq-answer">{answer}</p>
+					</details>
+				</div>
 			))}
 		</div>
 	</Container>
