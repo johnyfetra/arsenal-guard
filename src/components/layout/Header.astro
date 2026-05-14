@@ -88,7 +88,10 @@ const nav = [
 	updateHeader();
 	addEventListener('scroll', updateHeader, { passive: true });
 	menuToggle?.addEventListener('click', () => setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true'));
-	mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+	mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+		if (link.closest('[data-language-menu]')) return;
+		setMenuOpen(false);
+	}));
 	addEventListener('keydown', (event) => {
 		if (event.key === 'Escape') setMenuOpen(false);
 	});

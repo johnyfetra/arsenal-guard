@@ -69,11 +69,11 @@ const renderPage = page === 'article' ? 'notFound' : page;
 				datePublished: post.data.date.toISOString(),
 			}}
 		>
-			<section class="bg-mesh py-20 md:py-28">
+			<section class="article-hero py-20 md:py-28">
 				<Container class="max-w-4xl">
-					<p class="font-mono text-sm text-orange-300">{post.data.author} · {post.data.readTime}</p>
-					<h1 class="mt-5 text-4xl font-extrabold text-white md:text-6xl">{post.data.title}</h1>
-					<p class="mt-6 text-lg text-white/76">{post.data.description}</p>
+					<p class="article-hero-meta font-mono text-sm">{post.data.author} · {post.data.readTime}</p>
+					<h1 class="article-hero-title mt-5 text-4xl font-extrabold md:text-6xl">{post.data.title}</h1>
+					<p class="article-hero-copy mt-6 text-lg">{post.data.description}</p>
 				</Container>
 			</section>
 			<section class="py-16">

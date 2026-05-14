@@ -33,7 +33,7 @@ export const services = [
 		kicker: 'Audit ponctuel',
 		description: 'Audit rapide de votre plateforme: parcours critiques, couverture actuelle et recommandations actionnables.',
 		duration: '3 jours',
-		price: '600 EUR HT',
+		price: '600 € TTC',
 		for: 'CTO ou lead dev qui veut une photographie fiable du risque produit avant une release.',
 		deliverables: ['Cartographie des parcours critiques', 'Revue des tests existants', 'Backlog priorisé', 'Restitution claire avec quick wins'],
 		process: ['Kickoff technique de 45 minutes', 'Exploration produit et code', 'Analyse couverture et risques', 'Rapport de priorisation'],
@@ -48,7 +48,7 @@ export const services = [
 		kicker: 'Automatisation',
 		description: 'Bootstrap Cypress ou Playwright avec les premiers tests critiques, conventions et documentation équipe.',
 		duration: '7 jours',
-		price: '1 600 EUR HT',
+		price: '1 600 € TTC',
 		for: 'Équipe qui veut démarrer proprement l’automatisation sans créer une suite fragile.',
 		deliverables: ['Architecture Cypress ou Playwright', '3 tests E2E critiques', 'Fixtures et patterns maintenables', 'Documentation de reprise'],
 		process: ['Choix outil selon contexte', 'Installation et conventions', 'Implémentation des scénarios', 'Passage de relais équipe'],
@@ -63,7 +63,7 @@ export const services = [
 		kicker: 'Run QA',
 		description: 'Service QA récurrent sans engagement long: nouveaux tests, maintenance, support CI/CD et reporting qualité.',
 		duration: '5 à 15 jours/mois',
-		price: 'A partir de 1 100 EUR HT/mois',
+		price: 'À partir de 1 100 € TTC/mois',
 		for: 'Startup ou SaaS qui livre souvent et veut un QA senior sans recrutement temps plein.',
 		deliverables: ['3 à 5 nouveaux E2E par mois', 'Maintenance tests existants', 'Support pipelines CI/CD', 'Reporting qualité mensuel'],
 		process: ['Plan mensuel', 'Implémentation cadencée', 'Stabilisation continue', 'Bilan et priorités suivantes'],
@@ -78,33 +78,33 @@ export const services = [
 		kicker: 'Engagement dédié',
 		description: 'Un QA senior dédié à votre équipe pour les besoins soutenus, avec option supervision lead.',
 		duration: '20 jours/mois, minimum 3 mois',
-		price: '3 800 EUR HT/mois',
+		price: '3 800 € TTC/mois',
 		for: 'Équipe scale-up qui a besoin d’un vrai ownership QA sur plusieurs sprints.',
 		deliverables: ['QA senior intégré à vos rituels', 'Stratégie de test durable', 'Automation et manuel ciblé', 'Reporting risques release'],
 		process: ['Onboarding produit', 'Définition stratégie', 'Exécution sprint par sprint', 'Amélioration continue'],
 		faq: [
 			['Quel fuseau horaire ?', 'Madagascar permet un recouvrement confortable avec l’Europe, notamment France, Belgique et Suisse.'],
-			['Y a-t-il une supervision ?', 'Oui, une option Senior QA + Lead supervision est disponible à 4 500 EUR HT/mois.'],
+			['Y a-t-il une supervision ?', 'Oui, une option Senior QA + Lead supervision est disponible à 4 500 € TTC/mois.'],
 		],
 	},
 ];
 
 export const punctualOffers = [
-	['Express QA Audit', '3 jours', '600 EUR HT'],
-	['Flaky Test Stabilization', '5-6 jours', '1 200 EUR HT'],
-	['E2E Framework Setup + 3 tests', '7 jours', '1 600 EUR HT'],
-	['CI/CD + Blocking Tests Setup', '8 jours', '1 800 EUR HT'],
+	['Express QA Audit', '3 jours', '600 € TTC'],
+	['Flaky Test Stabilization', '5-6 jours', '1 200 € TTC'],
+	['E2E Framework Setup + 3 tests', '7 jours', '1 600 € TTC'],
+	['CI/CD + Blocking Tests Setup', '8 jours', '1 800 € TTC'],
 ];
 
 export const plans = [
-	{ name: 'Starter', volume: '5 jours/mois', price: '1 100 EUR HT/mois', featured: false },
-	{ name: 'Growth', volume: '10 jours/mois', price: '2 000 EUR HT/mois', featured: true },
-	{ name: 'Pro', volume: '15 jours/mois', price: '2 850 EUR HT/mois', featured: false },
+	{ name: 'Starter', volume: '5 jours/mois', price: '1 100 € TTC/mois', featured: false },
+	{ name: 'Growth', volume: '10 jours/mois', price: '2 000 € TTC/mois', featured: true },
+	{ name: 'Pro', volume: '15 jours/mois', price: '2 850 € TTC/mois', featured: false },
 ];
 
 export const dedicated = [
-	['Dedicated Senior QA', '20 jours/mois', '3 800 EUR HT/mois'],
-	['Senior QA + Lead supervision', '20 jours/mois', '4 500 EUR HT/mois'],
+	['Dedicated Senior QA', '20 jours/mois', '3 800 € TTC/mois'],
+	['Senior QA + Lead supervision', '20 jours/mois', '4 500 € TTC/mois'],
 ];
 
 export const faq = [
@@ -113,7 +113,7 @@ export const faq = [
 	['Quel est le délai de mise en place ?', 'Un audit peut démarrer en quelques jours. Un forfait mensuel demande généralement une semaine d’onboarding.'],
 	['Vos tests sont-ils maintenables ?', 'Oui. Les conventions, selectors, fixtures et rapports sont pensés pour être repris par vos développeurs.'],
 	['Comment garantir la confidentialité ?', 'NDA possible, accès limités, principe du moindre privilège et aucun partage de données client.'],
-	['Quelles sont vos modalités de paiement ?', 'Facturation HT, virement bancaire, acompte possible sur les missions ponctuelles.'],
+	['Quelles sont vos modalités de paiement ?', 'Facturation TTC, virement bancaire, acompte possible sur les missions ponctuelles.'],
 	['Travaillez-vous avec des startups pré-amorçage ?', 'Oui si le périmètre est clair: audit, MVP critique ou mise en place E2E légère.'],
 	['Comment choisir ponctuel ou forfait ?', 'Ponctuel pour débloquer un sujet ciblé. Forfait pour accompagner une cadence de livraison continue.'],
 ];

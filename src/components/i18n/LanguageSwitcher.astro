@@ -26,24 +26,39 @@ const { lang, path } = Astro.props;
 </div>
 
 <script is:inline>
-	document.querySelectorAll('[data-language-menu]').forEach((menu) => {
-		const button = menu.querySelector('[data-language-menu-button]');
-		const list = menu.querySelector('[data-language-menu-list]');
-		const setOpen = (open) => {
-			menu.classList.toggle('is-open', open);
-			button?.setAttribute('aria-expanded', String(open));
+	if (!window.__arsenalLanguageMenuReady) {
+		window.__arsenalLanguageMenuReady = true;
+
+		const closeLanguageMenus = (except) => {
+			document.querySelectorAll('[data-language-menu]').forEach((menu) => {
+				if (menu === except) return;
+				menu.classList.remove('is-open');
+				menu.querySelector('[data-language-menu-button]')?.setAttribute('aria-expanded', 'false');
+			});
 		};
 
-		button?.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
-		menu.addEventListener('keydown', (event) => {
+		document.addEventListener('click', (event) => {
+			const button = event.target.closest?.('[data-language-menu-button]');
+			const menu = event.target.closest?.('[data-language-menu]');
+
+			if (button && menu) {
+				event.stopPropagation();
+				const open = !menu.classList.contains('is-open');
+				closeLanguageMenus(menu);
+				menu.classList.toggle('is-open', open);
+				button.setAttribute('aria-expanded', String(open));
+				return;
+			}
+
+			if (!menu) closeLanguageMenus();
+		});
+
+		document.addEventListener('keydown', (event) => {
 			if (event.key === 'Escape') {
-				setOpen(false);
-				button?.focus();
+				const openMenu = document.querySelector('[data-language-menu].is-open');
+				closeLanguageMenus();
+				openMenu?.querySelector('[data-language-menu-button]')?.focus();
 			}
 		});
-		list?.addEventListener('click', () => setOpen(false));
-		document.addEventListener('click', (event) => {
-			if (!menu.contains(event.target)) setOpen(false);
-		});
-	});
+	}
 </script>
