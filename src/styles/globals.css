@@ -633,21 +633,21 @@ label:has(input[type='radio']) {
 	line-height: 1.8;
 }
 
+/* CTA always dark — intentional contrast break */
 :root[data-theme='light'] .cta-section {
 	background:
-		radial-gradient(circle at 16% 0%, rgba(230, 126, 34, 0.16), transparent 22rem),
-		radial-gradient(circle at 88% 22%, rgba(42, 66, 117, 0.14), transparent 26rem),
-		linear-gradient(135deg, #fffaf2 0%, #f7f9fc 46%, #edf3fb 100%);
-	color: var(--page-text);
-	border-block: 1px solid rgba(15, 31, 68, 0.08);
+		radial-gradient(circle at 18% 18%, rgba(230, 126, 34, 0.2), transparent 24rem),
+		radial-gradient(circle at 82% 10%, rgba(42, 66, 117, 0.5), transparent 28rem),
+		linear-gradient(135deg, #050b1a 0%, #0a1530 52%, #0f1f44 100%);
+	color: #ffffff;
 }
 
 :root[data-theme='light'] .cta-title {
-	color: #182033;
+	color: #ffffff;
 }
 
 :root[data-theme='light'] .cta-copy {
-	color: #526070;
+	color: rgba(255, 255, 255, 0.78);
 }
 
 .hero-shell {
@@ -877,7 +877,7 @@ label:has(input[type='radio']) {
 }
 
 .reveal-ready .reveal {
-	opacity: 0;
+	opacity: 1;
 	transform: translate3d(0, 14px, 0) scale(0.992);
 	transition:
 		opacity 360ms ease,
@@ -1393,5 +1393,145 @@ label:has(input[type='radio']) {
 :root[data-theme='light'] .stat-number {
 	background: linear-gradient(135deg, #182033 30%, #d35400);
 	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 	background-clip: text;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT MODE OVERRIDES — all new components
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Section skew bands */
+:root[data-theme='light'] .section-band {
+	background: #eef2f8;
+	border-color: rgba(15, 31, 68, 0.1);
+}
+
+/* Value prop cards */
+:root[data-theme='light'] .value-prop-card {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.12);
+	box-shadow: 0 4px 24px rgba(15, 31, 68, 0.07);
+}
+
+:root[data-theme='light'] .value-prop-card:hover {
+	border-color: rgba(212, 84, 0, 0.35);
+	box-shadow: 0 20px 60px rgba(15, 31, 68, 0.12), 0 0 0 1px rgba(212, 84, 0, 0.1);
+}
+
+:root[data-theme='light'] .value-prop-icon-wrap {
+	background: linear-gradient(135deg, rgba(212, 84, 0, 0.12), rgba(212, 84, 0, 0.04));
+	border-color: rgba(212, 84, 0, 0.18);
+}
+
+:root[data-theme='light'] .value-prop-card::after {
+	background: radial-gradient(circle, rgba(212, 84, 0, 0.08), transparent 65%);
+}
+
+/* Timeline num */
+:root[data-theme='light'] .timeline-num {
+	background: linear-gradient(135deg, #ffffff, #f0f2f6);
+	border-color: rgba(159, 58, 0, 0.45);
+	color: #8a3200;
+	box-shadow: 0 0 14px rgba(159, 58, 0, 0.1);
+}
+
+/* Pricing cards */
+:root[data-theme='light'] .pricing-card {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.12);
+	box-shadow: 0 4px 24px rgba(15, 31, 68, 0.07);
+}
+
+:root[data-theme='light'] .pricing-card:hover {
+	box-shadow: 0 20px 60px rgba(15, 31, 68, 0.12);
+}
+
+:root[data-theme='light'] .pricing-card--featured {
+	border-color: rgba(211, 84, 0, 0.45);
+	background: linear-gradient(145deg, rgba(211, 84, 0, 0.06) 0%, #ffffff 50%);
+	box-shadow: 0 0 0 1px rgba(211, 84, 0, 0.14), 0 20px 60px rgba(211, 84, 0, 0.1);
+}
+
+:root[data-theme='light'] .pricing-card--featured:hover {
+	box-shadow: 0 0 0 1px rgba(211, 84, 0, 0.3), 0 28px 70px rgba(211, 84, 0, 0.15);
+}
+
+:root[data-theme='light'] .pricing-price {
+	color: #182033;
+}
+
+/* Stack pills */
+:root[data-theme='light'] .stack-pill {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.14);
+	color: #182033;
+}
+
+:root[data-theme='light'] .stack-pill:hover {
+	border-color: rgba(211, 84, 0, 0.4);
+	background: rgba(211, 84, 0, 0.04);
+	box-shadow: 0 8px 24px rgba(15, 31, 68, 0.1);
+}
+
+/* Quote cards (testimonials) */
+:root[data-theme='light'] .quote-card {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.1);
+	box-shadow: 0 4px 20px rgba(15, 31, 68, 0.07);
+}
+
+:root[data-theme='light'] .quote-card:hover {
+	border-color: rgba(211, 84, 0, 0.28);
+	box-shadow: 0 20px 56px rgba(15, 31, 68, 0.12);
+}
+
+:root[data-theme='light'] .quote-card::before {
+	color: rgba(211, 84, 0, 0.16);
+}
+
+:root[data-theme='light'] .quote-avatar {
+	background: linear-gradient(135deg, #f0e8e0, #e8edf5);
+	border-color: rgba(159, 58, 0, 0.3);
+	color: #8a3200;
+}
+
+/* FAQ */
+:root[data-theme='light'] .faq-item {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.1);
+}
+
+:root[data-theme='light'] .faq-item:has(details[open]) {
+	border-color: rgba(211, 84, 0, 0.28);
+	box-shadow: 0 8px 32px rgba(15, 31, 68, 0.08);
+}
+
+:root[data-theme='light'] .faq-item summary::after {
+	border-color: rgba(15, 31, 68, 0.18);
+	color: #d35400;
+}
+
+:root[data-theme='light'] .faq-answer {
+	border-color: rgba(15, 31, 68, 0.08);
+}
+
+/* Section eyebrow in light */
+:root[data-theme='light'] .section-eyebrow {
+	color: #c86f12;
+}
+
+/* CTA orbs in light — keep dark section so same orbs work */
+:root[data-theme='light'] .cta-orb--left {
+	background: radial-gradient(circle, rgba(230, 126, 34, 0.32), transparent 68%);
+}
+
+/* Pricing badge in light */
+:root[data-theme='light'] .pricing-badge {
+	background: linear-gradient(90deg, #b85e0c, #c87a10);
+}
+
+/* Section divider lines in light */
+:root[data-theme='light'] .hero-scroll-hint {
+	color: #c86f12;
 }
