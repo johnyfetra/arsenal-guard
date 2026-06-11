@@ -115,6 +115,8 @@ npm run preview  # Preview production build
 
 - Node ≥ 18 required
 - Git branch: `main` is production; rebase-merge workflow (`git pull --rebase`)
+- **Commit messages**: short, clear, imperative (≤72 chars) — no AI signature, no `Co-Authored-By`
+- **Context file sync**: `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md` must always be identical in content. Update all three together, commit in one shot.
 
 ---
 
