@@ -48,7 +48,7 @@ const a11y = lang === 'fr'
 		<div class="flex items-center gap-2">
 			<div class="hidden sm:block"><LanguageSwitcher lang={lang} path={path} /></div>
 			<ThemeToggle />
-			<div class="hidden md:block"><Button href={routeMap.quote} lang={lang}>{t.nav.quote}</Button></div>
+			<Button href={routeMap.quote} lang={lang} class="hidden sm:inline-flex">{t.nav.quote}</Button>
 			<button class="mobile-menu-toggle lg:hidden" type="button" aria-label={a11y.menuOpen} aria-expanded="false" data-mobile-menu-toggle>
 				<Menu class="mobile-menu-icon-open size-5" aria-hidden="true" />
 				<X class="mobile-menu-icon-close hidden size-5" aria-hidden="true" />

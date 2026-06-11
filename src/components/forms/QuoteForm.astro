@@ -1,9 +1,10 @@
 ---
 const projectTypes = ['Audit', 'Stabilization', 'E2E Setup', 'Monthly Subscription', 'Dedicated QA', 'Other'];
-const budgets = ['< 1 000 €', '1 000 - 2 500 €', '2 500 - 5 000 €', '> 5 000 €'];
+const budgets = ['< 1 000 \u20ac', '1 000 - 2 500 \u20ac', '2 500 - 5 000 \u20ac', '> 5 000 \u20ac'];
 ---
 <form class="surface rounded-2xl p-6" data-quote-form>
 	<input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY ?? ''} />
+	<input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
 	<div class="mb-6 h-2 overflow-hidden rounded-full bg-white/10"><div class="h-full w-1/4 rounded-full bg-orange-500" data-progress></div></div>
 	<section data-step="0" class="grid gap-4">
 		<h2 class="text-2xl font-extrabold">1. Type de projet</h2>
@@ -13,23 +14,23 @@ const budgets = ['< 1 000 €', '1 000 - 2 500 €', '2 500 - 5 000 €', '> 5 0
 	</section>
 	<section data-step="1" class="hidden grid gap-4">
 		<h2 class="text-2xl font-extrabold">2. Informations projet</h2>
-		<label class="grid gap-2 text-sm font-semibold">Entreprise<input required name="company" class="rounded-lg px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Site web<input name="website" class="rounded-lg px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Stack technique<input name="stack" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Entreprise<input required name="company" maxlength="100" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Site web<input name="website" type="url" maxlength="200" placeholder="https://" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Stack technique<input name="stack" maxlength="200" class="rounded-lg px-4 py-3" /></label>
 		<label class="grid gap-2 text-sm font-semibold">Couverture actuelle<select name="coverage" class="rounded-lg px-4 py-3"><option>Inconnue</option><option>0-20%</option><option>20-50%</option><option>50%+</option></select></label>
 	</section>
 	<section data-step="2" class="hidden grid gap-4">
-		<h2 class="text-2xl font-extrabold">3. Delai et budget</h2>
-		<label class="grid gap-2 text-sm font-semibold">Date de démarrage souhaitée<input type="date" name="start_date" class="rounded-lg px-4 py-3" /></label>
+		<h2 class="text-2xl font-extrabold">3. D\u00e9lai et budget</h2>
+		<label class="grid gap-2 text-sm font-semibold">Date de d\u00e9marrage souhait\u00e9e<input type="date" name="start_date" class="rounded-lg px-4 py-3" /></label>
 		<label class="grid gap-2 text-sm font-semibold">Budget<select name="budget" class="rounded-lg px-4 py-3">{budgets.map((budget) => <option>{budget}</option>)}</select></label>
 		<label class="grid gap-2 text-sm font-semibold">Engagement<select name="engagement" class="rounded-lg px-4 py-3"><option>One-shot</option><option>Recurring</option></select></label>
 	</section>
 	<section data-step="3" class="hidden grid gap-4">
 		<h2 class="text-2xl font-extrabold">4. Contact</h2>
-		<label class="grid gap-2 text-sm font-semibold">Nom<input required name="name" class="rounded-lg px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Email<input required type="email" name="email" class="rounded-lg px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Telephone<input name="phone" class="rounded-lg px-4 py-3" /></label>
-		<label class="grid gap-2 text-sm font-semibold">Commentaires<textarea name="comments" rows="4" class="rounded-lg px-4 py-3"></textarea></label>
+		<label class="grid gap-2 text-sm font-semibold">Nom<input required name="name" maxlength="100" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Email<input required type="email" name="email" maxlength="254" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">T\u00e9l\u00e9phone<input name="phone" type="tel" maxlength="20" class="rounded-lg px-4 py-3" /></label>
+		<label class="grid gap-2 text-sm font-semibold">Commentaires<textarea name="comments" rows="4" maxlength="2000" class="rounded-lg px-4 py-3"></textarea></label>
 	</section>
 	<div class="mt-8 flex justify-between gap-3">
 		<button type="button" class="theme-control rounded-xl px-5 py-3 font-bold" data-prev>Retour</button>
@@ -41,6 +42,7 @@ const budgets = ['< 1 000 €', '1 000 - 2 500 €', '2 500 - 5 000 €', '> 5 0
 <script is:inline>
 	document.querySelectorAll('[data-quote-form]').forEach((form) => {
 		let step = 0;
+		let lastSubmit = 0;
 		const steps = [...form.querySelectorAll('[data-step]')];
 		const progress = form.querySelector('[data-progress]');
 		const prev = form.querySelector('[data-prev]');
@@ -49,18 +51,27 @@ const budgets = ['< 1 000 €', '1 000 - 2 500 €', '2 500 - 5 000 €', '> 5 0
 		const status = form.querySelector('[data-form-status]');
 		const render = () => {
 			steps.forEach((section, index) => section.classList.toggle('hidden', index !== step));
-			progress.style.width = `${((step + 1) / steps.length) * 100}%`;
+			progress.style.width = ((step + 1) / steps.length * 100) + '%';
 			prev.disabled = step === 0;
 			next.classList.toggle('hidden', step === steps.length - 1);
 			submit.classList.toggle('hidden', step !== steps.length - 1);
 		};
 		prev.addEventListener('click', () => { step = Math.max(0, step - 1); render(); });
-		next.addEventListener('click', () => { step = Math.min(steps.length - 1, step + 1); render(); });
+		next.addEventListener('click', () => {
+			const current = steps[step];
+			const inputs = current.querySelectorAll('[required]');
+			for (const input of inputs) { if (!input.checkValidity()) { input.reportValidity(); return; } }
+			step = Math.min(steps.length - 1, step + 1); render();
+		});
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
+			const now = Date.now();
+			if (now - lastSubmit < 5000) return;
+			lastSubmit = now;
 			status.classList.remove('hidden');
 			status.textContent = 'Envoi en cours...';
 			const data = Object.fromEntries(new FormData(form));
+			if (data.botcheck) return;
 			window.dispatchEvent(new CustomEvent('quote_submitted'));
 			try {
 				if (!data.access_key) throw new Error('Missing Web3Forms key');
@@ -70,10 +81,11 @@ const budgets = ['< 1 000 €', '1 000 - 2 500 €', '2 500 - 5 000 €', '> 5 0
 					body: JSON.stringify(data),
 				});
 				if (!response.ok) throw new Error('Submission failed');
-				status.textContent = 'Demande reçue ! Vous recevrez une proposition sous 24h ouvrées.';
+				status.textContent = 'Demande re\u00e7ue ! Proposition sous 24h ouvr\u00e9es.';
 				form.reset();
+				step = 0; render();
 			} catch {
-				status.textContent = 'Demande reçue localement. Ajoutez PUBLIC_WEB3FORMS_KEY pour activer l’envoi.';
+				status.textContent = "Erreur d'envoi. R\u00e9essayez ou contactez-nous par email.";
 			}
 		});
 		render();

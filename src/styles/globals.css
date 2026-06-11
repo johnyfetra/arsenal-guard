@@ -58,10 +58,12 @@ body {
 		color 110ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-*,
-*::before,
-*::after {
-	transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+a,
+button,
+.surface,
+.nav-link,
+.theme-control {
+	transition-property: background-color, border-color, color, box-shadow, opacity;
 	transition-duration: 140ms;
 	transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
