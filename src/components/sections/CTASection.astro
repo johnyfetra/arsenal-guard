@@ -9,6 +9,8 @@ const ctaMeta = lang === 'fr'
 	? {
 		eyebrow: 'Prêt à démarrer ?',
 		secondary: 'Discuter en 15 min',
+		title: 'Avant votre prochaine release, faites entrer le doute dans le process.',
+		lead: 'Un diagnostic QA court suffit souvent à révéler les parcours critiques, les signaux CI fragiles et les tests qui réduisent vraiment le risque.',
 		stats: [
 			{ value: '24h', label: 'Délai de réponse', counter: '24', suffix: 'h' },
 			{ value: '5+', label: "Ans d'expérience", counter: '5', suffix: '+' },
@@ -18,6 +20,8 @@ const ctaMeta = lang === 'fr'
 	: {
 		eyebrow: 'Ready to start?',
 		secondary: 'Book a 15-min call',
+		title: 'Before your next release, put uncertainty through a process.',
+		lead: 'A short QA diagnostic is often enough to surface critical journeys, fragile CI signals and the tests that actually reduce release risk.',
 		stats: [
 			{ value: '24h', label: 'Response time', counter: '24', suffix: 'h' },
 			{ value: '5+', label: 'Years of experience', counter: '5', suffix: '+' },
@@ -27,9 +31,6 @@ const ctaMeta = lang === 'fr'
 ---
 
 <section class="cta-section relative overflow-hidden py-20 md:py-36">
-	<!-- animated orbs -->
-	<div class="cta-orb cta-orb--left" aria-hidden="true"></div>
-	<div class="cta-orb cta-orb--right" aria-hidden="true"></div>
 	<!-- grid overlay -->
 	<div class="cta-grid-overlay" aria-hidden="true"></div>
 
@@ -37,10 +38,10 @@ const ctaMeta = lang === 'fr'
 		<p class="section-eyebrow justify-center reveal">{ctaMeta.eyebrow}</p>
 		<h2 class="cta-title mx-auto mt-5 max-w-3xl text-3xl font-extrabold md:text-5xl reveal"
 			style="--reveal-delay:60ms">
-			{copy[lang].sections.cta}
+			{ctaMeta.title}
 		</h2>
 		<p class="cta-copy mx-auto mt-5 max-w-2xl reveal" style="--reveal-delay:120ms">
-			{copy[lang].sections.ctaLead}
+			{ctaMeta.lead}
 		</p>
 
 		<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row reveal" style="--reveal-delay:180ms">

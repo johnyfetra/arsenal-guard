@@ -1,17 +1,30 @@
 ---
 import Container from '../ui/Container.astro';
-import { copy, type Lang } from '../../lib/i18n';
-import { steps } from '../../lib/site';
+import type { Lang } from '../../lib/i18n';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const localizedSteps = lang === 'fr'
-	? steps
+	? [
+		'Audit — parcours critiques, risques produit, signaux existants',
+		'Stratégie de test — manuel, automation et priorités release',
+		'Automation — Playwright/Cypress sur les flux qui comptent',
+		'Release report — décisions, anomalies et prochaines priorités',
+	]
 	: [
-		'15-minute scoping — brief, scope, tier confirmed',
-		'Structured manual testing — real journeys, real-time documentation',
-		'Prioritized report in 72h — structured PDF with annotated screenshots',
-		'Follow-up as needed — optional 30-min walkthrough and next step',
+		'Audit — critical flows, product risks, existing signals',
+		'Test strategy — manual, automation and release priorities',
+		'Automation — Playwright/Cypress on the flows that matter',
+		'Release report — decisions, defects and next priorities',
 	];
+const labels = lang === 'fr'
+	? {
+		eyebrow: 'Release workflow',
+		title: 'Un process QA lisible par produit, tech et management.',
+	}
+	: {
+		eyebrow: 'Release workflow',
+		title: 'A QA process readable by product, engineering and leadership.',
+	};
 ---
 <section class="how-section relative overflow-hidden py-16 md:py-32">
 	<!-- subtle diagonal background stripe -->
@@ -23,8 +36,8 @@ const localizedSteps = lang === 'fr'
 	</div>
 	<Container>
 		<div class="mb-10 md:mb-14 reveal">
-			<p class="section-eyebrow">{lang === 'fr' ? 'Méthodologie' : 'Method'}</p>
-			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.how}</h2>
+			<p class="section-eyebrow">{labels.eyebrow}</p>
+			<h2 class="mt-4 max-w-4xl text-3xl font-extrabold md:text-5xl">{labels.title}</h2>
 		</div>
 		<div class="grid gap-0 md:grid-cols-4 md:gap-0">
 			{localizedSteps.map((step, index) => (

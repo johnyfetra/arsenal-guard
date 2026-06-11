@@ -1,0 +1,94 @@
+---
+import AlertTriangle from 'lucide-astro/AlertTriangle';
+import CircleOff from 'lucide-astro/CircleOff';
+import GitPullRequestDraft from 'lucide-astro/GitPullRequestDraft';
+import Container from '../ui/Container.astro';
+import type { Lang } from '../../lib/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const content = lang === 'fr'
+	? {
+		eyebrow: 'Le vrai risque release',
+		title: 'La plupart des bugs ne sont pas invisibles. Ils ne sont pas assignés au bon niveau de risque.',
+		lead: 'Arsenal Guard transforme les signaux dispersés en décisions lisibles avant production.',
+		problems: [
+			{
+				icon: AlertTriangle,
+				title: 'Suites E2E instables',
+				text: 'Les flakies finissent ignorés, puis le signal qualité disparaît exactement quand vous en avez besoin.',
+				meta: 'Signal bruité',
+			},
+			{
+				icon: CircleOff,
+				title: 'Régressions manuelles trop tardives',
+				text: 'Le test manuel arrive en bout de chaîne, sous pression, sans couverture claire des parcours critiques.',
+				meta: 'Risque non cadré',
+			},
+			{
+				icon: GitPullRequestDraft,
+				title: 'CI verte, produit cassé',
+				text: 'Les pipelines passent, mais les parcours métier qui comptent pour vos utilisateurs restent vulnérables.',
+				meta: 'Fausse confiance',
+			},
+		],
+	}
+	: {
+		eyebrow: 'The real release risk',
+		title: 'Most bugs are not hidden. They are not owned at the right level of risk.',
+		lead: 'Arsenal Guard turns scattered signals into readable release decisions before production.',
+		problems: [
+			{
+				icon: AlertTriangle,
+				title: 'Unstable E2E suites',
+				text: 'Flaky tests get ignored, then the quality signal disappears exactly when the team needs it.',
+				meta: 'Noisy signal',
+			},
+			{
+				icon: CircleOff,
+				title: 'Manual regressions too late',
+				text: 'Manual QA arrives at the end of the chain, under pressure, without clear critical-flow coverage.',
+				meta: 'Unframed risk',
+			},
+			{
+				icon: GitPullRequestDraft,
+				title: 'Green CI, broken product',
+				text: 'Pipelines pass while the business journeys that matter to users remain exposed.',
+				meta: 'False confidence',
+			},
+		],
+	};
+---
+
+<section class="release-problems section-band relative overflow-hidden py-20 md:py-32">
+	<div class="release-problems-line" aria-hidden="true"></div>
+	<Container>
+		<div class="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+			<div>
+				<p class="section-eyebrow">{content.eyebrow}</p>
+				<h2 class="mt-4 max-w-3xl text-3xl font-extrabold md:text-5xl">{content.title}</h2>
+			</div>
+			<p class="max-w-2xl text-lg leading-relaxed text-muted lg:justify-self-end" data-reveal>{content.lead}</p>
+		</div>
+
+		<div class="mt-12 grid gap-5 md:grid-cols-3">
+			{content.problems.map((item, index) => {
+				const Icon = item.icon;
+				return (
+					<article class="release-problem-card" data-reveal style={`--reveal-delay:${index * 80}ms`}>
+						<div class="release-problem-icon">
+							<Icon class="size-5" aria-hidden="true" />
+						</div>
+						<p class="release-problem-meta">{item.meta}</p>
+						<h3>{item.title}</h3>
+						<p>{item.text}</p>
+					</article>
+				);
+			})}
+		</div>
+	</Container>
+</section>

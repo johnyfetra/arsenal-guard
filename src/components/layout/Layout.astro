@@ -22,7 +22,7 @@ const { title, description, lang, path, type, schema } = Astro.props;
 	<head>
 		<script is:inline>
 			const savedTheme = localStorage.getItem('theme');
-			const preferredTheme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			const preferredTheme = savedTheme || 'dark';
 			document.documentElement.dataset.theme = preferredTheme;
 			document.documentElement.classList.toggle('dark', preferredTheme === 'dark');
 			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;

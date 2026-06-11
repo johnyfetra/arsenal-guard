@@ -1,497 +1,580 @@
 ---
 import ArrowRight from 'lucide-astro/ArrowRight';
-import Badge from '../ui/Badge.astro';
+import Activity from 'lucide-astro/Activity';
+import Bot from 'lucide-astro/Bot';
+import GitBranch from 'lucide-astro/GitBranch';
+import ShieldCheck from 'lucide-astro/ShieldCheck';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
-import { copy, routeMap, type Lang } from '../../lib/i18n';
+import { routeMap, type Lang } from '../../lib/i18n';
 
 interface Props {
 	lang: Lang;
 }
+
 const { lang } = Astro.props;
-const t = copy[lang].hero;
-const squareSize = 13;
-const squareStep = 19;
-const gridCols = 64;
-const gridRows = 41;
-const gridOffset = 3;
-const gridCells = Array.from({ length: gridCols * gridRows }, (_, index) => {
-	const cols = gridCols;
-	return {
-		x: gridOffset + (index % cols) * squareStep,
-		y: gridOffset + Math.floor(index / cols) * squareStep,
+
+const hero = lang === 'fr'
+	? {
+		badge: 'Release Command · QA humaine + automation + CI/CD',
+		title: ['Vos releases', 'sans angle mort.'],
+		lead: 'Arsenal Guard combine QA manuelle senior, automatisation Playwright/Cypress et contrôle CI/CD pour livrer plus vite, sans perdre la maîtrise.',
+		primary: 'Planifier un audit QA',
+		secondary: 'Voir l’approche',
+		proof: 'Europe remote · Tests manuels · Automation · CI/CD ready',
+		radarTitle: 'Release readiness',
+		radarSubtitle: 'Signal qualité avant production',
+		layers: ['Human review', 'Automated checks', 'Release gate'],
+		signals: [
+			['Critical flows', '12 scénarios couverts', 'ready'],
+			['Regression suite', '2 flakies isolés', 'watch'],
+			['CI signal', 'Blocking tests actifs', 'pass'],
+			['Risk map', '3 priorités produit', 'review'],
+		],
+		stats: [
+			['72h', 'rapport priorisé'],
+			['5+', 'ans QA senior'],
+			['UTC+3', 'overlap Europe'],
+		],
+	}
+	: {
+		badge: 'Release Command · Human QA + automation + CI/CD',
+		title: ['Release confidence', 'without blind spots.'],
+		lead: 'Arsenal Guard combines senior manual QA, Playwright/Cypress automation and CI/CD release control for teams that need speed without blind spots.',
+		primary: 'Book a QA audit',
+		secondary: 'See the approach',
+		proof: 'Europe remote · Manual testing · Automation · CI/CD ready',
+		radarTitle: 'Release readiness',
+		radarSubtitle: 'Quality signal before production',
+		layers: ['Human review', 'Automated checks', 'Release gate'],
+		signals: [
+			['Critical flows', '12 journeys covered', 'ready'],
+			['Regression suite', '2 flakies isolated', 'watch'],
+			['CI signal', 'Blocking tests active', 'pass'],
+			['Risk map', '3 product priorities', 'review'],
+		],
+		stats: [
+			['72h', 'prioritized report'],
+			['5+', 'senior QA years'],
+			['UTC+3', 'Europe overlap'],
+		],
 	};
-});
+
+const icons = [ShieldCheck, Bot, GitBranch, Activity];
 ---
 
-<section
-	class="hero-shell hero-shell--home relative isolate overflow-hidden"
-	data-hero-grid-scene
->
-	<!-- ── Background layers ── -->
-	<div class="absolute inset-0 -z-20 hero-bg-solid" aria-hidden="true"></div>
+<section class="hero-shell hero-command relative isolate overflow-hidden">
+	<div class="hero-command-grid" aria-hidden="true"></div>
+	<div class="hero-command-beam hero-command-beam--orange" aria-hidden="true"></div>
+	<div class="hero-command-beam hero-command-beam--teal" aria-hidden="true"></div>
 
-	<!-- Radial glows -->
-	<div class="absolute -z-10 hero-glow-orange" aria-hidden="true"></div>
-	<div class="absolute -z-10 hero-glow-blue" aria-hidden="true"></div>
-
-	<!-- Animated grid of squares -->
-	<svg
-		class="hero-square-grid absolute inset-0 -z-10 h-full w-full"
-		viewBox="0 0 1200 760"
-		preserveAspectRatio="none"
-		aria-hidden="true"
-	>
-		<defs>
-			<radialGradient id="hero-square-bulge" cx="38%" cy="30%" r="78%">
-				<stop offset="0%" stop-color="#fff2d6" stop-opacity="0.95" />
-				<stop offset="42%" stop-color="#f39c12" stop-opacity="0.72" />
-				<stop offset="100%" stop-color="#0f1f44" stop-opacity="0.38" />
-			</radialGradient>
-			<filter id="hero-square-shadow" x="-130%" y="-130%" width="360%" height="360%">
-				<feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#e67e22" flood-opacity="0.13" />
-				<feDropShadow dx="-1" dy="-1" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.12" />
-			</filter>
-		</defs>
-		{gridCells.map(({ x, y }) => (
-			<rect
-				class="hero-square"
-				x={x}
-				y={y}
-				width={squareSize}
-				height={squareSize}
-				rx="2"
-				data-cx={x + squareSize / 2}
-				data-cy={y + squareSize / 2}
-			/>
-		))}
-	</svg>
-
-	<!-- Diagonal accent line -->
-	<div class="hero-diag-line absolute inset-y-0 right-[20%] w-px -skew-x-12 opacity-20 -z-10" aria-hidden="true"></div>
-	<div class="hero-diag-line absolute inset-y-0 right-[38%] w-px -skew-x-12 opacity-10 -z-10" aria-hidden="true"></div>
-
-	<Container class="relative z-10 flex flex-col items-center text-center">
-		<!-- Animated badge -->
-		<div class="hero-badge-wrap" data-animate="fade-down">
-			<Badge class="hero-badge-pill">{t.badge}</Badge>
-		</div>
-
-		<!-- Main headline — two lines, dramatic scale -->
-		<div class="hero-title-wrap max-w-5xl scroll-float" data-scroll-depth="-18">
-			<h1 class="hero-heading font-extrabold">
-				<span class="hero-title-line-1 block">{t.title}</span>
-				<span class="hero-heading-accent block">{t.accent}</span>
+	<Container class="relative z-10 grid gap-12 lg:grid-cols-[minmax(0,1.02fr)_minmax(24rem,.78fr)] lg:items-center">
+		<div class="hero-command-copy">
+			<p class="hero-command-badge">{hero.badge}</p>
+			<h1 class="hero-command-title">
+				{hero.title.map((line, index) => (
+					<span class={index === hero.title.length - 1 ? 'hero-command-title-accent' : ''}>{line}</span>
+				))}
 			</h1>
+			<p class="hero-command-lead">{hero.lead}</p>
+
+			<div class="hero-command-actions" role="group" aria-label={lang === 'fr' ? 'Actions principales' : 'Primary actions'}>
+				<Button href={routeMap.quote} lang={lang}>
+					{hero.primary}
+					<ArrowRight class="size-4" aria-hidden="true" />
+				</Button>
+				<Button href="#release-approach" lang={lang} variant="secondary">
+					{hero.secondary}
+				</Button>
+			</div>
+
+			<p class="hero-command-proof">{hero.proof}</p>
 		</div>
 
-		<!-- Subtitle -->
-		<p class="hero-subtitle max-w-2xl">
-			{t.subtitle}
-		</p>
+		<div class="hero-command-visual scroll-float" data-scroll-depth="-14" aria-label={hero.radarTitle}>
+			<div class="release-radar">
+				<div class="release-radar-rings" aria-hidden="true">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<div class="release-radar-sweep" aria-hidden="true"></div>
+				<div class="release-radar-core">
+					<ShieldCheck class="size-8" aria-hidden="true" />
+				</div>
 
-		<!-- CTAs -->
-		<div class="hero-actions flex flex-col gap-3 sm:flex-row" role="group" aria-label={lang === 'fr' ? 'Actions principales' : 'Primary actions'}>
-			<Button href={routeMap.quote} lang={lang}>
-				{t.primary}
-				<ArrowRight class="size-4" aria-hidden="true" />
-			</Button>
-			<Button href={routeMap.services} lang={lang} variant="secondary">
-				{t.secondary}
-			</Button>
-		</div>
+				{hero.layers.map((layer, index) => (
+					<div class={`release-layer release-layer--${index + 1}`}>
+						<span class="release-layer-dot" aria-hidden="true"></span>
+						{layer}
+					</div>
+				))}
+			</div>
 
-		<!-- Trust line -->
-		<p class="hero-trust max-w-3xl rounded-full px-5 py-3 text-sm font-semibold">
-			<span aria-label="5 étoiles">★★★★★</span>
-			<span class="ml-1">{t.trust}</span>
-		</p>
+			<div class="release-panel">
+				<div class="release-panel-head">
+					<div>
+						<p>{hero.radarTitle}</p>
+						<span>{hero.radarSubtitle}</span>
+					</div>
+					<strong>94%</strong>
+				</div>
+				<div class="release-signal-list">
+					{hero.signals.map(([label, value, state], index) => {
+						const Icon = icons[index];
+						return (
+							<div class={`release-signal release-signal--${state}`}>
+								<Icon class="size-4" aria-hidden="true" />
+								<div>
+									<p>{label}</p>
+									<span>{value}</span>
+								</div>
+							</div>
+						);
+					})}
+				</div>
+			</div>
 
-		<!-- Scroll indicator -->
-		<div class="hero-scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2" aria-hidden="true">
-			<div class="hero-scroll-dot"></div>
+			<div class="hero-command-stats" aria-label={lang === 'fr' ? 'Indicateurs Arsenal Guard' : 'Arsenal Guard indicators'}>
+				{hero.stats.map(([value, label]) => (
+					<div>
+						<strong>{value}</strong>
+						<span>{label}</span>
+					</div>
+				))}
+			</div>
 		</div>
 	</Container>
 </section>
 
 <style>
-	/* ── Hero always has dark background regardless of theme ── */
-	.hero-shell {
-		display: flex;
-		min-height: calc(100svh - 4.5rem);
+	.hero-command {
+		min-height: calc(100svh - 6.5rem);
 		align-items: center;
-		padding-block: clamp(3rem, 7vh, 5rem);
+		padding-block: clamp(4rem, 9vh, 7rem);
+		background:
+			linear-gradient(118deg, rgba(255, 106, 42, 0.12), transparent 26%),
+			linear-gradient(242deg, rgba(24, 214, 178, 0.11), transparent 32%),
+			linear-gradient(135deg, #05070a 0%, #081827 52%, #102b3c 100%);
+		color: #f5f7f8;
 	}
 
-	.hero-bg-solid {
-		background: linear-gradient(135deg, #050b1a 0%, #0a1530 52%, #0f1f44 100%);
+	.hero-command-grid {
+		position: absolute;
+		inset: 0;
+		z-index: -3;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.036) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.036) 1px, transparent 1px);
+		background-size: 46px 46px;
+		mask-image: radial-gradient(ellipse 85% 78% at 50% 42%, #000 0%, transparent 78%);
+		opacity: 0.54;
 	}
 
-	.hero-glow-orange {
-		left: 5%;
-		top: 10%;
-		width: min(38rem, 50vw);
-		height: min(24rem, 40vw);
-		border-radius: 45%;
-		background: radial-gradient(circle, rgba(230, 126, 34, 0.22), rgba(230, 126, 34, 0.04) 55%, transparent 72%);
-		filter: blur(24px);
-		animation: drift-glow 13s ease-in-out infinite alternate;
+	.hero-command-beam {
+		position: absolute;
+		z-index: -2;
+		width: min(42rem, 70vw);
+		height: 1px;
+		filter: blur(0.5px);
+		opacity: 0.7;
+		transform: rotate(-18deg);
+		animation: release-beam 12s ease-in-out infinite alternate;
 	}
 
-	.hero-glow-blue {
-		right: 8%;
-		top: 5%;
-		width: min(30rem, 40vw);
-		height: min(20rem, 32vw);
-		border-radius: 40%;
-		background: radial-gradient(circle, rgba(42, 66, 117, 0.55), rgba(42, 66, 117, 0.08) 55%, transparent 72%);
-		filter: blur(28px);
-		animation: drift-glow 17s ease-in-out infinite alternate-reverse;
+	.hero-command-beam::before,
+	.hero-command-beam::after {
+		content: '';
+		position: absolute;
+		inset: -4rem 0;
+		background: linear-gradient(90deg, transparent, currentColor, transparent);
+		opacity: 0.2;
 	}
 
-	.hero-diag-line {
-		background: linear-gradient(
-			to bottom,
-			transparent 0%,
-			rgba(230, 126, 34, 0.35) 30%,
-			rgba(230, 126, 34, 0.35) 70%,
-			transparent 100%
-		);
+	.hero-command-beam--orange {
+		left: -6rem;
+		top: 18%;
+		color: #ff6a2a;
 	}
 
-	/* Typography — always on dark bg */
-	.hero-heading {
-		color: #ffffff;
-		overflow: visible;
-		font-size: 5.9rem;
-		line-height: 1.08;
+	.hero-command-beam--teal {
+		right: -7rem;
+		top: 28%;
+		color: #18d6b2;
+		animation-delay: -5s;
+	}
+
+	.hero-command-badge {
+		display: inline-flex;
+		width: fit-content;
+		border: 1px solid rgba(24, 214, 178, 0.26);
+		border-radius: 9999px;
+		background: rgba(24, 214, 178, 0.07);
+		color: #8ff4dd;
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 0.74rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		padding: 0.55rem 0.85rem;
+		text-transform: uppercase;
+	}
+
+	.hero-command-title {
+		margin-top: clamp(1.4rem, 4vh, 2rem);
+		max-width: 58rem;
+		color: #f5f7f8;
+		font-size: clamp(3.3rem, 7vw, 6.2rem);
+		font-weight: 800;
 		letter-spacing: 0;
+		line-height: 0.94;
 		text-wrap: balance;
-		text-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
 	}
 
-	.hero-title-wrap {
-		width: 100%;
-		max-width: min(72rem, 100%);
-		margin-top: clamp(1rem, 3vh, 2rem);
-		overflow: visible;
+	.hero-command-title span {
+		display: block;
 	}
 
-	.hero-heading span {
-		overflow: visible;
-		padding-bottom: 0.08em;
-	}
-
-	.hero-heading-accent {
-		background: linear-gradient(92deg, #f39c12 0%, #f6c057 55%, #e67e22 100%);
+	.hero-command-title-accent {
+		background: linear-gradient(95deg, #ff6a2a 0%, #f6c057 46%, #18d6b2 100%);
+		background-clip: text;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		margin-top: -0.02em;
 	}
 
-	.hero-subtitle {
-		margin-top: clamp(1rem, 2.5vh, 1.75rem);
-		color: rgba(255, 255, 255, 0.78);
-		font-size: 1.15rem;
+	.hero-command-lead {
+		margin-top: 1.45rem;
+		max-width: 42rem;
+		color: rgba(245, 247, 248, 0.72);
+		font-size: clamp(1.02rem, 2vw, 1.2rem);
 		line-height: 1.72;
 	}
 
-	.hero-actions {
-		margin-top: clamp(1.4rem, 4vh, 2.5rem);
-	}
-
-	.hero-trust {
-		margin-top: clamp(1.3rem, 4vh, 2.5rem);
-		border: 1px solid rgba(255, 255, 255, 0.14);
-		background: rgba(255, 255, 255, 0.07);
-		color: rgba(255, 255, 255, 0.82);
-		backdrop-filter: blur(8px);
-	}
-
-	/* Badge pill */
-	.hero-badge-pill {
-		border-color: rgba(243, 156, 18, 0.35);
-		background: rgba(243, 156, 18, 0.1);
-		color: #f6b93b;
-		animation: badge-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-	}
-
-	/* Grid */
-	.hero-square-grid {
-		pointer-events: auto;
-		opacity: 0.44;
-	}
-
-	.hero-square-grid .hero-square {
-		fill: rgba(255, 255, 255, 0.012);
-		stroke: rgba(255, 255, 255, 0.15);
-		stroke-width: 0.72;
-		pointer-events: none;
-		transform-box: fill-box;
-		transform-origin: center;
-		transition: none;
-		opacity: 0.52;
-		will-change: transform, opacity, filter;
-	}
-
-	.hero-square-grid .hero-square:nth-child(3n) {
-		opacity: 0.38;
-	}
-
-	.hero-square-grid .hero-square:nth-child(5n) {
-		stroke: rgba(230, 126, 34, 0.12);
-	}
-
-	/* Scroll hint dot */
-	.hero-scroll-hint {
+	.hero-command-actions {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.35rem;
-		opacity: 0.45;
+		flex-wrap: wrap;
+		gap: 0.85rem;
+		margin-top: 2rem;
 	}
 
-	.hero-scroll-dot {
-		width: 6px;
-		height: 6px;
+	.hero-command-proof {
+		margin-top: 1.15rem;
+		color: rgba(245, 247, 248, 0.55);
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 0.82rem;
+	}
+
+	.hero-command-visual {
+		position: relative;
+		min-height: 38rem;
+	}
+
+	.release-radar {
+		position: relative;
+		display: grid;
+		width: min(31rem, 100%);
+		aspect-ratio: 1;
+		place-items: center;
+		margin-left: auto;
+		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 9999px;
-		background: rgba(243, 156, 18, 0.8);
-		animation: scroll-bounce 2s ease-in-out infinite;
+		background:
+			radial-gradient(circle, rgba(24, 214, 178, 0.08), transparent 52%),
+			rgba(255, 255, 255, 0.025);
+		box-shadow:
+			inset 0 0 70px rgba(24, 214, 178, 0.06),
+			0 34px 120px rgba(0, 0, 0, 0.38);
+		overflow: hidden;
 	}
 
-	@keyframes drift-glow {
-		from {
-			transform: translate3d(-3%, 0, 0) rotate(-8deg) scale(0.96);
-			opacity: 0.55;
-		}
+	.release-radar-rings,
+	.release-radar-rings span,
+	.release-radar-sweep {
+		position: absolute;
+		inset: 0;
+		border-radius: 9999px;
+	}
+
+	.release-radar-rings span {
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		margin: var(--ring-space, 4rem);
+	}
+
+	.release-radar-rings span:nth-child(2) {
+		--ring-space: 7.5rem;
+		border-color: rgba(24, 214, 178, 0.18);
+	}
+
+	.release-radar-rings span:nth-child(3) {
+		--ring-space: 11rem;
+		border-color: rgba(255, 106, 42, 0.22);
+	}
+
+	.release-radar-sweep {
+		background: conic-gradient(from 30deg, transparent 0deg, rgba(24, 214, 178, 0.22) 34deg, transparent 68deg);
+		mask-image: radial-gradient(circle, transparent 0 17%, #000 18% 100%);
+		animation: release-sweep 10s linear infinite;
+	}
+
+	.release-radar-core {
+		position: relative;
+		z-index: 2;
+		display: grid;
+		width: 5.8rem;
+		aspect-ratio: 1;
+		place-items: center;
+		border: 1px solid rgba(255, 106, 42, 0.34);
+		border-radius: 1.65rem;
+		background: linear-gradient(145deg, rgba(255, 106, 42, 0.18), rgba(24, 214, 178, 0.09));
+		color: #ff9b5e;
+		box-shadow: 0 0 46px rgba(255, 106, 42, 0.2);
+	}
+
+	.release-layer {
+		position: absolute;
+		z-index: 3;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		border: 1px solid rgba(255, 255, 255, 0.13);
+		border-radius: 9999px;
+		background: rgba(5, 7, 10, 0.64);
+		color: rgba(245, 247, 248, 0.78);
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 0.68rem;
+		font-weight: 700;
+		padding: 0.48rem 0.7rem;
+		text-transform: uppercase;
+		backdrop-filter: blur(16px);
+	}
+
+	.release-layer--1 {
+		left: 9%;
+		top: 25%;
+	}
+
+	.release-layer--2 {
+		right: 4%;
+		top: 44%;
+	}
+
+	.release-layer--3 {
+		left: 23%;
+		bottom: 16%;
+	}
+
+	.release-layer-dot {
+		width: 0.44rem;
+		aspect-ratio: 1;
+		border-radius: 9999px;
+		background: #18d6b2;
+		box-shadow: 0 0 16px rgba(24, 214, 178, 0.8);
+	}
+
+	.release-panel {
+		position: absolute;
+		right: 0;
+		bottom: 2.2rem;
+		z-index: 4;
+		width: min(24rem, 82%);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 1.35rem;
+		background: rgba(8, 24, 39, 0.82);
+		box-shadow: 0 26px 90px rgba(0, 0, 0, 0.32);
+		padding: 1rem;
+		backdrop-filter: blur(22px) saturate(150%);
+	}
+
+	.release-panel-head {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.3rem 0.35rem 0.9rem;
+	}
+
+	.release-panel-head p {
+		color: #f5f7f8;
+		font-weight: 800;
+	}
+
+	.release-panel-head span {
+		color: rgba(245, 247, 248, 0.54);
+		font-size: 0.8rem;
+	}
+
+	.release-panel-head strong {
+		color: #b8ff6a;
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 1.35rem;
+	}
+
+	.release-signal-list {
+		display: grid;
+		gap: 0.55rem;
+	}
+
+	.release-signal {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 0.7rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 0.9rem;
+		background: rgba(255, 255, 255, 0.045);
+		color: #18d6b2;
+		padding: 0.7rem;
+	}
+
+	.release-signal p {
+		color: #f5f7f8;
+		font-size: 0.84rem;
+		font-weight: 750;
+	}
+
+	.release-signal span {
+		display: block;
+		margin-top: 0.08rem;
+		color: rgba(245, 247, 248, 0.5);
+		font-size: 0.76rem;
+	}
+
+	.release-signal--watch {
+		color: #ffb26f;
+	}
+
+	.release-signal--review {
+		color: #f6c057;
+	}
+
+	.hero-command-stats {
+		position: absolute;
+		left: 0;
+		bottom: 0.4rem;
+		z-index: 5;
+		display: grid;
+		width: min(23rem, 78%);
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 1.1rem;
+		background: rgba(5, 7, 10, 0.72);
+		backdrop-filter: blur(18px);
+	}
+
+	.hero-command-stats div {
+		padding: 0.85rem;
+	}
+
+	.hero-command-stats div + div {
+		border-left: 1px solid rgba(255, 255, 255, 0.09);
+	}
+
+	.hero-command-stats strong,
+	.hero-command-stats span {
+		display: block;
+	}
+
+	.hero-command-stats strong {
+		color: #f5f7f8;
+		font-size: 1.1rem;
+		font-weight: 800;
+	}
+
+	.hero-command-stats span {
+		margin-top: 0.2rem;
+		color: rgba(245, 247, 248, 0.48);
+		font-size: 0.69rem;
+		font-weight: 700;
+		line-height: 1.25;
+		text-transform: uppercase;
+	}
+
+	@keyframes release-sweep {
 		to {
-			transform: translate3d(18%, 12%, 0) rotate(4deg) scale(1.08);
-			opacity: 0.82;
+			transform: rotate(360deg);
 		}
 	}
 
-	@keyframes badge-in {
+	@keyframes release-beam {
 		from {
-			opacity: 0;
-			transform: translateY(-10px) scale(0.94);
+			transform: translate3d(0, 0, 0) rotate(-18deg);
 		}
+
 		to {
-			opacity: 1;
-			transform: translateY(0) scale(1);
-		}
-	}
-
-	@keyframes scroll-bounce {
-		0%, 100% { transform: translateY(0); opacity: 0.45; }
-		50% { transform: translateY(6px); opacity: 0.7; }
-	}
-
-	@media (max-height: 760px) and (min-width: 768px) {
-		.hero-shell {
-			min-height: calc(100svh - 4rem);
-			padding-block: 2rem;
-		}
-
-		.hero-heading {
-			font-size: 4.85rem;
-			line-height: 1.08;
-		}
-
-		.hero-title-wrap {
-			margin-top: 1rem;
-		}
-
-		.hero-subtitle {
-			margin-top: 0.9rem;
-			line-height: 1.55;
-		}
-
-		.hero-actions,
-		.hero-trust {
-			margin-top: 1.15rem;
-		}
-
-		.hero-scroll-hint {
-			display: none;
+			transform: translate3d(5%, 1.5rem, 0) rotate(-18deg);
 		}
 	}
 
 	@media (max-width: 1024px) {
-		.hero-heading {
-			font-size: 4.8rem;
-		}
-
-		.hero-title-wrap {
-			max-width: min(58rem, 100%);
-		}
-	}
-
-	@media (max-width: 768px) {
-		.hero-shell {
+		.hero-command {
 			min-height: auto;
-			padding-block: 3.4rem 4rem;
 		}
 
-		.hero-badge-wrap {
-			width: 100%;
-			display: flex;
-			justify-content: center;
+		.hero-command-visual {
+			min-height: 34rem;
 		}
 
-		.hero-badge-pill {
-			max-width: min(100%, 24rem);
-			white-space: normal;
-			text-align: center;
-			font-size: 0.72rem;
-			line-height: 1.35;
-			letter-spacing: 0.12em;
-			padding-inline: 0.85rem;
-		}
-
-		.hero-heading {
-			font-size: 3.35rem;
-			line-height: 1.1;
-		}
-
-		.hero-title-wrap {
-			margin-top: 1rem;
-			max-width: 34rem;
-		}
-
-		.hero-subtitle {
-			max-width: 33rem;
-			font-size: 1rem;
-			line-height: 1.65;
-		}
-
-		.hero-actions {
-			width: 100%;
-			align-items: stretch;
-			justify-content: center;
+		.release-radar {
+			margin-inline: auto;
 		}
 	}
 
 	@media (max-width: 640px) {
-		.hero-shell {
-			padding-block: 3.1rem 3.75rem;
+		.hero-command {
+			padding-block: 3.4rem 4rem;
 		}
 
-		.hero-heading {
-			font-size: 2.82rem;
-		}
-
-		.hero-trust {
-			border-radius: 1.25rem;
-			font-size: 0.78rem;
+		.hero-command-badge {
+			font-size: 0.68rem;
 			line-height: 1.45;
-			padding: 0.85rem 1rem;
+			white-space: normal;
 		}
 
-		.hero-scroll-hint {
-			display: none;
-		}
-	}
-
-	@media (max-width: 420px) {
-		.hero-heading {
-			font-size: 2.45rem;
-			line-height: 1.12;
+		.hero-command-actions {
+			align-items: stretch;
+			flex-direction: column;
 		}
 
-		.hero-subtitle {
-			font-size: 0.96rem;
-			line-height: 1.6;
+		.hero-command-actions :global(a) {
+			width: 100%;
+		}
+
+		.hero-command-visual {
+			display: grid;
+			gap: 0.75rem;
+			min-height: auto;
+			margin-top: 0.5rem;
+		}
+
+		.release-radar {
+			width: min(100%, 22rem);
+		}
+
+		.release-panel {
+			position: relative;
+			left: auto;
+			right: auto;
+			bottom: auto;
+			width: 100%;
+			transform: none;
+		}
+
+		.hero-command-stats {
+			position: relative;
+			left: auto;
+			bottom: auto;
+			width: 100%;
+			transform: none;
+		}
+
+		.release-layer {
+			font-size: 0.6rem;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.hero-glow-orange,
-		.hero-glow-blue,
-		.hero-badge-pill,
-		.hero-scroll-dot {
+		.hero-command-beam,
+		.release-radar-sweep {
 			animation: none;
 		}
 	}
 </style>
-
-<script is:inline>
-	const scene = document.querySelector('[data-hero-grid-scene]');
-	const svg = scene?.querySelector('.hero-square-grid');
-	const squares = svg
-		? [...svg.querySelectorAll('.hero-square')].map((square) => ({
-				el: square,
-				cx: Number(square.dataset.cx),
-				cy: Number(square.dataset.cy),
-			}))
-		: [];
-	let frame = 0;
-	let pointer = null;
-	let activeSquares = new Set();
-
-	const resetSquare = (square) => {
-		square.style.transform = '';
-		square.style.opacity = '';
-		square.style.fill = '';
-		square.style.stroke = '';
-		square.style.filter = '';
-		square.style.strokeWidth = '';
-	};
-
-	const resetSquares = (items = activeSquares) => {
-		for (const square of items) resetSquare(square);
-		activeSquares.clear();
-	};
-
-	const animateSquares = () => {
-		frame = 0;
-		if (!pointer || !svg) return;
-		const point = svg.createSVGPoint();
-		point.x = pointer.x;
-		point.y = pointer.y;
-		const local = point.matrixTransform(svg.getScreenCTM().inverse());
-		const radius = 72;
-		const nextActive = new Set();
-
-		for (const { el: square, cx, cy } of squares) {
-			const dx = cx - local.x;
-			const dy = cy - local.y;
-			const distance = Math.hypot(dx, dy);
-			const strength = Math.max(0, 1 - distance / radius);
-			if (strength <= 0) continue;
-			nextActive.add(square);
-			const eased = 1 - Math.pow(1 - strength, 2);
-			const directionX = distance ? dx / distance : 0;
-			const directionY = distance ? dy / distance : -1;
-			const push = eased * 2.2;
-			const scale = 1 + eased * 0.5;
-			const lift = -eased * 1.1;
-			square.style.transform = `translate(${directionX * push}px, ${directionY * push + lift}px) scale(${scale})`;
-			square.style.opacity = String(0.48 + eased * 0.3);
-			square.style.fill = `rgba(255,255,255, ${0.012 + eased * 0.024})`;
-			square.style.stroke = `rgba(243,156,18, ${0.08 + eased * 0.14})`;
-			square.style.filter = eased > 0.24 ? 'url(#hero-square-shadow)' : '';
-			square.style.strokeWidth = String(0.72 + eased * 0.58);
-		}
-
-		for (const square of activeSquares) {
-			if (!nextActive.has(square)) resetSquare(square);
-		}
-		activeSquares = nextActive;
-	};
-
-	const schedule = (event) => {
-		pointer = { x: event.clientX, y: event.clientY };
-		if (!frame) frame = requestAnimationFrame(animateSquares);
-	};
-
-	if (scene && svg && squares.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-		scene.addEventListener('pointermove', schedule, { passive: true });
-		scene.addEventListener('pointerleave', () => {
-			pointer = null;
-			if (frame) cancelAnimationFrame(frame);
-			frame = 0;
-			resetSquares();
-		});
-	}
-</script>
