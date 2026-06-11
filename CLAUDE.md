@@ -138,7 +138,7 @@ npm run preview  # Preview production build
 - Git branch: `main` is production; rebase-merge workflow (`git pull --rebase`)
 - **Before `git pull --rebase`**: stash any unstaged deletions to avoid conflicts
 - Vercel deploys automatically from `main`
-- **Commit messages**: short, clear, imperative (≤72 chars) — no AI signature, no `Co-Authored-By`
+- **Commit messages**: follow Conventional Commits — `type(scope): description` — imperative, ≤72 chars, no period, no AI signature. Types: `feat`, `fix`, `refactor`, `style`, `chore`, `docs`, `perf`, `test`
 - **Context file sync**: `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md` must always be identical in content. Update all three together, commit in one shot.
 
 ---
