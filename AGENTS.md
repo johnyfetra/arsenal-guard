@@ -14,7 +14,7 @@ _Critical rules and patterns to follow when implementing code. Focus on non-obvi
 | Animations | GSAP + ScrollTrigger | ^3.15.0 |
 | Icons | lucide-astro | latest |
 | Fonts | @fontsource/inter, @fontsource/jetbrains-mono | self-hosted |
-| i18n | astro-i18next + JSON locale files | latest |
+| i18n | Custom (src/lib/i18n.ts copy object) | — |
 | Content | Astro Content Collections (MDX blog, MD services) | — |
 | Validation | Zod | — |
 | Deployment | Vercel (static) | — |
@@ -41,11 +41,12 @@ _Critical rules and patterns to follow when implementing code. Focus on non-obvi
 
 ### i18n Rules
 
-- Default locale: **`fr`** (no URL prefix); other locales: `/en/`, `/de/`, `/es/`, `/it/`
-- Translation files: `src/i18n/{locale}/{namespace}.json` — namespaces: `common`, `home`, `services`, `about`, `quote`, `seo`
-- Every new page or section **must** have translations in all 5 locales
-- SEO: hreflang tags in `<head>` for all page variants (handled by `BaseHead`)
-- `type Lang = 'fr' | 'en' | 'de' | 'es' | 'it'` from `src/lib/i18n.ts`
+- Default locale: **`fr`** (no URL prefix); other locale: `/en/`
+- **Single source of truth**: `src/lib/i18n.ts` — `copy` object contains all translations keyed by lang
+- `type Lang = 'fr' | 'en'` from `src/lib/i18n.ts`
+- Every new page or section **must** have translations in both FR and EN
+- SEO: hreflang tags in `<head>` for both locales (handled by `BaseHead`)
+- DE/ES/IT are out of scope for v1 (deferred to Phase 4)
 
 ### Animation Rules (GSAP System)
 
@@ -122,7 +123,7 @@ npm run preview  # Preview production build
 | Rule | Why it bites you |
 |---|---|
 | Never use `clearProps` to show hidden elements | `clearProps` only removes GSAP inline styles — CSS class-based `opacity:0` survives. Use `gsap.set(el, { opacity: 1, ... })` instead |
-| Never hardcode user-visible text | All 5 locales must match; missing key silently renders `undefined` |
+| Never hardcode user-visible text | Both FR/EN locales must match; missing key silently renders `undefined` |
 | Don't add `.reveal` to children of `.reveal` | `setupReveals()` filters out nested reveals; they'd be invisible forever |
 | `is:inline` ≠ `<script>` | `is:inline` runs synchronously, can't import npm packages. Use `<script>` for GSAP and any npm import |
 | `data-counter-final` is required for range values | Without it, `40–50%` would display as `50%` after counter completes |
