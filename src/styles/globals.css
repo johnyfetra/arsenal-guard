@@ -915,26 +915,18 @@ label:has(input[type='radio']) {
 	}
 }
 
+/* GSAP controls all reveal animations — CSS only provides the opacity fallback */
 .reveal-ready .reveal {
-	opacity: 1;
-	transform: translate3d(0, 14px, 0) scale(0.992);
-	transition:
-		opacity 360ms ease,
-		transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
-	transition-delay: var(--reveal-delay, 0ms);
+	opacity: 0;
+	/* transform is set per-element by GSAP (type-based: x for steps, scale for cards, etc.) */
 }
 
-.reveal-ready .reveal.is-visible {
-	opacity: 1;
-	transform: translate3d(0, 0, 0) scale(1);
+.reveal-ready .stack-pill {
+	opacity: 0;
 }
 
 .reveal-ready .reveal.scroll-float {
-	transform: translate3d(0, calc(14px + var(--scroll-shift, 0px)), 0) scale(0.992);
-}
-
-.reveal-ready .reveal.scroll-float.is-visible {
-	transform: translate3d(0, var(--scroll-shift, 0px), 0) scale(1);
+	transform: translate3d(0, var(--scroll-shift, 0px), 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1453,6 +1445,7 @@ label:has(input[type='radio']) {
 	font-weight: 800;
 	line-height: 1;
 	letter-spacing: -0.03em;
+	white-space: nowrap;
 	background: linear-gradient(135deg, #ffffff 30%, rgba(243, 156, 18, 0.85));
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;

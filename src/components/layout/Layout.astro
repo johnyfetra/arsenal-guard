@@ -38,7 +38,7 @@ const { title, description, lang, path, type, schema } = Astro.props;
 		</main>
 		<Footer lang={lang} />
 		<script is:inline>
-			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+			// Mark elements for GSAP reveal (adds .reveal class used as selector)
 			const revealSelectors = [
 				'main section:not(.hero-shell) h1',
 				'main section:not(.hero-shell) h2',
@@ -55,41 +55,12 @@ const { title, description, lang, path, type, schema } = Astro.props;
 				if (node.matches('h1, h2') && node.closest('.surface, .step-card, form, .logo-marquee, .prose-ag')) return false;
 				return true;
 			});
-			const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
-			const showAllReveals = () => {
-				for (const node of revealNodes) node.classList.add('is-visible');
-			};
-
 			revealNodes.forEach((node) => {
 				if (!node.classList.contains('reveal')) node.classList.add('reveal');
-				const siblings = revealNodes.filter((item) => item.closest('section') === node.closest('section'));
-				const index = siblings.indexOf(node);
-				node.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 45}ms`);
 			});
 
-			if (reduceMotion.matches || !('IntersectionObserver' in window)) {
-				document.documentElement.classList.remove('reveal-ready');
-				showAllReveals();
-			} else {
-				const observer = new IntersectionObserver((entries, currentObserver) => {
-					for (const entry of entries) {
-						if (!entry.isIntersecting) continue;
-						entry.target.classList.add('is-visible');
-						currentObserver.unobserve(entry.target);
-					}
-				}, { rootMargin: '0px 0px -8% 0px', threshold: 0.14 });
-
-				revealNodes.forEach((node) => {
-					const rect = node.getBoundingClientRect();
-					if (rect.top < viewportHeight * 0.9) {
-						node.classList.add('is-visible');
-					} else {
-						observer.observe(node);
-					}
-				});
-				setTimeout(showAllReveals, 1400);
-			}
-
+			// Scroll-float parallax (lightweight, no GSAP needed)
+			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 			const scrollFloatNodes = [...document.querySelectorAll('.scroll-float[data-scroll-depth]')];
 			let scrollFloatFrame = 0;
 			const updateScrollFloat = () => {
@@ -111,6 +82,9 @@ const { title, description, lang, path, type, schema } = Astro.props;
 				addEventListener('scroll', requestScrollFloat, { passive: true });
 				addEventListener('resize', requestScrollFloat);
 			}
+		</script>
+		<script>
+			import '../../scripts/animations';
 		</script>
 	</body>
 </html>

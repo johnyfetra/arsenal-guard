@@ -10,18 +10,18 @@ const ctaMeta = lang === 'fr'
 		eyebrow: 'Prêt à démarrer ?',
 		secondary: 'Discuter en 15 min',
 		stats: [
-			['24h', 'Délai de réponse'],
-			['5+', "Ans d'expérience"],
-			['Sans engagement', 'Forfaits mensuels'],
+			{ value: '24h', label: 'Délai de réponse', counter: '24', suffix: 'h' },
+			{ value: '5+', label: "Ans d'expérience", counter: '5', suffix: '+' },
+			{ value: 'Sans engagement', label: 'Forfaits mensuels' },
 		],
 	}
 	: {
 		eyebrow: 'Ready to start?',
 		secondary: 'Book a 15-min call',
 		stats: [
-			['24h', 'Response time'],
-			['5+', 'Years of experience'],
-			['Flexible', 'Monthly plans'],
+			{ value: '24h', label: 'Response time', counter: '24', suffix: 'h' },
+			{ value: '5+', label: 'Years of experience', counter: '5', suffix: '+' },
+			{ value: 'Flexible', label: 'Monthly plans' },
 		],
 	};
 ---
@@ -54,9 +54,13 @@ const ctaMeta = lang === 'fr'
 
 		<!-- micro-stats -->
 		<div class="mt-10 flex flex-wrap justify-center gap-x-10 gap-y-6 border-t border-white/15 pt-8 md:mt-16 md:gap-x-12 md:pt-12 reveal" style="--reveal-delay:220ms">
-			{ctaMeta.stats.map(([val, label]) => (
+			{ctaMeta.stats.map(({ value, label, counter, suffix }) => (
 				<div class="text-center">
-					<p class="text-2xl font-extrabold text-white">{val}</p>
+					<p
+						class="text-2xl font-extrabold text-white"
+						data-counter={counter}
+						data-counter-suffix={suffix}
+					>{value}</p>
 					<p class="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/50">{label}</p>
 				</div>
 			))}

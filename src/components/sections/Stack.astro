@@ -12,14 +12,14 @@ const categories = [
 ];
 const stats = lang === 'fr'
 	? [
-		['5+', "années d'expérience QA senior"],
-		['40-50%', "d'économie vs staffing local équivalent"],
-		['UTC+3', "recouvrement confortable avec l'Europe"],
+		{ value: '5+',    label: "années d'expérience QA senior",         counter: '5',  suffix: '+',  prefix: undefined, final: undefined },
+		{ value: '40–50%', label: "d'économie vs staffing local équivalent", counter: '50', suffix: '%',  prefix: undefined, final: '40–50%' },
+		{ value: 'UTC+3', label: "recouvrement confortable avec l'Europe",  counter: '3',  suffix: '',   prefix: 'UTC+',    final: undefined },
 	]
 	: [
-		['5+', 'years of senior QA experience'],
-		['40-50%', 'savings vs equivalent local staffing'],
-		['UTC+3', 'comfortable overlap with Europe'],
+		{ value: '5+',    label: 'years of senior QA experience',   counter: '5',  suffix: '+', prefix: undefined, final: undefined },
+		{ value: '40–50%', label: 'savings vs equivalent local staffing', counter: '50', suffix: '%', prefix: undefined, final: '40–50%' },
+		{ value: 'UTC+3', label: 'comfortable overlap with Europe',  counter: '3',  suffix: '',  prefix: 'UTC+',    final: undefined },
 	];
 ---
 
@@ -62,9 +62,15 @@ const stats = lang === 'fr'
 
 		<!-- stats row -->
 		<div class="mt-10 grid gap-6 border-t border-white/10 pt-8 md:mt-16 md:grid-cols-3 md:pt-12 reveal">
-			{stats.map(([num, label]) => (
+			{stats.map(({ value, label, counter, suffix, prefix, final }) => (
 				<div class="flex items-center gap-4">
-					<p class="stat-number">{num}</p>
+					<p
+						class="stat-number"
+						data-counter={counter}
+						data-counter-suffix={suffix}
+						data-counter-prefix={prefix}
+						data-counter-final={final}
+					>{value}</p>
 					<p class="text-sm text-muted leading-snug max-w-[12rem]">{label}</p>
 				</div>
 			))}
