@@ -1,7 +1,7 @@
 ---
-import ShieldCheck from 'lucide-astro/ShieldCheck';
-import Workflow from 'lucide-astro/Workflow';
-import TrendingUp from 'lucide-astro/TrendingUp';
+import FileSearch from 'lucide-astro/FileSearch';
+import Zap from 'lucide-astro/Zap';
+import Eye from 'lucide-astro/Eye';
 import Container from '../ui/Container.astro';
 import { copy, type Lang } from '../../lib/i18n';
 import { valueProps } from '../../lib/site';
@@ -10,13 +10,13 @@ interface Props {
 	lang: Lang;
 }
 const { lang } = Astro.props;
-const icons = { ShieldCheck, Workflow, TrendingUp };
+const icons = { FileSearch, Zap, Eye };
 const localizedValueProps = lang === 'fr'
 	? valueProps
 	: [
-		{ icon: 'ShieldCheck', title: 'Reliable quality', text: 'Fewer bugs. More confidence on every critical release.' },
-		{ icon: 'Workflow', title: 'Automated testing', text: 'Scalable E2E suites with Cypress, Playwright and CI/CD.' },
-		{ icon: 'TrendingUp', title: 'Business impact', text: 'Better ROI, delivery efficiency and release confidence.' },
+		{ icon: 'FileSearch', title: 'A clear report, not a ticket dump', text: 'Every bug is documented, prioritized and illustrated. No noise — just what actually blocks.' },
+		{ icon: 'Zap', title: 'No setup, no tools to learn', text: 'You share a staging link. We handle the rest. Delivered in 48 to 72 business hours.' },
+		{ icon: 'Eye', title: 'The outside perspective your team can\'t have', text: 'An external tester sees what familiarity hides: broken flows, UX inconsistencies, critical anomalies.' },
 	];
 ---
 

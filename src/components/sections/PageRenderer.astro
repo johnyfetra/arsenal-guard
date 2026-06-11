@@ -13,11 +13,15 @@ import FAQ from './FAQ.astro';
 import CTASection from './CTASection.astro';
 import LogoCloud from './LogoCloud.astro';
 import Testimonials from './Testimonials.astro';
+import TierPricingTable from './TierPricingTable.astro';
+import SnapshotTeaser from './SnapshotTeaser.astro';
+import AutomationBridge from './AutomationBridge.astro';
 import QuoteForm from '../forms/QuoteForm.astro';
 import ContactForm from '../forms/ContactForm.astro';
 import johnyPortrait from '../../assets/images/johny-fetramalala.jpg';
 import { copy, getPageTitle, routeMap, type Lang } from '../../lib/i18n';
 import { dedicated, localizedServiceIntro, plans, punctualOffers, services, site } from '../../lib/site';
+import type { PunctualRow } from '../../lib/site';
 
 interface Props {
 	lang: Lang;
@@ -161,10 +165,12 @@ const ui = lang === 'fr'
 		<>
 			<Hero lang={lang} />
 			<LogoCloud lang={lang} />
-			<ValueProps lang={lang} />
+			<SnapshotTeaser lang={lang} />
 			<HowItWorks lang={lang} />
+			<AutomationBridge lang={lang} />
+			<ValueProps lang={lang} />
 			<Stack lang={lang} />
-			<ServicesPreview lang={lang} mode="pricing" />
+			<ServicesPreview lang={lang} mode="services" />
 			<Testimonials lang={lang} />
 			<FAQ lang={lang} />
 			<CTASection lang={lang} />
@@ -180,21 +186,55 @@ const ui = lang === 'fr'
 				</Container>
 			</section>
 			<section class="py-24">
-				<Container class="grid gap-5 md:grid-cols-2">
-					{services.map((item) => (
-						<Card>
-							<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">{item.kicker}</p>
-							<h2 class="mt-4 text-3xl font-extrabold">{item.title}</h2>
-							<p class="mt-3 text-muted">{item.description}</p>
-							<p class="mt-5 font-mono text-orange-400">{item.duration} · {item.price}</p>
-							<Button class="mt-6" href={`services/${item.id}`} lang={lang} variant="secondary">{ui.serviceButton}</Button>
-						</Card>
-					))}
+				<Container>
+					<h2 class="mb-6 text-sm font-bold uppercase tracking-[0.14em] text-orange-400 reveal">
+						{lang === 'fr' ? 'Tests manuels' : 'Manual testing'}
+					</h2>
+					<div class="grid gap-5 md:grid-cols-2">
+						{services.filter((s) => s.id === 'test-manuel-ponctuel' || s.id === 'audit-qa').map((item) => (
+							<Card>
+								<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">{item.kicker}</p>
+								<h2 class="mt-4 text-3xl font-extrabold">{item.title}</h2>
+								<p class="mt-3 text-muted">{item.description}</p>
+								<p class="mt-5 font-mono text-orange-400">{item.duration} · {item.price}</p>
+								<Button class="mt-6" href={`services/${item.id}`} lang={lang} variant="secondary">{ui.serviceButton}</Button>
+							</Card>
+						))}
+					</div>
+
+					<h2 class="mb-6 mt-14 text-sm font-bold uppercase tracking-[0.14em] text-orange-400 reveal">
+						{lang === 'fr' ? 'Automatisation & accompagnement' : 'Automation & retainers'}
+					</h2>
+					<div class="grid gap-5 md:grid-cols-2">
+						{services.filter((s) => s.id !== 'test-manuel-ponctuel' && s.id !== 'audit-qa').map((item) => (
+							<Card>
+								<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">{item.kicker}</p>
+								<h2 class="mt-4 text-3xl font-extrabold">{item.title}</h2>
+								<p class="mt-3 text-muted">{item.description}</p>
+								<p class="mt-5 font-mono text-orange-400">{item.duration} · {item.price}</p>
+								<Button class="mt-6" href={`services/${item.id}`} lang={lang} variant="secondary">{ui.serviceButton}</Button>
+							</Card>
+						))}
+					</div>
 				</Container>
 			</section>
 			<section class="section-band border-y py-24">
 				<Container class="grid gap-8 lg:grid-cols-3">
-					<div><h2 class="text-3xl font-extrabold">{ui.punctual}</h2>{punctualOffers.map(([name, duration, price]) => <p class="mt-4 text-muted">{name} · {duration} · <strong>{price}</strong></p>)}</div>
+					<div>
+						<h2 class="text-3xl font-extrabold">{ui.punctual}</h2>
+						{punctualOffers.map((row: PunctualRow) =>
+							'tiers' in row
+								? (
+									<div class="mt-4">
+										<p class="font-semibold text-white">{row.name} · {row.duration}</p>
+										{row.tiers.map(([label, price]) => (
+											<p class="ml-3 mt-1 text-sm text-muted">{label} · <strong>{price}</strong></p>
+										))}
+									</div>
+								)
+								: <p class="mt-4 text-muted">{row[0]} · {row[1]} · <strong>{row[2]}</strong></p>
+						)}
+					</div>
 					<div><h2 class="text-3xl font-extrabold">{ui.monthly}</h2>{plans.map((plan) => <p class="mt-4 text-muted">{plan.name} · {plan.volume} · <strong>{plan.price}</strong></p>)}</div>
 					<div><h2 class="text-3xl font-extrabold">{ui.dedicated}</h2>{dedicated.map(([name, volume, price]) => <p class="mt-4 text-muted">{name} · {volume} · <strong>{price}</strong></p>)}</div>
 				</Container>
@@ -213,6 +253,11 @@ const ui = lang === 'fr'
 					<p class="mt-8 font-mono text-xl text-orange-400">{service.duration} · {service.price}</p>
 				</Container>
 			</section>
+
+			{service.tiers && service.tiers.length > 0 && (
+				<TierPricingTable tiers={service.tiers} lang={lang} />
+			)}
+
 			<section class="py-24">
 				<Container class="grid gap-6 lg:grid-cols-3">
 					<Card><h2 class="text-2xl font-extrabold">{ui.deliverables}</h2><ul class="mt-5 space-y-3 text-muted">{service.deliverables.map((item) => <li>{item}</li>)}</ul></Card>
@@ -220,7 +265,28 @@ const ui = lang === 'fr'
 					<Card><h2 class="text-2xl font-extrabold">{ui.forWhom}</h2><p class="mt-5 text-muted">{service.for}</p><Button class="mt-6" href={routeMap.quote} lang={lang}>{t.nav.quote}</Button></Card>
 				</Container>
 			</section>
+
 			<FAQ lang={lang} items={service.faq} />
+
+			{service.nextStep && (() => {
+				const nextService = services.find((s) => s.id === service.nextStep!.serviceId)
+				return nextService ? (
+					<section class="section-band border-y py-16">
+						<Container class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+							<div>
+								<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">
+									{lang === 'fr' ? 'Étape suivante' : 'Next step'}
+								</p>
+								<p class="mt-2 text-lg font-semibold">{service.nextStep!.label[lang]}</p>
+							</div>
+							<Button href={`services/${nextService.id}`} lang={lang} variant="secondary" class="shrink-0">
+								{nextService.title}
+							</Button>
+						</Container>
+					</section>
+				) : null
+			})()}
+
 			<CTASection lang={lang} />
 		</>
 	)}

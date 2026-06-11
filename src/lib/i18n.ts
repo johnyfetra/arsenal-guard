@@ -67,13 +67,13 @@ export const copy = {
 	fr: {
 		nav: { services: 'Services', about: 'À propos', cases: 'Réalisations', blog: 'Blog', contact: 'Contact', quote: 'Demander un devis' },
 		hero: {
-			badge: 'Service QA premium · Équipe francophone/anglophone',
-			title: 'Nous automatisons vos tests critiques',
-			accent: 'pour livrer plus vite, sans régressions.',
-			subtitle: 'Audit QA, tests E2E Playwright/Cypress et intégration CI/CD : vous gagnez des releases prévisibles, moins de bugs en production et une équipe produit plus sereine.',
+			badge: 'Test manuel · Rapport de bugs · Sans engagement',
+			title: 'Vos parcours critiques testés à la main.',
+			accent: 'Rapport livré sous 72h.',
+			subtitle: 'Je teste vos parcours à la main — audit de site existant, validation avant une release, test ciblé, ou regard tiers avant livraison client. Rapport de bugs priorisé sous 72h. Aucun setup. Aucun engagement.',
 			primary: 'Demander un devis',
 			secondary: 'Voir les services',
-			trust: 'Notre approche a fait ses preuves sur des produits utilisés par Chanel, Sodexo et des plateformes SaaS européennes',
+			trust: 'Interventions réalisées sur des produits utilisés par Chanel, Sodexo et des plateformes SaaS européennes',
 		},
 		sections: {
 			value: 'Qualité logicielle, sans bruit inutile',
@@ -85,8 +85,8 @@ export const copy = {
 			ctaLead: 'Discutons de votre projet en 15 minutes et identifions les tests qui réduisent vraiment votre risque release.',
 		},
 		descriptions: {
-			home: 'Arsenal Guard est un service de QA dédié pour startups et scale-ups européennes. Tests automatisés Cypress et Playwright, CI/CD, et expertise francophone offshore. Sécurisez vos prochaines releases.',
-			services: 'Audits, automatisation E2E, stabilisation de tests flaky, forfaits mensuels et QA dédiée pour équipes européennes.',
+			home: 'Arsenal Guard teste vos parcours critiques à la main et livre un rapport de bugs priorisé sous 72h. Audit de site, validation avant release, test ciblé — sans setup, sans engagement.',
+			services: 'QA Snapshot, audits, automatisation E2E, forfaits mensuels et QA dédiée — pour toute équipe qui veut livrer sans régressions.',
 			about: 'Découvrez Arsenal Guard, service de QA premium dédié aux scale-ups européennes. Notre mission, nos valeurs et l’équipe qui sécurise vos livraisons logicielles.',
 			cases: 'Les réalisations Arsenal Guard seront publiées après validation client.',
 			blog: 'Guides concrets pour mieux piloter la qualité logicielle, les tests E2E et l’automatisation QA.',
@@ -99,13 +99,13 @@ export const copy = {
 	en: {
 		nav: { services: 'Services', about: 'About', cases: 'Work', blog: 'Blog', contact: 'Contact', quote: 'Request a quote' },
 		hero: {
-			badge: 'Premium QA service · French-speaking team · European clients',
-			title: 'We automate your critical tests',
-			accent: 'so you ship faster, with fewer regressions.',
-			subtitle: 'QA audits, Playwright/Cypress E2E tests and CI/CD integration: you get predictable releases, fewer production bugs and a calmer product team.',
+			badge: 'Manual testing · Bug reports · No commitment',
+			title: 'Your critical flows tested by hand.',
+			accent: 'Bug report delivered in 72h.',
+			subtitle: 'I test your flows by hand — auditing existing sites, validating before a release, targeted testing, or a third-party review before client delivery. Prioritized bug report in 72h. No setup. No commitment.',
 			primary: 'Request a quote',
 			secondary: 'View services',
-			trust: 'Our approach has proven itself on products used by Chanel, Sodexo and European SaaS platforms',
+			trust: 'Work delivered on products used by Chanel, Sodexo and European SaaS platforms',
 		},
 		sections: {
 			value: 'Software quality without theatre',
@@ -117,8 +117,8 @@ export const copy = {
 			ctaLead: 'Let’s discuss your project in 15 minutes and identify the tests that truly reduce release risk.',
 		},
 		descriptions: {
-			home: 'Arsenal Guard helps CTOs and product teams automate critical testing with Cypress, Playwright and CI/CD.',
-			services: 'Audits, E2E automation, flaky test stabilization, monthly retainers and dedicated QA for European teams.',
+			home: 'Arsenal Guard tests your critical flows by hand and delivers a prioritized bug report in 72h. Site audits, pre-release validation, targeted testing — no setup, no commitment.',
+			services: 'QA Snapshot, audits, E2E automation, monthly retainers and dedicated QA — for any team that wants to ship without regressions.',
 			about: 'Discover Arsenal Guard, a premium QA service for European scale-ups. Our mission, values and the team securing your software releases.',
 			cases: 'Arsenal Guard case studies will be published after client approval.',
 			blog: 'Practical guides for better software quality, E2E tests and QA automation.',
@@ -137,6 +137,7 @@ export function getPageTitle(lang: Lang, key: keyof (typeof pageTitles)['fr']) {
 export const routeMap = {
 	home: '',
 	services: 'services',
+	snapshot: 'services/test-manuel-ponctuel',
 	audit: 'services/audit-qa',
 	automation: 'services/tests-automatises',
 	retainer: 'services/forfait-mensuel',

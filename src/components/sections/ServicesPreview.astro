@@ -5,6 +5,7 @@ import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import { copy, routeMap, type Lang } from '../../lib/i18n';
 import { plans, services } from '../../lib/site';
+import type { Service } from '../../lib/site';
 
 interface Props { lang: Lang; mode?: 'services' | 'pricing' }
 const { lang, mode = 'services' } = Astro.props;
@@ -81,11 +82,12 @@ const pricingItems = plans.map((item) => ({
 	perks: planDetails[item.name as keyof typeof planDetails].perks[lang],
 }));
 
-const serviceItems = services.slice(0, 3).map((item) => ({
+const homeServices = services.filter((s: Service) => s.featuredOnHome === true).slice(0, 3)
+const serviceItems = homeServices.map((item: Service) => ({
 	eyebrow: item.kicker,
 	title: item.title,
 	description: item.description,
-	price: item.price,
+	price: item.tiers ? (item.tiers.find((t) => t.featured)?.price ?? item.price) : item.price,
 	featured: false,
 	perks: item.deliverables.slice(0, 4),
 }));

@@ -1,0 +1,78 @@
+---
+import type { Tier } from '../../lib/site'
+import type { Lang } from '../../lib/i18n'
+import Container from '../ui/Container.astro'
+import Button from '../ui/Button.astro'
+import { routeMap } from '../../lib/i18n'
+
+interface Props {
+	tiers: Tier[]
+	lang: Lang
+}
+
+const { tiers, lang } = Astro.props
+
+const labels = lang === 'fr'
+	? {
+			title: 'Choisissez votre forfait',
+			subtitle: 'Tests manuels réalisés par un expert QA humain',
+			recommended: 'Recommandé',
+			cta: 'Demander un devis',
+			custom: 'Aucun forfait ne convient ?',
+			customLink: 'Devis sur mesure →',
+			reassurance: 'Réponse sous 24h · Sans engagement · Paiement à la livraison',
+		}
+	: {
+			title: 'Choose your plan',
+			subtitle: 'Manual tests carried out by a human QA expert',
+			recommended: 'Recommended',
+			cta: 'Request a quote',
+			custom: 'None of these fit?',
+			customLink: 'Custom quote →',
+			reassurance: 'Reply within 24h · No commitment · Payment on delivery',
+		}
+---
+
+<section class="py-20">
+	<Container>
+		<div class="mb-12 text-center reveal">
+			<h2 class="text-3xl font-extrabold md:text-4xl">{labels.title}</h2>
+			<p class="mt-3 text-muted">{labels.subtitle}</p>
+		</div>
+
+		<div class="grid gap-5 md:grid-cols-3 md:items-end">
+			{tiers.map((tier, index) => (
+				<div
+					class={`pricing-card reveal flex flex-col rounded-2xl p-8 ${tier.featured ? 'pricing-card--featured md:-translate-y-3' : ''}`}
+					style={`--reveal-delay:${index * 80}ms`}
+				>
+					{tier.featured && (
+						<div class="mb-4">
+							<span class="pricing-badge">{labels.recommended}</span>
+						</div>
+					)}
+					<p class="text-muted text-sm leading-relaxed">{tier.label}</p>
+					<p class="pricing-price mt-4">{tier.price}</p>
+					{tier.featured && (
+						<div class="mt-6">
+							<Button href={routeMap.quote} lang={lang} class="w-full justify-center">
+								{labels.cta}
+							</Button>
+						</div>
+					)}
+				</div>
+			))}
+		</div>
+
+		<div class="mt-8 rounded-xl border border-dashed border-white/20 px-6 py-5 text-center reveal">
+			<span class="text-muted text-sm">{labels.custom} </span>
+			<a
+				href={`/${routeMap.contact}`}
+				class="text-sm font-semibold text-orange-400 hover:underline"
+			>
+				{labels.customLink}
+			</a>
+			<p class="mt-2 text-xs text-muted/60">{labels.reassurance}</p>
+		</div>
+	</Container>
+</section>

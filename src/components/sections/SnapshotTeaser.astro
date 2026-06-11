@@ -1,0 +1,145 @@
+---
+import ArrowRight from 'lucide-astro/ArrowRight';
+import Check from 'lucide-astro/Check';
+import Star from 'lucide-astro/Star';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import { routeMap, type Lang } from '../../lib/i18n';
+import { services } from '../../lib/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const snapshot = services.find((s) => s.id === 'test-manuel-ponctuel')!;
+
+const labels = lang === 'fr'
+	? {
+		eyebrow: 'Point d\'entrée',
+		title: 'Testez votre produit avant la prochaine release.',
+		subtitle: 'Un testeur humain parcourt vos pages et documente chaque anomalie. Rapport livré sous 72h. Sans CI/CD. Sans setup.',
+		recommended: 'Recommandé',
+		custom: 'Volume plus important ?',
+		customLink: 'Obtenir un devis sur mesure',
+		cta: 'Voir le service complet',
+		perTier: [
+			{ label: '3–4 pages', duration: '~1,5 jour', perks: ['Rapport PDF structuré', 'Captures annotées', 'Bugs Critique / Majeur / Mineur'] },
+			{ label: '5–7 pages', duration: '~2,5 jours', perks: ['Rapport PDF structuré', 'Captures annotées', 'Matrice de couverture', 'Recommandations UX quick wins'] },
+			{ label: 'Jusqu\'à 20 pages', duration: '~5 jours', perks: ['Rapport PDF structuré', 'Captures annotées', 'Matrice de couverture', 'Recommandations UX + synthèse exécutive', 'Intégration Jira / Linear incluse'] },
+		],
+	}
+	: {
+		eyebrow: 'Entry point',
+		title: 'Test your product before the next release.',
+		subtitle: 'A human tester walks through your pages and documents every issue. Report delivered in 72h. No CI/CD. No setup.',
+		recommended: 'Recommended',
+		custom: 'Larger volume?',
+		customLink: 'Get a custom quote',
+		cta: 'View full service',
+		perTier: [
+			{ label: '3–4 pages', duration: '~1.5 days', perks: ['Structured PDF report', 'Annotated screenshots', 'Critical / Major / Minor bugs'] },
+			{ label: '5–7 pages', duration: '~2.5 days', perks: ['Structured PDF report', 'Annotated screenshots', 'Coverage matrix', 'UX quick wins'] },
+			{ label: 'Up to 20 pages', duration: '~5 days', perks: ['Structured PDF report', 'Annotated screenshots', 'Coverage matrix', 'UX recommendations + executive summary', 'Jira / Linear integration included'] },
+		],
+	};
+---
+
+<section class="snapshot-teaser py-20 md:py-32">
+	<Container>
+		<div class="mb-12 reveal">
+			<p class="section-eyebrow">{labels.eyebrow}</p>
+			<h2 class="mt-4 max-w-3xl text-3xl font-extrabold md:text-5xl">{labels.title}</h2>
+			<p class="mt-4 max-w-2xl text-muted text-lg leading-relaxed">{labels.subtitle}</p>
+		</div>
+
+		<div class="grid gap-5 md:grid-cols-3">
+			{snapshot.tiers!.map((tier, index) => {
+				const info = labels.perTier[index];
+				const isFeatured = tier.featured === true;
+				return (
+					<div
+						class={`snapshot-card reveal flex flex-col rounded-2xl border p-6 md:p-7 ${isFeatured ? 'snapshot-card--featured' : ''}`}
+						style={`--reveal-delay:${index * 80}ms`}
+					>
+						{isFeatured && (
+							<div class="mb-4 flex items-center gap-1.5">
+								<Star class="size-3.5 fill-orange-400 text-orange-400" />
+								<span class="snapshot-badge text-xs font-bold uppercase tracking-[0.14em]">{labels.recommended}</span>
+							</div>
+						)}
+						<p class="font-mono text-sm font-bold text-orange-400">{info.label}</p>
+						<p class="mt-1 text-xs text-muted">{info.duration}</p>
+						<p class="snapshot-price mt-4 text-3xl font-extrabold">{tier.price}</p>
+
+						<ul class="mt-5 flex-1 space-y-2">
+							{info.perks.map((perk) => (
+								<li class="flex items-start gap-2 text-sm text-muted">
+									<Check class="mt-0.5 size-4 flex-shrink-0 text-orange-400" />
+									{perk}
+								</li>
+							))}
+						</ul>
+
+						{isFeatured && (
+							<div class="mt-6">
+								<Button href={routeMap.quote} lang={lang} class="w-full justify-center">
+									{lang === 'fr' ? 'Démarrer' : 'Get started'}
+								</Button>
+							</div>
+						)}
+					</div>
+				);
+			})}
+		</div>
+
+		<div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between reveal" style="--reveal-delay:280ms">
+			<p class="text-sm text-muted">
+				{labels.custom}{' '}
+				<a href={routeMap.quote} class="font-semibold text-orange-400 hover:underline">{labels.customLink}</a>
+			</p>
+			<Button href={routeMap.snapshot} lang={lang} variant="ghost">
+				{labels.cta} <ArrowRight class="size-4" />
+			</Button>
+		</div>
+	</Container>
+</section>
+
+<style>
+	.snapshot-card {
+		background: rgba(var(--color-surface-rgb, 15 31 68), 0.6);
+		border-color: rgba(255, 255, 255, 0.08);
+		transition: border-color 0.2s ease, transform 0.2s ease;
+	}
+
+	:global([data-theme='light']) .snapshot-card {
+		background: rgba(255, 255, 255, 0.85);
+		border-color: rgba(0, 0, 0, 0.08);
+	}
+
+	.snapshot-card:hover {
+		border-color: rgba(230, 126, 34, 0.3);
+		transform: translateY(-2px);
+	}
+
+	.snapshot-card--featured {
+		border-color: rgba(230, 126, 34, 0.45);
+		background: rgba(15, 31, 68, 0.9);
+		box-shadow: 0 0 0 1px rgba(230, 126, 34, 0.2), 0 8px 32px rgba(0, 0, 0, 0.3);
+	}
+
+	:global([data-theme='light']) .snapshot-card--featured {
+		background: #ffffff;
+		box-shadow: 0 0 0 1px rgba(230, 126, 34, 0.35), 0 8px 32px rgba(230, 126, 34, 0.1);
+	}
+
+	.snapshot-badge {
+		color: #f39c12;
+	}
+
+	.snapshot-price {
+		color: #ffffff;
+	}
+
+	:global([data-theme='light']) .snapshot-price {
+		color: #0f1f44;
+	}
+</style>
