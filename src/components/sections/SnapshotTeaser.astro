@@ -7,108 +7,185 @@ import Container from '../ui/Container.astro';
 import { routeMap, type Lang } from '../../lib/i18n';
 import { services } from '../../lib/site';
 
-interface Props { lang: Lang }
+interface Props {
+	lang: Lang;
+}
 const { lang } = Astro.props;
 
-const snapshot = services.find((s) => s.id === 'test-manuel-ponctuel')!;
+const snapshot = services.find((s) => s.id === 'test-manuel-ponctuel');
 
-const labels = lang === 'fr'
-	? {
-		eyebrow: 'Point d\'entrée',
-		title: 'Testez votre produit avant la prochaine release.',
-		subtitle: 'Un testeur humain parcourt vos pages et documente chaque anomalie. Rapport livré sous 72h. Sans CI/CD. Sans setup.',
-		recommended: 'Recommandé',
-		custom: 'Volume plus important ?',
-		customLink: 'Obtenir un devis sur mesure',
-		cta: 'Voir le service complet',
-		perTier: [
-			{ label: '3–4 pages', duration: '~1,5 jour', perks: ['Rapport PDF structuré', 'Captures annotées', 'Bugs Critique / Majeur / Mineur'] },
-			{ label: '5–7 pages', duration: '~2,5 jours', perks: ['Rapport PDF structuré', 'Captures annotées', 'Matrice de couverture', 'Recommandations UX quick wins'] },
-			{ label: 'Jusqu\'à 20 pages', duration: '~5 jours', perks: ['Rapport PDF structuré', 'Captures annotées', 'Matrice de couverture', 'Recommandations UX + synthèse exécutive', 'Intégration Jira / Linear incluse'] },
-		],
-	}
-	: {
-		eyebrow: 'Entry point',
-		title: 'Test your product before the next release.',
-		subtitle: 'A human tester walks through your pages and documents every issue. Report delivered in 72h. No CI/CD. No setup.',
-		recommended: 'Recommended',
-		custom: 'Larger volume?',
-		customLink: 'Get a custom quote',
-		cta: 'View full service',
-		perTier: [
-			{ label: '3–4 pages', duration: '~1.5 days', perks: ['Structured PDF report', 'Annotated screenshots', 'Critical / Major / Minor bugs'] },
-			{ label: '5–7 pages', duration: '~2.5 days', perks: ['Structured PDF report', 'Annotated screenshots', 'Coverage matrix', 'UX quick wins'] },
-			{ label: 'Up to 20 pages', duration: '~5 days', perks: ['Structured PDF report', 'Annotated screenshots', 'Coverage matrix', 'UX recommendations + executive summary', 'Jira / Linear integration included'] },
-		],
-	};
+if (!snapshot?.tiers) {
+	throw new Error('QA Snapshot service tiers are required for SnapshotTeaser.');
+}
+
+const labels =
+	lang === 'fr'
+		? {
+				eyebrow: 'Reconnaissance avant release',
+				title: 'Envoyez une sentinelle QA sur vos parcours critiques.',
+				subtitle:
+					'Un testeur humain parcourt vos pages comme un utilisateur réel, documente les anomalies et livre un rapport priorisé sous 72h. Sans setup. Sans engagement.',
+				recommended: 'Recommandé',
+				custom: 'Terrain plus large ?',
+				customLink: 'Demander une mission sur mesure',
+				cta: 'Voir la mission complète',
+				perTier: [
+					{
+						label: 'Patrouille ciblée',
+						duration: '3–4 pages · ~1,5 jour',
+						perks: ['Rapport PDF structuré', 'Captures annotées', 'Bugs Critique / Majeur / Mineur'],
+					},
+					{
+						label: 'Garde standard',
+						duration: '5–7 pages · ~2,5 jours',
+						perks: [
+							'Rapport PDF structuré',
+							'Captures annotées',
+							'Matrice de couverture',
+							'Recommandations UX quick wins',
+						],
+					},
+					{
+						label: 'Périmètre complet',
+						duration: "Jusqu'à 20 pages · ~5 jours",
+						perks: [
+							'Rapport PDF structuré',
+							'Captures annotées',
+							'Matrice de couverture',
+							'Recommandations UX + synthèse exécutive',
+							'Intégration Jira / Linear incluse',
+						],
+					},
+				],
+			}
+		: {
+				eyebrow: 'Pre-release recon',
+				title: 'Send a QA sentinel through your critical journeys.',
+				subtitle:
+					'A human tester walks through your pages like a real user, documents defects and delivers a prioritized report within 72h. No setup. No commitment.',
+				recommended: 'Recommended',
+				custom: 'Larger terrain?',
+				customLink: 'Request a custom mission',
+				cta: 'View full mission',
+				perTier: [
+					{
+						label: 'Targeted patrol',
+						duration: '3–4 pages · ~1.5 days',
+						perks: ['Structured PDF report', 'Annotated screenshots', 'Critical / Major / Minor bugs'],
+					},
+					{
+						label: 'Standard guard',
+						duration: '5–7 pages · ~2.5 days',
+						perks: ['Structured PDF report', 'Annotated screenshots', 'Coverage matrix', 'UX quick wins'],
+					},
+					{
+						label: 'Full perimeter',
+						duration: 'Up to 20 pages · ~5 days',
+						perks: [
+							'Structured PDF report',
+							'Annotated screenshots',
+							'Coverage matrix',
+							'UX recommendations + executive summary',
+							'Jira / Linear integration included',
+						],
+					},
+				],
+			};
 ---
 
-<section class="snapshot-teaser py-20 md:py-32">
+<section id="qa-recon" class="snapshot-teaser tactical-snapshot py-20 md:py-32">
 	<Container>
-		<div class="mb-12 reveal">
+		<div class="mb-12">
 			<p class="section-eyebrow">{labels.eyebrow}</p>
 			<h2 class="mt-4 max-w-3xl text-3xl font-extrabold md:text-5xl">{labels.title}</h2>
-			<p class="mt-4 max-w-2xl text-muted text-lg leading-relaxed">{labels.subtitle}</p>
+			<p class="mt-4 max-w-2xl text-muted text-lg leading-relaxed" data-reveal>{labels.subtitle}</p>
 		</div>
 
 		<div class="grid gap-5 md:grid-cols-3">
-			{snapshot.tiers!.map((tier, index) => {
-				const info = labels.perTier[index];
-				const isFeatured = tier.featured === true;
-				return (
-					<div
-						class={`snapshot-card reveal flex flex-col rounded-2xl border p-6 md:p-7 ${isFeatured ? 'snapshot-card--featured' : ''}`}
-						style={`--reveal-delay:${index * 80}ms`}
-					>
-						{isFeatured && (
-							<div class="mb-4 flex items-center gap-1.5">
-								<Star class="size-3.5 fill-orange-400 text-orange-400" />
-								<span class="snapshot-badge text-xs font-bold uppercase tracking-[0.14em]">{labels.recommended}</span>
-							</div>
-						)}
-						<p class="font-mono text-sm font-bold text-orange-400">{info.label}</p>
-						<p class="mt-1 text-xs text-muted">{info.duration}</p>
-						<p class="snapshot-price mt-4 text-3xl font-extrabold">{tier.price}</p>
+			{
+				snapshot.tiers.map((tier, index) => {
+					const info = labels.perTier[index];
+					const isFeatured = tier.featured === true;
+					return (
+						<div
+							class={`snapshot-card reveal flex flex-col rounded-2xl border p-6 md:p-7 ${isFeatured ? 'snapshot-card--featured' : ''}`}
+							style={`--reveal-delay:${index * 80}ms`}
+						>
+							{isFeatured && (
+								<div class="mb-4 flex items-center gap-1.5">
+									<Star class="size-3.5 fill-orange-400 text-orange-400" />
+									<span class="snapshot-badge text-xs font-bold uppercase tracking-[0.14em]">{labels.recommended}</span>
+								</div>
+							)}
+							<p class="font-mono text-sm font-bold text-orange-400">{info.label}</p>
+							<p class="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-muted">{info.duration}</p>
+							<p class="snapshot-price mt-4 text-3xl font-extrabold">{tier.price}</p>
 
-						<ul class="mt-5 flex-1 space-y-2">
-							{info.perks.map((perk) => (
-								<li class="flex items-start gap-2 text-sm text-muted">
-									<Check class="mt-0.5 size-4 flex-shrink-0 text-orange-400" />
-									{perk}
-								</li>
-							))}
-						</ul>
+							<ul class="mt-5 flex-1 space-y-2">
+								{info.perks.map((perk) => (
+									<li class="flex items-start gap-2 text-sm text-muted">
+										<Check class="mt-0.5 size-4 flex-shrink-0 text-orange-400" />
+										{perk}
+									</li>
+								))}
+							</ul>
 
-						{isFeatured && (
-							<div class="mt-6">
-								<Button href={routeMap.quote} lang={lang} class="w-full justify-center">
-									{lang === 'fr' ? 'Démarrer' : 'Get started'}
-								</Button>
-							</div>
-						)}
-					</div>
-				);
-			})}
+							{isFeatured && (
+								<div class="mt-6">
+									<Button href={routeMap.quote} lang={lang} class="w-full justify-center">
+										{lang === 'fr' ? 'Démarrer' : 'Get started'}
+									</Button>
+								</div>
+							)}
+						</div>
+					);
+				})
+			}
 		</div>
 
-		<div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between reveal" style="--reveal-delay:280ms">
+		<div
+			class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between reveal"
+			style="--reveal-delay:280ms"
+		>
 			<p class="text-sm text-muted">
 				{labels.custom}{' '}
 				<a href={routeMap.quote} class="font-semibold text-orange-400 hover:underline">{labels.customLink}</a>
 			</p>
 			<Button href={routeMap.snapshot} lang={lang} variant="ghost">
-				{labels.cta} <ArrowRight class="size-4" />
+				{labels.cta}
+				<ArrowRight class="size-4" />
 			</Button>
 		</div>
 	</Container>
 </section>
 
 <style>
+	.tactical-snapshot {
+		position: relative;
+		background:
+			linear-gradient(90deg, rgba(255, 106, 42, 0.06), transparent 30%),
+			linear-gradient(270deg, rgba(24, 214, 178, 0.055), transparent 34%);
+	}
+
+	.tactical-snapshot::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+		background-size: 38px 38px;
+		mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+		pointer-events: none;
+	}
+
 	.snapshot-card {
 		position: relative;
 		background: rgba(var(--color-surface-rgb, 15 31 68), 0.6);
 		border-color: rgba(255, 255, 255, 0.08);
-		transition: border-color 0.2s ease, transform 0.2s ease;
+		transition:
+			border-color 0.2s ease,
+			transform 0.2s ease;
 		overflow: visible;
 	}
 
@@ -126,8 +203,12 @@ const labels = lang === 'fr'
 			rgba(255, 160, 20, 0.6) 292deg,
 			transparent 320deg
 		);
-		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		-webkit-mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
 		-webkit-mask-composite: destination-out;
 		mask-composite: exclude;
 		opacity: 0;
@@ -154,12 +235,16 @@ const labels = lang === 'fr'
 	.snapshot-card--featured {
 		border-color: rgba(230, 126, 34, 0.45);
 		background: rgba(15, 31, 68, 0.9);
-		box-shadow: 0 0 0 1px rgba(230, 126, 34, 0.2), 0 8px 32px rgba(0, 0, 0, 0.3);
+		box-shadow:
+			0 0 0 1px rgba(230, 126, 34, 0.2),
+			0 8px 32px rgba(0, 0, 0, 0.3);
 	}
 
 	:global([data-theme='light']) .snapshot-card--featured {
 		background: #ffffff;
-		box-shadow: 0 0 0 1px rgba(230, 126, 34, 0.35), 0 8px 32px rgba(230, 126, 34, 0.1);
+		box-shadow:
+			0 0 0 1px rgba(230, 126, 34, 0.35),
+			0 8px 32px rgba(230, 126, 34, 0.1);
 	}
 
 	.snapshot-badge {

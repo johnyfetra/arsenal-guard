@@ -1,79 +1,164 @@
 ---
 import Container from '../ui/Container.astro';
-import { copy, type Lang } from '../../lib/i18n';
-interface Props { lang: Lang }
+import type { Lang } from '../../lib/i18n';
+interface Props {
+	lang: Lang;
+}
 const { lang } = Astro.props;
 
 const categories = [
-	{ label: lang === 'fr' ? 'Automatisation QA' : 'Test automation', items: ['Cypress', 'Playwright'] },
-	{ label: lang === 'fr' ? 'Langages et front' : 'Languages and frontend', items: ['TypeScript', 'Angular', 'RxJS', 'NgRx'] },
-	{ label: 'CI/CD', items: ['GitLab CI', 'GitHub Actions'] },
-	{ label: lang === 'fr' ? 'QA assistée par IA' : 'AI-assisted QA', items: ['AI-assisted QA'] },
+	{ label: lang === 'fr' ? 'Sentinelles E2E' : 'E2E sentinels', items: ['Cypress', 'Playwright'] },
+	{ label: lang === 'fr' ? 'Terrain front' : 'Frontend terrain', items: ['TypeScript', 'Angular', 'RxJS', 'NgRx'] },
+	{ label: lang === 'fr' ? 'Gates CI/CD' : 'CI/CD gates', items: ['GitLab CI', 'GitHub Actions'] },
+	{ label: lang === 'fr' ? 'Analyse assistée' : 'Assisted analysis', items: ['AI-assisted QA'] },
 ];
-const stats = lang === 'fr'
-	? [
-		{ value: '5+',    label: "années d'expérience QA senior",         counter: '5',  suffix: '+',  prefix: undefined, final: undefined },
-		{ value: '40–50%', label: "d'économie vs staffing local équivalent", counter: '50', suffix: '%',  prefix: undefined, final: '40–50%' },
-		{ value: 'UTC+3', label: "recouvrement confortable avec l'Europe",  counter: '3',  suffix: '',   prefix: 'UTC+',    final: undefined },
-	]
-	: [
-		{ value: '5+',    label: 'years of senior QA experience',   counter: '5',  suffix: '+', prefix: undefined, final: undefined },
-		{ value: '40–50%', label: 'savings vs equivalent local staffing', counter: '50', suffix: '%', prefix: undefined, final: '40–50%' },
-		{ value: 'UTC+3', label: 'comfortable overlap with Europe',  counter: '3',  suffix: '',  prefix: 'UTC+',    final: undefined },
-	];
+const stats =
+	lang === 'fr'
+		? [
+				{
+					value: '5+',
+					label: "années d'expérience QA senior",
+					counter: '5',
+					suffix: '+',
+					prefix: undefined,
+					final: undefined,
+				},
+				{
+					value: '40–50%',
+					label: "d'économie vs staffing local équivalent",
+					counter: '50',
+					suffix: '%',
+					prefix: undefined,
+					final: '40–50%',
+				},
+				{
+					value: 'UTC+3',
+					label: "recouvrement confortable avec l'Europe",
+					counter: '3',
+					suffix: '',
+					prefix: 'UTC+',
+					final: undefined,
+				},
+			]
+		: [
+				{
+					value: '5+',
+					label: 'years of senior QA experience',
+					counter: '5',
+					suffix: '+',
+					prefix: undefined,
+					final: undefined,
+				},
+				{
+					value: '40–50%',
+					label: 'savings vs equivalent local staffing',
+					counter: '50',
+					suffix: '%',
+					prefix: undefined,
+					final: '40–50%',
+				},
+				{
+					value: 'UTC+3',
+					label: 'comfortable overlap with Europe',
+					counter: '3',
+					suffix: '',
+					prefix: 'UTC+',
+					final: undefined,
+				},
+			];
+
+const labels =
+	lang === 'fr'
+		? {
+				eyebrow: 'Arsenal technique',
+				title: 'Des outils choisis pour protéger la release, pas pour décorer une stack.',
+				lead: 'Chaque technologie a une fonction claire : écrire des tests lisibles, faire remonter un signal fiable et laisser votre équipe reprendre la main.',
+				consoleTitle: 'Release gate',
+				consoleRows: [
+					['auth-flow.spec', 'guarded'],
+					['checkout-risk.map', 'review'],
+					['ci-blockers', 'armed'],
+				],
+			}
+		: {
+				eyebrow: 'Technical arsenal',
+				title: 'Tools chosen to protect the release, not decorate a stack.',
+				lead: 'Every technology has a clear role: write readable tests, surface a reliable signal and let your team take ownership.',
+				consoleTitle: 'Release gate',
+				consoleRows: [
+					['auth-flow.spec', 'guarded'],
+					['checkout-risk.map', 'review'],
+					['ci-blockers', 'armed'],
+				],
+			};
 ---
 
-<section class="relative overflow-hidden py-16 md:py-32">
-	<!-- decorative angled band -->
-	<div
-		class="absolute inset-0 -z-10"
-		aria-hidden="true"
-		style="background: linear-gradient(168deg, transparent 0%, transparent 44%, rgba(15,31,68,0.38) 44%, rgba(15,31,68,0.38) 100%);"
-	></div>
+<section id="technical-arsenal" class="armory-section relative overflow-hidden py-16 md:py-32">
+	<div class="armory-angle" aria-hidden="true"></div>
 
 	<Container>
-		<div class="mb-10 grid gap-6 md:mb-14 md:grid-cols-[1fr_auto] md:items-end reveal">
+		<div class="mb-10 grid gap-6 md:mb-14 md:grid-cols-[1fr_auto] md:items-end">
 			<div>
-				<p class="section-eyebrow">{lang === 'fr' ? 'Outillage' : 'Tooling'}</p>
-				<h2 class="mt-4 max-w-2xl text-3xl font-extrabold md:text-5xl">{copy[lang].sections.stack}</h2>
+				<p class="section-eyebrow">{labels.eyebrow}</p>
+				<h2 class="mt-4 max-w-3xl text-3xl font-extrabold md:text-5xl">{labels.title}</h2>
 			</div>
-			<p class="max-w-xs text-sm text-muted leading-relaxed">
-				{lang === 'fr'
-					? 'Des choix techniques pragmatiques pour des suites lisibles, rapides à diagnostiquer et utiles au produit.'
-					: 'Pragmatic technical choices for readable suites that are fast to diagnose and useful to the product.'}
-			</p>
+			<p class="max-w-sm text-sm text-muted leading-relaxed" data-reveal>{labels.lead}</p>
 		</div>
 
-		<div class="grid gap-8 md:grid-cols-4">
-			{categories.map((cat, ci) => (
-				<div class="reveal" style={`--reveal-delay:${ci * 70}ms`}>
-					<p class="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-muted">{cat.label}</p>
-					<div class="flex flex-wrap gap-2">
-						{cat.items.map((item) => (
-							<span class="stack-pill">
-								<span class="stack-pill-dot" aria-hidden="true"></span>
-								{item}
-							</span>
-						))}
-					</div>
+		<div class="armory-layout grid gap-6 lg:grid-cols-[1fr_0.72fr] lg:items-stretch">
+			<div class="grid gap-8 md:grid-cols-2">
+				{
+					categories.map((cat, ci) => (
+						<div class="armory-category reveal" style={`--reveal-delay:${ci * 70}ms`}>
+							<p class="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-muted">{cat.label}</p>
+							<div class="flex flex-wrap gap-2">
+								{cat.items.map((item) => (
+									<span class="stack-pill">
+										<span class="stack-pill-dot" aria-hidden="true" />
+										{item}
+									</span>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+
+			<div class="armory-console reveal" style="--reveal-delay:220ms">
+				<div class="armory-console-head">
+					<span></span>
+					<p>{labels.consoleTitle}</p>
 				</div>
-			))}
+				<div class="armory-console-lines">
+					{
+						labels.consoleRows.map(([name, status]) => (
+							<div>
+								<code>{name}</code>
+								<span>{status}</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
 		</div>
 
-		<!-- stats row -->
 		<div class="mt-10 grid gap-6 border-t border-white/10 pt-8 md:mt-16 md:grid-cols-3 md:pt-12 reveal">
-			{stats.map(({ value, label, counter, suffix, prefix, final }) => (
-				<div class="flex items-center gap-4">
-					<p
-						class="stat-number"
-						data-counter={counter}
-						data-counter-suffix={suffix}
-						data-counter-prefix={prefix}
-						data-counter-final={final}
-					>{value}</p>
-					<p class="text-sm text-muted leading-snug max-w-[12rem]">{label}</p>
-				</div>
-			))}
+			{
+				stats.map(({ value, label, counter, suffix, prefix, final }) => (
+					<div class="flex items-center gap-4">
+						<p
+							class="stat-number"
+							data-counter={counter}
+							data-counter-suffix={suffix}
+							data-counter-prefix={prefix}
+							data-counter-final={final}
+						>
+							{value}
+						</p>
+						<p class="text-sm text-muted leading-snug max-w-[12rem]">{label}</p>
+					</div>
+				))
+			}
 		</div>
 	</Container>
 </section>

@@ -40,7 +40,7 @@ type CopyShape = {
 
 const pageTitles: Record<Lang, Record<string, string>> = {
 	fr: {
-		home: 'Arsenal Guard — Service QA premium pour livraisons logicielles fiables',
+		home: 'Arsenal Guard — Release Command QA pour livraisons fiables',
 		services: 'Services QA premium Cypress et Playwright',
 		about: 'À propos d’Arsenal Guard — Notre mission qualité',
 		cases: 'Réalisations QA',
@@ -51,7 +51,7 @@ const pageTitles: Record<Lang, Record<string, string>> = {
 		privacy: 'Politique de confidentialité',
 	},
 	en: {
-		home: 'Arsenal Guard — Premium QA service for reliable software releases',
+		home: 'Arsenal Guard — Release Command QA for reliable software releases',
 		services: 'Premium QA services with Cypress and Playwright',
 		about: 'About Arsenal Guard — Our quality mission',
 		cases: 'QA case studies',
@@ -65,12 +65,20 @@ const pageTitles: Record<Lang, Record<string, string>> = {
 
 export const copy = {
 	fr: {
-		nav: { services: 'Services', about: 'À propos', cases: 'Réalisations', blog: 'Blog', contact: 'Contact', quote: 'Demander un devis' },
+		nav: {
+			services: 'Services',
+			about: 'À propos',
+			cases: 'Réalisations',
+			blog: 'Blog',
+			contact: 'Contact',
+			quote: 'Demander un devis',
+		},
 		hero: {
 			badge: 'Test manuel · Rapport de bugs · Sans engagement',
 			title: 'Vos parcours critiques testés à la main.',
 			accent: 'Rapport livré sous 72h.',
-			subtitle: 'Je teste vos parcours à la main — audit de site existant, validation avant une release, test ciblé, ou regard tiers avant livraison client. Rapport de bugs priorisé sous 72h. Aucun setup. Aucun engagement.',
+			subtitle:
+				'Je teste vos parcours à la main — audit de site existant, validation avant une release, test ciblé, ou regard tiers avant livraison client. Rapport de bugs priorisé sous 72h. Aucun setup. Aucun engagement.',
 			primary: 'Demander un devis',
 			secondary: 'Voir les services',
 			trust: 'Interventions réalisées sur des produits utilisés par Chanel, Sodexo et des plateformes SaaS européennes',
@@ -82,12 +90,15 @@ export const copy = {
 			pricing: 'Forfaits mensuels',
 			faq: 'Questions fréquentes',
 			cta: 'Sécurisez vos prochaines livraisons.',
-			ctaLead: 'Discutons de votre projet en 15 minutes et identifions les tests qui réduisent vraiment votre risque release.',
+			ctaLead:
+				'Discutons de votre projet en 15 minutes et identifions les tests qui réduisent vraiment votre risque release.',
 		},
 		descriptions: {
-			home: 'Arsenal Guard teste vos parcours critiques à la main et livre un rapport de bugs priorisé sous 72h. Audit de site, validation avant release, test ciblé — sans setup, sans engagement.',
-			services: 'QA Snapshot, audits, automatisation E2E, forfaits mensuels et QA dédiée — pour toute équipe qui veut livrer sans régressions.',
-			about: 'Découvrez Arsenal Guard, service de QA premium dédié aux scale-ups européennes. Notre mission, nos valeurs et l’équipe qui sécurise vos livraisons logicielles.',
+			home: 'Arsenal Guard combine QA humaine, automatisation E2E et garde-fous CI/CD pour cartographier les risques, détecter les bugs et sécuriser vos releases.',
+			services:
+				'QA Snapshot, audits, automatisation E2E, forfaits mensuels et QA dédiée — pour toute équipe qui veut livrer sans régressions.',
+			about:
+				'Découvrez Arsenal Guard, service de QA premium dédié aux scale-ups européennes. Notre mission, nos valeurs et l’équipe qui sécurise vos livraisons logicielles.',
 			cases: 'Les réalisations Arsenal Guard seront publiées après validation client.',
 			blog: 'Guides concrets pour mieux piloter la qualité logicielle, les tests E2E et l’automatisation QA.',
 			quote: 'Décrivez votre besoin QA et recevez une proposition sous 24h ouvrées.',
@@ -97,12 +108,20 @@ export const copy = {
 		},
 	},
 	en: {
-		nav: { services: 'Services', about: 'About', cases: 'Work', blog: 'Blog', contact: 'Contact', quote: 'Request a quote' },
+		nav: {
+			services: 'Services',
+			about: 'About',
+			cases: 'Work',
+			blog: 'Blog',
+			contact: 'Contact',
+			quote: 'Request a quote',
+		},
 		hero: {
 			badge: 'Manual testing · Bug reports · No commitment',
 			title: 'Your critical flows tested by hand.',
 			accent: 'Bug report delivered in 72h.',
-			subtitle: 'I test your flows by hand — auditing existing sites, validating before a release, targeted testing, or a third-party review before client delivery. Prioritized bug report in 72h. No setup. No commitment.',
+			subtitle:
+				'I test your flows by hand — auditing existing sites, validating before a release, targeted testing, or a third-party review before client delivery. Prioritized bug report in 72h. No setup. No commitment.',
 			primary: 'Request a quote',
 			secondary: 'View services',
 			trust: 'Work delivered on products used by Chanel, Sodexo and European SaaS platforms',
@@ -117,9 +136,11 @@ export const copy = {
 			ctaLead: 'Let’s discuss your project in 15 minutes and identify the tests that truly reduce release risk.',
 		},
 		descriptions: {
-			home: 'Arsenal Guard tests your critical flows by hand and delivers a prioritized bug report in 72h. Site audits, pre-release validation, targeted testing — no setup, no commitment.',
-			services: 'QA Snapshot, audits, E2E automation, monthly retainers and dedicated QA — for any team that wants to ship without regressions.',
-			about: 'Discover Arsenal Guard, a premium QA service for European scale-ups. Our mission, values and the team securing your software releases.',
+			home: 'Arsenal Guard combines human QA, E2E automation and CI/CD guardrails to map risks, detect bugs and secure your releases.',
+			services:
+				'QA Snapshot, audits, E2E automation, monthly retainers and dedicated QA — for any team that wants to ship without regressions.',
+			about:
+				'Discover Arsenal Guard, a premium QA service for European scale-ups. Our mission, values and the team securing your software releases.',
 			cases: 'Arsenal Guard case studies will be published after client approval.',
 			blog: 'Practical guides for better software quality, E2E tests and QA automation.',
 			quote: 'Describe your QA needs and receive a proposal within one business day.',

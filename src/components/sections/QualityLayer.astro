@@ -12,59 +12,60 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const content = lang === 'fr'
-	? {
-		eyebrow: 'Human + automation + IA',
-		title: 'Une couche QA qui transforme le doute en décision release.',
-		lead: 'Nous ne remplaçons pas le jugement humain par des scripts. Nous combinons regard QA senior, automatisation ciblée et analyse assistée pour produire un signal exploitable.',
-		matrix: [
-			{
-				icon: Eye,
-				label: 'Human judgment',
-				title: 'L’humain détecte l’ambiguïté',
-				text: 'UX incohérente, parcours confus, cas limite métier : ce que la couverture brute ne voit pas.',
-			},
-			{
-				icon: Repeat2,
-				label: 'Automated coverage',
-				title: 'L’automation capture la répétition',
-				text: 'Parcours critiques, régressions récurrentes, smoke tests et garde-fous CI/CD.',
-			},
-			{
-				icon: BrainCircuit,
-				label: 'AI-assisted analysis',
-				title: 'L’IA aide à remonter les patterns',
-				text: 'Regroupement de risques, accélération de rédaction, aide au tri sans surpromesse magique.',
-			},
-		],
-		result: 'Arsenal Guard transforme les trois signaux en priorités claires pour produit, tech et management.',
-	}
-	: {
-		eyebrow: 'Human + automation + AI',
-		title: 'A QA layer that turns uncertainty into release decisions.',
-		lead: 'We do not replace human judgment with scripts. We combine senior QA perspective, targeted automation and assisted analysis to produce an actionable signal.',
-		matrix: [
-			{
-				icon: Eye,
-				label: 'Human judgment',
-				title: 'Humans catch ambiguity',
-				text: 'Inconsistent UX, confusing journeys, domain edge cases: what raw coverage cannot see.',
-			},
-			{
-				icon: Repeat2,
-				label: 'Automated coverage',
-				title: 'Automation catches repetition',
-				text: 'Critical journeys, recurring regressions, smoke tests and CI/CD guardrails.',
-			},
-			{
-				icon: BrainCircuit,
-				label: 'AI-assisted analysis',
-				title: 'AI helps surface patterns',
-				text: 'Risk grouping, faster documentation, triage support without magical overpromising.',
-			},
-		],
-		result: 'Arsenal Guard turns all three signals into clear priorities for product, engineering and leadership.',
-	};
+const content =
+	lang === 'fr'
+		? {
+				eyebrow: 'Trois lignes de défense',
+				title: 'L’humain repère, l’automation garde, l’IA aide à lire le signal.',
+				lead: 'Arsenal Guard ne remplace pas le jugement QA par des scripts. Nous combinons observation humaine, garde-fous automatisés et analyse assistée pour produire une décision release.',
+				matrix: [
+					{
+						icon: Eye,
+						label: 'Ligne humaine',
+						title: 'L’humain détecte l’ambiguïté',
+						text: 'UX incohérente, parcours confus, cas limite métier : ce que la couverture brute ne voit pas.',
+					},
+					{
+						icon: Repeat2,
+						label: 'Ligne automatisée',
+						title: 'L’automation capture la répétition',
+						text: 'Parcours critiques, régressions récurrentes, smoke tests et garde-fous CI/CD.',
+					},
+					{
+						icon: BrainCircuit,
+						label: 'Ligne assistée',
+						title: 'L’IA aide à remonter les patterns',
+						text: 'Regroupement de risques, accélération de rédaction, aide au tri sans surpromesse magique.',
+					},
+				],
+				result: 'Les trois lignes convergent vers un signal unique : expédier, bloquer, corriger ou surveiller.',
+			}
+		: {
+				eyebrow: 'Three defense lines',
+				title: 'Humans spot, automation guards, AI helps read the signal.',
+				lead: 'Arsenal Guard does not replace QA judgment with scripts. We combine human observation, automated guardrails and assisted analysis to produce a release decision.',
+				matrix: [
+					{
+						icon: Eye,
+						label: 'Human line',
+						title: 'Humans catch ambiguity',
+						text: 'Inconsistent UX, confusing journeys, domain edge cases: what raw coverage cannot see.',
+					},
+					{
+						icon: Repeat2,
+						label: 'Automated line',
+						title: 'Automation catches repetition',
+						text: 'Critical journeys, recurring regressions, smoke tests and CI/CD guardrails.',
+					},
+					{
+						icon: BrainCircuit,
+						label: 'Assisted line',
+						title: 'AI helps surface patterns',
+						text: 'Risk grouping, faster documentation, triage support without magical overpromising.',
+					},
+				],
+				result: 'The three lines converge into one signal: ship, block, fix or monitor.',
+			};
 ---
 
 <section id="release-approach" class="quality-layer relative overflow-hidden py-20 md:py-32">
@@ -81,21 +82,23 @@ const content = lang === 'fr'
 		</div>
 
 		<div class="quality-matrix" data-reveal>
-			{content.matrix.map((item, index) => {
-				const Icon = item.icon;
-				return (
-					<article class="quality-matrix-row" style={`--row-index:${index}`}>
-						<div class="quality-matrix-icon">
-							<Icon class="size-5" aria-hidden="true" />
-						</div>
-						<div>
-							<p class="quality-matrix-label">{item.label}</p>
-							<h3>{item.title}</h3>
-							<p>{item.text}</p>
-						</div>
-					</article>
-				);
-			})}
+			{
+				content.matrix.map((item, index) => {
+					const Icon = item.icon;
+					return (
+						<article class="quality-matrix-row" style={`--row-index:${index}`}>
+							<div class="quality-matrix-icon">
+								<Icon class="size-5" aria-hidden="true" />
+							</div>
+							<div>
+								<p class="quality-matrix-label">{item.label}</p>
+								<h3>{item.title}</h3>
+								<p>{item.text}</p>
+							</div>
+						</article>
+					);
+				})
+			}
 		</div>
 	</Container>
 </section>

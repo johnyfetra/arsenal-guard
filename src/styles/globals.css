@@ -69,8 +69,7 @@ body {
 :root[data-theme='light'] body {
 	background:
 		linear-gradient(118deg, rgba(230, 126, 34, 0.045), transparent 28rem),
-		linear-gradient(242deg, rgba(15, 156, 131, 0.035), transparent 32rem),
-		var(--page-bg);
+		linear-gradient(242deg, rgba(15, 156, 131, 0.035), transparent 32rem), var(--page-bg);
 }
 
 html.ag-preloader-active,
@@ -191,9 +190,7 @@ html.ag-preloader-active .ag-preloader.is-complete {
 	aspect-ratio: 1;
 	border: 1px solid rgba(246, 192, 87, 0.35);
 	border-radius: 9999px;
-	background:
-		radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.8), transparent 22%),
-		rgba(230, 126, 34, 0.22);
+	background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.8), transparent 22%), rgba(230, 126, 34, 0.22);
 	box-shadow: 0 0 24px rgba(230, 126, 34, 0.24);
 	opacity: 0.72;
 	animation: ag-loader-float 3.4s ease-in-out infinite alternate;
@@ -378,7 +375,7 @@ select option {
 
 .language-menu {
 	color: var(--page-text);
-	font-family: Inter, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+	font-family: Inter, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
 }
 
 .language-menu-button {
@@ -834,7 +831,9 @@ label:has(input[type='radio']) {
 
 .about-portrait-group:hover .about-portrait-card {
 	border-color: rgba(243, 156, 18, 0.34);
-	box-shadow: 0 22px 70px rgba(5, 11, 26, 0.28), 0 0 40px rgba(230, 126, 34, 0.16);
+	box-shadow:
+		0 22px 70px rgba(5, 11, 26, 0.28),
+		0 0 40px rgba(230, 126, 34, 0.16);
 	transform: translate3d(0, 0, 0) scale(1.028);
 }
 
@@ -873,11 +872,15 @@ label:has(input[type='radio']) {
 		transform 180ms ease;
 }
 
+section[id] {
+	scroll-margin-top: 6rem;
+}
+
 .cta-section {
 	background:
-		radial-gradient(circle at 18% 18%, rgba(230, 126, 34, 0.2), transparent 24rem),
-		radial-gradient(circle at 82% 10%, rgba(42, 66, 117, 0.5), transparent 28rem),
-		linear-gradient(135deg, #050b1a 0%, #0a1530 52%, #0f1f44 100%);
+		linear-gradient(118deg, rgba(255, 106, 42, 0.18), transparent 32%),
+		linear-gradient(242deg, rgba(24, 214, 178, 0.13), transparent 34%),
+		linear-gradient(135deg, #05070a 0%, #081827 52%, #102b3c 100%);
 	color: #ffffff;
 }
 
@@ -894,9 +897,9 @@ label:has(input[type='radio']) {
 /* CTA always dark — intentional contrast break */
 :root[data-theme='light'] .cta-section {
 	background:
-		radial-gradient(circle at 18% 18%, rgba(230, 126, 34, 0.2), transparent 24rem),
-		radial-gradient(circle at 82% 10%, rgba(42, 66, 117, 0.5), transparent 28rem),
-		linear-gradient(135deg, #050b1a 0%, #0a1530 52%, #0f1f44 100%);
+		linear-gradient(118deg, rgba(255, 106, 42, 0.18), transparent 32%),
+		linear-gradient(242deg, rgba(24, 214, 178, 0.13), transparent 34%),
+		linear-gradient(135deg, #05070a 0%, #081827 52%, #102b3c 100%);
 	color: #ffffff;
 }
 
@@ -1333,6 +1336,28 @@ label:has(input[type='radio']) {
 
 /* ── How It Works timeline ──────────────────────────────────── */
 
+.how-section {
+	background:
+		linear-gradient(
+			112deg,
+			transparent 0%,
+			transparent 34%,
+			rgba(8, 24, 39, 0.48) 34%,
+			rgba(8, 24, 39, 0.48) 66%,
+			transparent 66%
+		),
+		var(--page-bg);
+}
+
+.how-section-track {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(90deg, transparent, rgba(24, 214, 178, 0.12), transparent) 50% 22% / 100% 1px no-repeat,
+		linear-gradient(90deg, transparent, rgba(255, 106, 42, 0.1), transparent) 50% 78% / 100% 1px no-repeat;
+	pointer-events: none;
+}
+
 .timeline-step {
 	position: relative;
 }
@@ -1340,11 +1365,11 @@ label:has(input[type='radio']) {
 .timeline-step::before {
 	content: '';
 	position: absolute;
-	top: 3.25rem;
-	left: 1.6rem;
+	top: 4.5rem;
+	left: 2rem;
 	width: 1px;
 	bottom: 0.35rem;
-	background: linear-gradient(to bottom, rgba(230, 126, 34, 0.42), rgba(230, 126, 34, 0.06));
+	background: linear-gradient(to bottom, rgba(24, 214, 178, 0.4), rgba(255, 106, 42, 0.12));
 	pointer-events: none;
 	transform: translateX(-0.5px);
 }
@@ -1355,37 +1380,80 @@ label:has(input[type='radio']) {
 
 @media (min-width: 768px) {
 	.timeline-step::before {
-		top: 1.7rem;
+		top: 2.05rem;
 		left: auto;
-		right: -1.5rem;
+		right: -1.35rem;
 		bottom: auto;
-		width: calc(3rem - 1px);
+		width: calc(2.7rem - 1px);
 		height: 1px;
-		background: linear-gradient(to right, rgba(230, 126, 34, 0.5), rgba(230, 126, 34, 0.08));
+		background: linear-gradient(to right, rgba(24, 214, 178, 0.48), rgba(255, 106, 42, 0.14));
 	}
 	.timeline-step:last-child::before {
 		display: none;
 	}
 }
 
+.timeline-step-inner {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 1rem;
+	align-items: flex-start;
+	padding-bottom: 2rem;
+}
+
 .timeline-num {
 	position: relative;
 	z-index: 1;
-	display: inline-flex;
-	width: 3.2rem;
-	height: 3.2rem;
+	display: grid;
+	width: 4rem;
+	height: 4rem;
 	align-items: center;
 	justify-content: center;
-	border-radius: 9999px;
-	border: 1.5px solid rgba(230, 126, 34, 0.4);
-	background: radial-gradient(circle at 40% 35%, rgba(10, 21, 48, 0.85), rgba(10, 21, 48, 0.72) 60%, rgba(10, 21, 48, 0.6));
-	color: #f39c12;
+	gap: 0.18rem;
+	border: 1.5px solid rgba(24, 214, 178, 0.28);
+	border-radius: 1rem;
+	background: linear-gradient(145deg, rgba(24, 214, 178, 0.12), rgba(255, 106, 42, 0.08)), rgba(8, 24, 39, 0.82);
+	color: #18d6b2;
 	font-family: 'JetBrains Mono', monospace;
-	font-size: 0.82rem;
-	font-weight: 700;
+	font-size: 0.68rem;
+	font-weight: 800;
 	letter-spacing: 0.06em;
-	box-shadow: 0 0 18px rgba(230, 126, 34, 0.12);
+	box-shadow: 0 0 22px rgba(24, 214, 178, 0.1);
 	flex-shrink: 0;
+}
+
+.timeline-num svg {
+	color: #ff9b5e;
+}
+
+.timeline-phase {
+	color: #ff9b5e;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.timeline-step h3 {
+	margin-top: 0.55rem;
+	padding-right: 1.2rem;
+	color: var(--page-text);
+	font-size: 1rem;
+	font-weight: 750;
+	line-height: 1.55;
+}
+
+@media (min-width: 768px) {
+	.timeline-step-inner {
+		display: block;
+		padding-bottom: 0;
+		padding-right: 1.2rem;
+	}
+
+	.timeline-num {
+		margin-bottom: 1.1rem;
+	}
 }
 
 @media (max-width: 767px) {
@@ -1394,7 +1462,7 @@ label:has(input[type='radio']) {
 	}
 
 	.timeline-step::before {
-		top: 3.55rem;
+		top: 4.35rem;
 		bottom: -0.35rem;
 	}
 
@@ -1465,8 +1533,12 @@ label:has(input[type='radio']) {
 		rgba(255, 160, 20, 0.6) 292deg,
 		transparent 320deg
 	);
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask:
+		linear-gradient(#fff 0 0) content-box,
+		linear-gradient(#fff 0 0);
+	mask:
+		linear-gradient(#fff 0 0) content-box,
+		linear-gradient(#fff 0 0);
 	-webkit-mask-composite: destination-out;
 	mask-composite: exclude;
 	opacity: 0;
@@ -1510,6 +1582,133 @@ label:has(input[type='radio']) {
 	letter-spacing: 0;
 }
 
+/* ── Technical armory ───────────────────────────────────────── */
+
+.armory-section {
+	background:
+		linear-gradient(168deg, transparent 0%, transparent 44%, rgba(8, 24, 39, 0.42) 44%, rgba(8, 24, 39, 0.42) 100%),
+		var(--page-bg);
+}
+
+.armory-angle {
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+	background-size: 34px 34px;
+	mask-image: linear-gradient(120deg, transparent, #000 28%, #000 70%, transparent);
+	opacity: 0.7;
+	pointer-events: none;
+}
+
+.armory-layout {
+	position: relative;
+}
+
+.armory-category {
+	position: relative;
+	border-left: 1px solid rgba(24, 214, 178, 0.24);
+	padding-left: 1.1rem;
+}
+
+.armory-category::before {
+	content: '';
+	position: absolute;
+	left: -0.28rem;
+	top: 0.3rem;
+	width: 0.55rem;
+	aspect-ratio: 1;
+	border-radius: 9999px;
+	background: #18d6b2;
+	box-shadow: 0 0 18px rgba(24, 214, 178, 0.35);
+}
+
+.armory-console {
+	position: relative;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 1.3rem;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035)), rgba(8, 24, 39, 0.78);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.08),
+		0 28px 82px rgba(0, 0, 0, 0.24);
+	overflow: hidden;
+	padding: 1rem;
+}
+
+.armory-console::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(90deg, rgba(24, 214, 178, 0.11), transparent 42%),
+		linear-gradient(180deg, transparent 0 52%, rgba(255, 106, 42, 0.08) 52% 52.4%, transparent 52.4%);
+	pointer-events: none;
+}
+
+.armory-console-head,
+.armory-console-lines {
+	position: relative;
+	z-index: 1;
+}
+
+.armory-console-head {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+	padding-bottom: 0.9rem;
+}
+
+.armory-console-head span {
+	width: 0.6rem;
+	aspect-ratio: 1;
+	border-radius: 9999px;
+	background: #b8ff6a;
+	box-shadow: 0 0 18px rgba(184, 255, 106, 0.34);
+}
+
+.armory-console-head p {
+	color: #f5f7f8;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.armory-console-lines {
+	display: grid;
+	gap: 0.7rem;
+	margin-top: 1rem;
+}
+
+.armory-console-lines div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 0.85rem;
+	background: rgba(5, 7, 10, 0.34);
+	padding: 0.85rem 0.95rem;
+}
+
+.armory-console-lines code {
+	color: rgba(245, 247, 248, 0.76);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.78rem;
+}
+
+.armory-console-lines span {
+	color: #18d6b2;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
 /* ── Stack tech grid ────────────────────────────────────────── */
 
 .stack-pill {
@@ -1536,7 +1735,9 @@ label:has(input[type='radio']) {
 	border-color: rgba(230, 126, 34, 0.45);
 	background: color-mix(in srgb, var(--panel-bg) 96%, rgba(230, 126, 34, 0.08));
 	transform: translateY(-3px);
-	box-shadow: 0 12px 32px rgba(5, 11, 26, 0.16), 0 0 0 1px rgba(230, 126, 34, 0.14);
+	box-shadow:
+		0 12px 32px rgba(5, 11, 26, 0.16),
+		0 0 0 1px rgba(230, 126, 34, 0.14);
 }
 
 .stack-pill-dot {
@@ -1588,6 +1789,31 @@ label:has(input[type='radio']) {
 	font-size: 0.9rem;
 }
 
+.field-report-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	border: 1px solid rgba(24, 214, 178, 0.2);
+	border-radius: 9999px;
+	background: rgba(24, 214, 178, 0.07);
+	color: #18d6b2;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.7rem;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	padding: 0.45rem 0.7rem;
+	text-transform: uppercase;
+}
+
+.field-report-status::before {
+	content: '';
+	width: 0.45rem;
+	aspect-ratio: 1;
+	border-radius: 9999px;
+	background: currentColor;
+	box-shadow: 0 0 14px rgba(24, 214, 178, 0.38);
+}
+
 .quote-avatar {
 	width: 2.75rem;
 	height: 2.75rem;
@@ -1602,7 +1828,73 @@ label:has(input[type='radio']) {
 	flex-shrink: 0;
 }
 
-/* ── Value props asymmetric ─────────────────────────────────── */
+/* ── Doctrine / value props ─────────────────────────────────── */
+
+.doctrine-section {
+	background: linear-gradient(180deg, rgba(8, 24, 39, 0.74), rgba(5, 7, 10, 0.88)), var(--section-band);
+}
+
+.doctrine-section-mark {
+	position: absolute;
+	right: clamp(1rem, 5vw, 5rem);
+	top: clamp(1rem, 5vw, 4rem);
+	display: grid;
+	width: 4.5rem;
+	aspect-ratio: 1;
+	place-items: center;
+	border: 1px solid rgba(255, 106, 42, 0.22);
+	border-radius: 1.2rem;
+	background: linear-gradient(135deg, rgba(255, 106, 42, 0.1), rgba(24, 214, 178, 0.06)), rgba(5, 7, 10, 0.34);
+	color: rgba(255, 155, 94, 0.62);
+	transform: rotate(8deg);
+	pointer-events: none;
+}
+
+.doctrine-layout {
+	position: relative;
+}
+
+.doctrine-seal {
+	position: relative;
+	display: grid;
+	width: min(18rem, 78vw);
+	margin: 0 auto 2rem;
+	place-items: center;
+	border: 1px solid rgba(24, 214, 178, 0.18);
+	border-radius: 1.5rem;
+	background: linear-gradient(135deg, rgba(24, 214, 178, 0.08), rgba(255, 106, 42, 0.07)), rgba(8, 24, 39, 0.54);
+	padding: 1.3rem;
+	text-align: center;
+}
+
+.doctrine-seal-ring {
+	display: grid;
+	width: 6.2rem;
+	aspect-ratio: 1;
+	place-items: center;
+	border: 1px solid rgba(255, 106, 42, 0.34);
+	border-radius: 9999px;
+	background: linear-gradient(145deg, rgba(255, 106, 42, 0.12), rgba(24, 214, 178, 0.08)), rgba(5, 7, 10, 0.36);
+	color: #ff9b5e;
+	box-shadow: inset 0 0 0 1rem rgba(255, 255, 255, 0.018);
+}
+
+.doctrine-seal p {
+	margin-top: 0.9rem;
+	color: #f5f7f8;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.8rem;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.doctrine-seal span {
+	margin-top: 0.3rem;
+	color: #18d6b2;
+	font-size: 0.82rem;
+	font-weight: 800;
+}
 
 .value-prop-card {
 	border: 1px solid var(--border-soft);
@@ -1638,12 +1930,14 @@ label:has(input[type='radio']) {
 .value-prop-card::after {
 	content: '';
 	position: absolute;
-	bottom: -3rem;
-	right: -3rem;
-	width: 10rem;
-	height: 10rem;
-	border-radius: 9999px;
-	background: radial-gradient(circle, rgba(230, 126, 34, 0.1), transparent 65%);
+	right: 1.2rem;
+	bottom: 1rem;
+	width: 4.8rem;
+	height: 4.8rem;
+	background:
+		linear-gradient(135deg, transparent 0 44%, rgba(24, 214, 178, 0.13) 44% 46%, transparent 46%),
+		linear-gradient(45deg, transparent 0 58%, rgba(255, 106, 42, 0.12) 58% 60%, transparent 60%);
+	opacity: 0.7;
 	pointer-events: none;
 }
 
@@ -1682,11 +1976,24 @@ label:has(input[type='radio']) {
 		linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
 		linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
 	background-size: 48px 48px;
-	mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+	mask-image: linear-gradient(180deg, transparent, black 18%, black 82%, transparent);
 	pointer-events: none;
 }
 
 /* ── FAQ accordion enhanced ─────────────────────────────────── */
+
+.faq-section {
+	background: linear-gradient(155deg, rgba(8, 24, 39, 0.52) 0%, transparent 46%), var(--page-bg);
+}
+
+.faq-section-angle {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(90deg, transparent, rgba(255, 106, 42, 0.08), transparent) 50% 0 / 100% 1px no-repeat,
+		linear-gradient(90deg, transparent, rgba(24, 214, 178, 0.08), transparent) 50% 100% / 100% 1px no-repeat;
+	pointer-events: none;
+}
 
 .faq-item {
 	border: 1px solid var(--border-soft);
@@ -1832,7 +2139,9 @@ label:has(input[type='radio']) {
 
 :root[data-theme='light'] .value-prop-card:hover {
 	border-color: rgba(212, 84, 0, 0.35);
-	box-shadow: 0 20px 60px rgba(15, 31, 68, 0.12), 0 0 0 1px rgba(212, 84, 0, 0.1);
+	box-shadow:
+		0 20px 60px rgba(15, 31, 68, 0.12),
+		0 0 0 1px rgba(212, 84, 0, 0.1);
 }
 
 :root[data-theme='light'] .value-prop-icon-wrap {
@@ -1841,15 +2150,38 @@ label:has(input[type='radio']) {
 }
 
 :root[data-theme='light'] .value-prop-card::after {
-	background: radial-gradient(circle, rgba(212, 84, 0, 0.08), transparent 65%);
+	background:
+		linear-gradient(135deg, transparent 0 44%, rgba(15, 156, 131, 0.12) 44% 46%, transparent 46%),
+		linear-gradient(45deg, transparent 0 58%, rgba(211, 84, 0, 0.1) 58% 60%, transparent 60%);
 }
 
 /* Timeline num */
+:root[data-theme='light'] .how-section {
+	background:
+		linear-gradient(
+			112deg,
+			transparent 0%,
+			transparent 34%,
+			rgba(233, 238, 246, 0.78) 34%,
+			rgba(233, 238, 246, 0.78) 66%,
+			transparent 66%
+		),
+		var(--page-bg);
+}
+
 :root[data-theme='light'] .timeline-num {
-	background: linear-gradient(135deg, #ffffff, #f0f2f6);
-	border-color: rgba(159, 58, 0, 0.45);
-	color: #8a3200;
-	box-shadow: 0 0 14px rgba(159, 58, 0, 0.1);
+	background: linear-gradient(145deg, rgba(15, 156, 131, 0.08), rgba(211, 84, 0, 0.06)), #ffffff;
+	border-color: rgba(15, 156, 131, 0.26);
+	color: #0f8d77;
+	box-shadow: 0 0 14px rgba(15, 156, 131, 0.08);
+}
+
+:root[data-theme='light'] .timeline-num svg {
+	color: #c86f12;
+}
+
+:root[data-theme='light'] .timeline-phase {
+	color: #c86f12;
 }
 
 /* Pricing cards */
@@ -1866,11 +2198,15 @@ label:has(input[type='radio']) {
 :root[data-theme='light'] .pricing-card--featured {
 	border-color: rgba(211, 84, 0, 0.45);
 	background: linear-gradient(145deg, rgba(211, 84, 0, 0.06) 0%, #ffffff 50%);
-	box-shadow: 0 0 0 1px rgba(211, 84, 0, 0.14), 0 20px 60px rgba(211, 84, 0, 0.1);
+	box-shadow:
+		0 0 0 1px rgba(211, 84, 0, 0.14),
+		0 20px 60px rgba(211, 84, 0, 0.1);
 }
 
 :root[data-theme='light'] .pricing-card--featured:hover {
-	box-shadow: 0 0 0 1px rgba(211, 84, 0, 0.3), 0 28px 70px rgba(211, 84, 0, 0.15);
+	box-shadow:
+		0 0 0 1px rgba(211, 84, 0, 0.3),
+		0 28px 70px rgba(211, 84, 0, 0.15);
 }
 
 :root[data-theme='light'] .pricing-price {
@@ -1878,6 +2214,46 @@ label:has(input[type='radio']) {
 }
 
 /* Stack pills */
+:root[data-theme='light'] .armory-section,
+:root[data-theme='light'] .doctrine-section {
+	background: #eef2f8;
+}
+
+:root[data-theme='light'] .armory-category {
+	border-color: rgba(15, 156, 131, 0.24);
+}
+
+:root[data-theme='light'] .armory-console,
+:root[data-theme='light'] .doctrine-seal {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.12);
+	box-shadow: 0 24px 70px rgba(15, 31, 68, 0.1);
+}
+
+:root[data-theme='light'] .armory-console-head {
+	border-color: rgba(15, 31, 68, 0.1);
+}
+
+:root[data-theme='light'] .armory-console-head p,
+:root[data-theme='light'] .doctrine-seal p {
+	color: #182033;
+}
+
+:root[data-theme='light'] .armory-console-lines div {
+	background: rgba(15, 31, 68, 0.035);
+	border-color: rgba(15, 31, 68, 0.08);
+}
+
+:root[data-theme='light'] .armory-console-lines code {
+	color: #526070;
+}
+
+:root[data-theme='light'] .doctrine-section-mark {
+	background: rgba(255, 255, 255, 0.68);
+	border-color: rgba(211, 84, 0, 0.16);
+	color: rgba(211, 84, 0, 0.52);
+}
+
 :root[data-theme='light'] .stack-pill {
 	background: #ffffff;
 	border-color: rgba(15, 31, 68, 0.14);
@@ -1912,7 +2288,17 @@ label:has(input[type='radio']) {
 	color: #8a3200;
 }
 
+:root[data-theme='light'] .field-report-status {
+	background: rgba(15, 156, 131, 0.08);
+	border-color: rgba(15, 156, 131, 0.18);
+	color: #0f8d77;
+}
+
 /* FAQ */
+:root[data-theme='light'] .faq-section {
+	background: linear-gradient(155deg, rgba(233, 238, 246, 0.78) 0%, transparent 46%), var(--page-bg);
+}
+
 :root[data-theme='light'] .faq-item {
 	background: #ffffff;
 	border-color: rgba(15, 31, 68, 0.1);
@@ -1950,9 +2336,7 @@ label:has(input[type='radio']) {
 /* ── Release Command sections ───────────────────────────────── */
 
 .release-problems {
-	background:
-		linear-gradient(180deg, rgba(8, 24, 39, 0.84), rgba(5, 7, 10, 0.92)),
-		var(--section-band);
+	background: linear-gradient(180deg, rgba(8, 24, 39, 0.84), rgba(5, 7, 10, 0.92)), var(--section-band);
 }
 
 .release-problems-line {
@@ -1969,9 +2353,7 @@ label:has(input[type='radio']) {
 	min-height: 18rem;
 	border: 1px solid rgba(255, 255, 255, 0.11);
 	border-radius: 1.4rem;
-	background:
-		linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035)),
-		rgba(8, 24, 39, 0.72);
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035)), rgba(8, 24, 39, 0.72);
 	box-shadow:
 		inset 0 1px 0 rgba(255, 255, 255, 0.08),
 		0 24px 70px rgba(0, 0, 0, 0.24);
@@ -2131,9 +2513,7 @@ label:has(input[type='radio']) {
 	align-items: flex-start;
 	border: 1px solid rgba(255, 255, 255, 0.08);
 	border-radius: 1.15rem;
-	background:
-		linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025)),
-		rgba(255, 255, 255, 0.035);
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025)), rgba(255, 255, 255, 0.035);
 	padding: 1.2rem;
 }
 
@@ -2237,8 +2617,12 @@ label:has(input[type='radio']) {
 		rgba(255, 175, 30, 0.72) 300deg,
 		transparent 320deg
 	);
-	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-	mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask:
+		linear-gradient(#fff 0 0) content-box,
+		linear-gradient(#fff 0 0);
+	mask:
+		linear-gradient(#fff 0 0) content-box,
+		linear-gradient(#fff 0 0);
 	-webkit-mask-composite: destination-out;
 	mask-composite: exclude;
 	opacity: 0;

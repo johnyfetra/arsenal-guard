@@ -27,7 +27,7 @@ import Sun from 'lucide-astro/Sun';
 		}, 120);
 	};
 	const saved = localStorage.getItem('theme');
-	const initial = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+	const initial = saved || 'dark';
 	applyTheme(initial);
 	document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
 		button.addEventListener('click', () => {

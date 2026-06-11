@@ -1,57 +1,100 @@
 ---
+import FileSearch from 'lucide-astro/FileSearch';
+import Flag from 'lucide-astro/Flag';
+import ShieldCheck from 'lucide-astro/ShieldCheck';
+import Waypoints from 'lucide-astro/Waypoints';
 import Container from '../ui/Container.astro';
 import type { Lang } from '../../lib/i18n';
-interface Props { lang: Lang }
+interface Props {
+	lang: Lang;
+}
 const { lang } = Astro.props;
-const localizedSteps = lang === 'fr'
-	? [
-		'Audit — parcours critiques, risques produit, signaux existants',
-		'Stratégie de test — manuel, automation et priorités release',
-		'Automation — Playwright/Cypress sur les flux qui comptent',
-		'Release report — décisions, anomalies et prochaines priorités',
-	]
-	: [
-		'Audit — critical flows, product risks, existing signals',
-		'Test strategy — manual, automation and release priorities',
-		'Automation — Playwright/Cypress on the flows that matter',
-		'Release report — decisions, defects and next priorities',
-	];
-const labels = lang === 'fr'
-	? {
-		eyebrow: 'Release workflow',
-		title: 'Un process QA lisible par produit, tech et management.',
-	}
-	: {
-		eyebrow: 'Release workflow',
-		title: 'A QA process readable by product, engineering and leadership.',
-	};
+const labels =
+	lang === 'fr'
+		? {
+				eyebrow: 'Mission release',
+				title: 'Une opération QA lisible par produit, tech et management.',
+				lead: 'Le process reste court, mais discipliné : on reconnaît le terrain, on classe les risques, on fortifie les parcours critiques, puis on transmet une décision claire.',
+				steps: [
+					{
+						icon: Waypoints,
+						phase: 'Reconnaître',
+						text: 'Parcours critiques, rôles utilisateurs, zones fragiles et signaux qualité déjà présents.',
+					},
+					{
+						icon: Flag,
+						phase: 'Prioriser',
+						text: 'Ce qui bloque la release, ce qui mérite surveillance et ce qui peut attendre sans danger.',
+					},
+					{
+						icon: ShieldCheck,
+						phase: 'Fortifier',
+						text: 'Tests manuels ciblés, automation Playwright/Cypress et garde-fous CI/CD sur les flux clés.',
+					},
+					{
+						icon: FileSearch,
+						phase: 'Transmettre',
+						text: 'Rapport release : anomalies, preuves, arbitrage et prochaines actions pour l’équipe.',
+					},
+				],
+			}
+		: {
+				eyebrow: 'Release mission',
+				title: 'A QA operation readable by product, engineering and leadership.',
+				lead: 'The process stays short but disciplined: we read the terrain, rank the risks, fortify critical journeys, then transmit a clear release decision.',
+				steps: [
+					{
+						icon: Waypoints,
+						phase: 'Recon',
+						text: 'Critical journeys, user roles, fragile zones and existing quality signals.',
+					},
+					{
+						icon: Flag,
+						phase: 'Prioritize',
+						text: 'What blocks the release, what deserves monitoring and what can wait safely.',
+					},
+					{
+						icon: ShieldCheck,
+						phase: 'Fortify',
+						text: 'Targeted manual QA, Playwright/Cypress automation and CI/CD guardrails on key flows.',
+					},
+					{
+						icon: FileSearch,
+						phase: 'Report',
+						text: 'Release report: defects, evidence, arbitration and next actions for the team.',
+					},
+				],
+			};
 ---
+
 <section class="how-section relative overflow-hidden py-16 md:py-32">
-	<!-- subtle diagonal background stripe -->
-	<div class="absolute inset-0 -z-10 opacity-40" aria-hidden="true">
-		<div
-			class="absolute inset-0"
-			style="background: linear-gradient(112deg, transparent 0%, transparent 38%, rgba(10,21,48,0.55) 38%, rgba(10,21,48,0.55) 62%, transparent 62%);"
-		></div>
-	</div>
+	<div class="how-section-track" aria-hidden="true"></div>
 	<Container>
-		<div class="mb-10 md:mb-14 reveal">
+		<div class="mb-10 md:mb-14">
 			<p class="section-eyebrow">{labels.eyebrow}</p>
 			<h2 class="mt-4 max-w-4xl text-3xl font-extrabold md:text-5xl">{labels.title}</h2>
+			<p class="mt-5 max-w-3xl text-lg leading-relaxed text-muted" data-reveal>{labels.lead}</p>
 		</div>
 		<div class="grid gap-0 md:grid-cols-4 md:gap-0">
-			{localizedSteps.map((step, index) => (
-				<div class="timeline-step reveal" style={`--reveal-delay:${index * 90}ms`}>
-					<div class="flex items-start gap-4 md:flex-col md:items-start md:gap-0">
-						<!-- number badge -->
-						<div class="timeline-num md:mb-5">0{index + 1}</div>
-						<!-- connector line visible on mobile (vertical) handled by ::before -->
-						<div class="pb-8 md:pb-0 md:pr-8">
-							<h3 class="font-bold text-base leading-snug">{step}</h3>
+			{
+				labels.steps.map((step, index) => {
+					const Icon = step.icon;
+					return (
+						<div class="timeline-step reveal" style={`--reveal-delay:${index * 90}ms`}>
+							<div class="timeline-step-inner">
+								<div class="timeline-num">
+									<Icon class="size-5" aria-hidden="true" />
+									<span>0{index + 1}</span>
+								</div>
+								<div>
+									<p class="timeline-phase">{step.phase}</p>
+									<h3>{step.text}</h3>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			))}
+					);
+				})
+			}
 		</div>
 	</Container>
 </section>

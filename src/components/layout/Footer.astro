@@ -17,19 +17,20 @@ const links = [
 	[lang === 'fr' ? 'Mentions légales' : 'Legal notice', routeMap.legal],
 	[lang === 'fr' ? 'Politique de confidentialité' : 'Privacy policy', routeMap.privacy],
 ];
-const footerCopy = lang === 'fr'
-	? {
-		tagline: `${site.tagline}. Antananarivo, Madagascar — clients dans toute l’Europe.`,
-		nav: 'Navigation',
-		contact: 'Contact',
-		rights: 'Tous droits réservés.',
-	}
-	: {
-		tagline: 'Premium QA service for European SaaS products. Antananarivo, Madagascar — clients across Europe.',
-		nav: 'Navigation',
-		contact: 'Contact',
-		rights: 'All rights reserved.',
-	};
+const footerCopy =
+	lang === 'fr'
+		? {
+				tagline: `${site.tagline}. Antananarivo, Madagascar — clients dans toute l’Europe.`,
+				nav: 'Navigation',
+				contact: 'Contact',
+				rights: 'Tous droits réservés.',
+			}
+		: {
+				tagline: 'Release Command QA for European SaaS products. Antananarivo, Madagascar — clients across Europe.',
+				nav: 'Navigation',
+				contact: 'Contact',
+				rights: 'All rights reserved.',
+			};
 ---
 
 <footer class="site-footer border-t py-12">
@@ -41,7 +42,15 @@ const footerCopy = lang === 'fr'
 		<div>
 			<p class="font-bold text-white">{footerCopy.nav}</p>
 			<ul class="footer-muted mt-4 space-y-2 text-sm">
-				{links.map(([label, href]) => <li><a class="footer-link" href={localizedPath(lang, href)}>{label}</a></li>)}
+				{
+					links.map(([label, href]) => (
+						<li>
+							<a class="footer-link" href={localizedPath(lang, href)}>
+								{label}
+							</a>
+						</li>
+					))
+				}
 			</ul>
 		</div>
 		<div>

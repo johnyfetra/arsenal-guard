@@ -1,47 +1,111 @@
 ---
-import FileSearch from 'lucide-astro/FileSearch';
-import Zap from 'lucide-astro/Zap';
 import Eye from 'lucide-astro/Eye';
+import FileSearch from 'lucide-astro/FileSearch';
+import ShieldCheck from 'lucide-astro/ShieldCheck';
+import Zap from 'lucide-astro/Zap';
 import Container from '../ui/Container.astro';
-import { copy, type Lang } from '../../lib/i18n';
-import { valueProps } from '../../lib/site';
+import type { Lang } from '../../lib/i18n';
 
 interface Props {
 	lang: Lang;
 }
 const { lang } = Astro.props;
-const icons = { FileSearch, Zap, Eye };
-const localizedValueProps = lang === 'fr'
-	? valueProps
-	: [
-		{ icon: 'FileSearch', title: 'A clear report, not a ticket dump', text: 'Every bug is documented, prioritized and illustrated. No noise — just what actually blocks.' },
-		{ icon: 'Zap', title: 'No setup, no tools to learn', text: 'You share a staging link. We handle the rest. Delivered in 48 to 72 business hours.' },
-		{ icon: 'Eye', title: 'The outside perspective your team can\'t have', text: 'An external tester sees what familiarity hides: broken flows, UX inconsistencies, critical anomalies.' },
-	];
+
+const content =
+	lang === 'fr'
+		? {
+				eyebrow: 'Doctrine Arsenal Guard',
+				title: 'Un art QA sobre : observer, verrouiller, transmettre.',
+				lead: 'Notre travail n’est pas de produire du bruit. C’est de faire apparaître le risque exact, au bon moment, avec assez de preuves pour décider.',
+				principles: [
+					{
+						icon: Eye,
+						code: 'RECON',
+						title: 'Observer comme un utilisateur réel',
+						text: 'On parcourt les chemins sensibles avec un regard externe : friction UX, edge cases métier, incohérences et points de rupture.',
+					},
+					{
+						icon: ShieldCheck,
+						code: 'GUARD',
+						title: 'Transformer les bugs en garde-fous',
+						text: 'Chaque anomalie utile devient une priorité : corriger, surveiller, automatiser ou intégrer au gate CI/CD.',
+					},
+					{
+						icon: FileSearch,
+						code: 'REPORT',
+						title: 'Transmettre un signal exploitable',
+						text: 'Rapport net, captures, sévérité et prochaine action. Produit, tech et management lisent le même terrain.',
+					},
+				],
+				seal: 'Release readiness',
+				status: 'Signal clair',
+			}
+		: {
+				eyebrow: 'Arsenal Guard doctrine',
+				title: 'A disciplined QA craft: observe, guard, report.',
+				lead: 'Our work is not to create noise. It is to surface the exact risk, at the right time, with enough evidence to make a release decision.',
+				principles: [
+					{
+						icon: Eye,
+						code: 'RECON',
+						title: 'Observe like a real user',
+						text: 'We walk sensitive journeys with an external eye: UX friction, domain edge cases, inconsistencies and breakpoints.',
+					},
+					{
+						icon: ShieldCheck,
+						code: 'GUARD',
+						title: 'Turn bugs into guardrails',
+						text: 'Every useful defect becomes a decision: fix it, monitor it, automate it or add it to the CI/CD gate.',
+					},
+					{
+						icon: FileSearch,
+						code: 'REPORT',
+						title: 'Transmit an actionable signal',
+						text: 'Clean report, screenshots, severity and next action. Product, engineering and leadership read the same terrain.',
+					},
+				],
+				seal: 'Release readiness',
+				status: 'Clear signal',
+			};
 ---
 
-<section class="section-skew-both section-band relative z-10">
+<section class="doctrine-section section-skew-both section-band relative z-10 overflow-hidden">
+	<div class="doctrine-section-mark" aria-hidden="true">
+		<Zap class="size-6" />
+	</div>
 	<Container>
-		<div class="mx-auto mb-12 max-w-2xl text-center reveal">
-			<p class="section-eyebrow justify-center">{lang === 'fr' ? 'Notre valeur' : 'Our value'}</p>
-			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.value}</h2>
+		<div class="mx-auto mb-12 max-w-3xl text-center">
+			<p class="section-eyebrow justify-center">{content.eyebrow}</p>
+			<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{content.title}</h2>
+			<p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted" data-reveal>{content.lead}</p>
 		</div>
-		<div class="grid gap-6 md:grid-cols-3">
-			{localizedValueProps.map((item, index) => {
-				const Icon = icons[item.icon as keyof typeof icons];
-				return (
-					<div class="value-prop-card reveal" style={`--reveal-delay:${index * 80}ms`}>
-						<div class="value-prop-icon-wrap">
-							<Icon class="size-6 text-orange-400" />
-						</div>
-						<p class="mt-2 font-mono text-xs font-bold tracking-[0.18em] text-orange-400 opacity-60">
-							0{index + 1}
-						</p>
-						<h3 class="mt-3 text-xl font-bold">{item.title}</h3>
-						<p class="mt-3 text-muted leading-relaxed">{item.text}</p>
-					</div>
-				);
-			})}
+
+		<div class="doctrine-layout">
+			<div class="doctrine-seal" data-reveal>
+				<div class="doctrine-seal-ring">
+					<ShieldCheck class="size-10" aria-hidden="true" />
+				</div>
+				<p>{content.seal}</p>
+				<span>{content.status}</span>
+			</div>
+
+			<div class="grid gap-5 md:grid-cols-3">
+				{
+					content.principles.map((item, index) => {
+						const Icon = item.icon;
+						return (
+							<div class="value-prop-card reveal" style={`--reveal-delay:${index * 80}ms`}>
+								<div class="value-prop-icon-wrap">
+									<Icon class="size-6 text-orange-400" aria-hidden="true" />
+								</div>
+								<p class="mt-2 font-mono text-xs font-bold tracking-[0.18em] text-orange-400 opacity-70">{item.code}</p>
+								<h3 class="mt-3 text-xl font-bold">{item.title}</h3>
+								<p class="mt-3 text-muted leading-relaxed">{item.text}</p>
+							</div>
+						);
+					})
+				}
+			</div>
 		</div>
 	</Container>
 </section>

@@ -7,7 +7,9 @@ import lafLogo from '../../assets/logos/les-aligneurs-francais.png';
 import sodexoLogo from '../../assets/logos/sodexo.png';
 import type { Lang } from '../../lib/i18n';
 
-interface Props { lang?: Lang }
+interface Props {
+	lang?: Lang;
+}
 const { lang = 'fr' } = Astro.props;
 
 const clients = [
@@ -19,28 +21,44 @@ const clients = [
 ];
 const loopItems = [...clients, ...clients, ...clients];
 ---
+
 <section class="overflow-hidden py-10 md:py-14">
 	<Container>
-		<p class="logo-cloud-title text-center text-xl font-extrabold uppercase tracking-[0.24em] text-current md:text-2xl">
-			{lang === 'fr' ? 'Ils nous ont fait confiance' : 'Trusted by ambitious teams'}
+		<p
+			class="logo-cloud-title mx-auto max-w-4xl text-center text-xl font-extrabold uppercase tracking-[0.24em] text-current md:text-2xl"
+		>
+			{lang === 'fr' ? 'Expérience terrain sur des plateformes exigeantes' : 'Field experience on demanding platforms'}
 		</p>
 	</Container>
-	<div class="logo-marquee mt-9" aria-label={lang === 'fr' ? 'Références clients Arsenal Guard' : 'Arsenal Guard client references'}>
+	<div
+		class="logo-marquee mt-9"
+		aria-label={lang === 'fr' ? 'Références clients Arsenal Guard' : 'Arsenal Guard client references'}
+	>
 		<div class="logo-marquee-track">
-			{loopItems.map((client) => (
-				<div class="client-logo" style={`--logo-color: ${client.color}`}>
-					<img class="client-logo-image" src={client.logo.src} alt={`Logo ${client.name}`} loading="lazy" decoding="async" />
-				</div>
-			))}
+			{
+				loopItems.map((client) => (
+					<div class="client-logo" style={`--logo-color: ${client.color}`}>
+						<img
+							class="client-logo-image"
+							src={client.logo.src}
+							alt={`Logo ${client.name}`}
+							loading="lazy"
+							decoding="async"
+						/>
+					</div>
+				))
+			}
 		</div>
 	</div>
 	<div class="logo-marquee logo-marquee--reverse mt-4" aria-hidden="true">
 		<div class="logo-marquee-track">
-			{loopItems.map((client) => (
-				<div class="client-logo" style={`--logo-color: ${client.color}`}>
-					<img class="client-logo-image" src={client.logo.src} alt="" loading="lazy" decoding="async" />
-				</div>
-			))}
+			{
+				loopItems.map((client) => (
+					<div class="client-logo" style={`--logo-color: ${client.color}`}>
+						<img class="client-logo-image" src={client.logo.src} alt="" loading="lazy" decoding="async" />
+					</div>
+				))
+			}
 		</div>
 	</div>
 </section>

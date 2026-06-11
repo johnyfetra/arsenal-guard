@@ -1,0 +1,490 @@
+---
+import Activity from 'lucide-astro/Activity';
+import Bug from 'lucide-astro/Bug';
+import Eye from 'lucide-astro/Eye';
+import GitBranch from 'lucide-astro/GitBranch';
+import Radar from 'lucide-astro/Radar';
+import Container from '../ui/Container.astro';
+import type { Lang } from '../../lib/i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const content =
+	lang === 'fr'
+		? {
+				eyebrow: 'Carte de défense release',
+				title: 'Avant d’expédier, on rend le terrain lisible.',
+				lead: 'Chaque parcours critique devient une zone surveillée : ce qui casse, ce qui tient, ce qui mérite un blocage CI et ce qui peut attendre sans mettre la release en danger.',
+				kpis: [
+					['01', 'Zones critiques cartographiées'],
+					['02', 'Bugs classés par niveau de menace'],
+					['03', 'Gate release prêt à décider'],
+				],
+				zones: ['Auth', 'Checkout', 'Dashboard', 'Billing', 'CI/CD'],
+				signals: [
+					{ icon: Eye, label: 'Recon humaine', value: 'parcours réels' },
+					{ icon: Bug, label: 'Anomalies', value: 'tri critique' },
+					{ icon: GitBranch, label: 'Pipeline', value: 'signal bloquant' },
+					{ icon: Activity, label: 'Commandement', value: 'rapport net' },
+				],
+			}
+		: {
+				eyebrow: 'Release defense map',
+				title: 'Before shipping, we make the terrain readable.',
+				lead: 'Every critical journey becomes a monitored zone: what breaks, what holds, what deserves a CI blocker and what can wait without putting the release at risk.',
+				kpis: [
+					['01', 'Critical zones mapped'],
+					['02', 'Bugs ranked by threat level'],
+					['03', 'Release gate ready to decide'],
+				],
+				zones: ['Auth', 'Checkout', 'Dashboard', 'Billing', 'CI/CD'],
+				signals: [
+					{ icon: Eye, label: 'Human recon', value: 'real journeys' },
+					{ icon: Bug, label: 'Defects', value: 'critical triage' },
+					{ icon: GitBranch, label: 'Pipeline', value: 'blocking signal' },
+					{ icon: Activity, label: 'Command', value: 'clean report' },
+				],
+			};
+---
+
+<section id="release-map" class="mission-map-section relative overflow-hidden py-20 md:py-32">
+	<div class="mission-map-grid" aria-hidden="true"></div>
+	<Container class="relative z-10 grid gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
+		<div>
+			<p class="section-eyebrow">{content.eyebrow}</p>
+			<h2 class="mt-4 max-w-3xl text-3xl font-extrabold md:text-5xl">{content.title}</h2>
+			<p class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">{content.lead}</p>
+
+			<div class="mission-map-kpis mt-8 grid gap-3" data-reveal>
+				{
+					content.kpis.map(([index, label]) => (
+						<div class="mission-map-kpi">
+							<span>{index}</span>
+							<p>{label}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		<div class="mission-map-board scroll-float" data-scroll-depth="-10" data-reveal>
+			<div class="mission-map-board-head">
+				<div>
+					<p>Arsenal Guard / Release Map</p>
+					<span>{lang === 'fr' ? 'Surveillance multi-zone' : 'Multi-zone monitoring'}</span>
+				</div>
+				<Radar class="size-6" aria-hidden="true" />
+			</div>
+
+			<div class="mission-map-canvas" aria-hidden="true">
+				<svg viewBox="0 0 680 430" role="img" aria-label={content.eyebrow}>
+					<defs>
+						<linearGradient id="mission-path" x1="80" y1="80" x2="600" y2="350" gradientUnits="userSpaceOnUse">
+							<stop stop-color="#18D6B2" stop-opacity="0.9"></stop>
+							<stop offset="0.48" stop-color="#F6C057" stop-opacity="0.9"></stop>
+							<stop offset="1" stop-color="#FF6A2A" stop-opacity="0.88"></stop>
+						</linearGradient>
+						<filter id="mission-glow" x="-40%" y="-40%" width="180%" height="180%">
+							<feGaussianBlur stdDeviation="7" result="blur"></feGaussianBlur>
+							<feMerge>
+								<feMergeNode in="blur"></feMergeNode>
+								<feMergeNode in="SourceGraphic"></feMergeNode>
+							</feMerge>
+						</filter>
+					</defs>
+					<path
+						class="mission-map-terrain mission-map-terrain--one"
+						d="M67 113c52-52 119-62 174-26 54 36 98 31 150 5 78-39 155-5 205 57 40 50 30 112-20 158-50 45-121 37-175 14-67-28-101 7-162 19-79 16-151-6-179-63-28-58-32-123 7-164Z"
+					></path>
+					<path
+						class="mission-map-terrain mission-map-terrain--two"
+						d="M115 270c44-58 107-43 157-19 52 24 91 5 132-23 54-38 115-32 151 8 35 39 28 101-18 137-47 37-117 25-166 7-51-18-87 10-143 15-71 6-137-23-150-75-4-18 6-34 37-50Z"
+					></path>
+					<path class="mission-map-route" d="M106 314C159 221 235 255 281 179s119-76 167-21 85 65 139 16"></path>
+					<path
+						class="mission-map-route mission-map-route--ghost"
+						d="M127 145c55 28 87 94 161 92s101-83 163-76 82 69 125 116"></path>
+					{
+						[
+							[106, 314],
+							[207, 246],
+							[281, 179],
+							[393, 139],
+							[487, 181],
+							[587, 174],
+						].map(([cx, cy], index) => (
+							<g class="mission-map-node" style={`--node-index:${index}`}>
+								<circle cx={cx} cy={cy} r="20" />
+								<circle cx={cx} cy={cy} r="6" />
+							</g>
+						))
+					}
+					<g class="mission-map-shield" filter="url(#mission-glow)">
+						<path d="M340 139 389 157v42c0 35-20 62-49 78-29-16-49-43-49-78v-42l49-18Z"></path>
+						<path d="m318 206 15 15 31-48"></path>
+					</g>
+					<g class="mission-map-sweep">
+						<circle cx="340" cy="210" r="122"></circle>
+						<path d="M340 210 455 168"></path>
+					</g>
+				</svg>
+
+				{
+					content.zones.map((zone, index) => (
+						<span class={`mission-map-zone mission-map-zone--${index + 1}`}>{zone}</span>
+					))
+				}
+			</div>
+
+			<div class="mission-map-signal-grid">
+				{
+					content.signals.map((signal) => {
+						const Icon = signal.icon;
+						return (
+							<div class="mission-map-signal">
+								<Icon class="size-4" aria-hidden="true" />
+								<div>
+									<p>{signal.label}</p>
+									<span>{signal.value}</span>
+								</div>
+							</div>
+						);
+					})
+				}
+			</div>
+		</div>
+	</Container>
+</section>
+
+<style>
+	.mission-map-section {
+		background: linear-gradient(180deg, rgba(5, 7, 10, 0.96), rgba(8, 24, 39, 0.86)), var(--page-bg);
+	}
+
+	.mission-map-grid {
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+		background-size: 44px 44px;
+		mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+		opacity: 0.48;
+		pointer-events: none;
+	}
+
+	.mission-map-kpi {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 0.9rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.045);
+		padding: 0.9rem 1rem;
+	}
+
+	.mission-map-kpi span {
+		color: #18d6b2;
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+	}
+
+	.mission-map-kpi p {
+		color: rgba(245, 247, 248, 0.78);
+		font-size: 0.94rem;
+		font-weight: 700;
+		line-height: 1.4;
+	}
+
+	.mission-map-board {
+		position: relative;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 1.65rem;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035)), rgba(8, 24, 39, 0.78);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.09),
+			0 34px 100px rgba(0, 0, 0, 0.32);
+		overflow: hidden;
+		padding: clamp(1rem, 2vw, 1.3rem);
+	}
+
+	.mission-map-board::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(120deg, rgba(24, 214, 178, 0.12), transparent 28%),
+			linear-gradient(300deg, rgba(255, 106, 42, 0.13), transparent 34%);
+		pointer-events: none;
+	}
+
+	.mission-map-board-head {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.09);
+		border-radius: 1.1rem;
+		background: rgba(5, 7, 10, 0.38);
+		color: #18d6b2;
+		padding: 0.9rem 1rem;
+	}
+
+	.mission-map-board-head p {
+		color: #f5f7f8;
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.mission-map-board-head span {
+		display: block;
+		margin-top: 0.2rem;
+		color: rgba(245, 247, 248, 0.54);
+		font-size: 0.82rem;
+		font-weight: 700;
+	}
+
+	.mission-map-canvas {
+		position: relative;
+		z-index: 1;
+		margin-top: 1rem;
+		min-height: clamp(18rem, 45vw, 28rem);
+		border: 1px solid rgba(255, 255, 255, 0.09);
+		border-radius: 1.2rem;
+		background:
+			radial-gradient(circle at 50% 48%, rgba(24, 214, 178, 0.11), transparent 16rem),
+			radial-gradient(circle at 78% 25%, rgba(255, 106, 42, 0.08), transparent 13rem), rgba(5, 7, 10, 0.42);
+		overflow: hidden;
+	}
+
+	.mission-map-canvas::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+		background-size: 30px 30px;
+		pointer-events: none;
+	}
+
+	.mission-map-canvas svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.mission-map-terrain {
+		fill: rgba(255, 255, 255, 0.035);
+		stroke: rgba(255, 255, 255, 0.12);
+		stroke-width: 1;
+	}
+
+	.mission-map-terrain--two {
+		fill: rgba(24, 214, 178, 0.04);
+		stroke: rgba(24, 214, 178, 0.16);
+	}
+
+	.mission-map-route {
+		fill: none;
+		stroke: url('#mission-path');
+		stroke-linecap: round;
+		stroke-width: 4;
+		stroke-dasharray: 12 12;
+		animation: mission-route-flow 6s linear infinite;
+	}
+
+	.mission-map-route--ghost {
+		stroke: rgba(255, 255, 255, 0.16);
+		stroke-width: 2;
+		stroke-dasharray: 5 13;
+		animation-duration: 9s;
+	}
+
+	.mission-map-node circle:first-child {
+		fill: rgba(24, 214, 178, 0.06);
+		stroke: rgba(24, 214, 178, 0.42);
+		stroke-width: 1.5;
+		animation: mission-node-pulse 2.8s ease-in-out infinite;
+		animation-delay: calc(var(--node-index) * -0.32s);
+	}
+
+	.mission-map-node circle:last-child {
+		fill: #18d6b2;
+	}
+
+	.mission-map-shield path:first-child {
+		fill: rgba(255, 106, 42, 0.1);
+		stroke: #ff9b5e;
+		stroke-width: 4;
+		stroke-linejoin: round;
+	}
+
+	.mission-map-shield path:last-child {
+		fill: none;
+		stroke: #b8ff6a;
+		stroke-width: 6;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.mission-map-sweep {
+		fill: none;
+		stroke: rgba(24, 214, 178, 0.34);
+		stroke-width: 1.4;
+		transform-box: fill-box;
+		transform-origin: center;
+		animation: mission-sweep 8s linear infinite;
+	}
+
+	.mission-map-zone {
+		position: absolute;
+		display: inline-flex;
+		border: 1px solid rgba(255, 255, 255, 0.13);
+		border-radius: 9999px;
+		background: rgba(5, 7, 10, 0.74);
+		color: rgba(245, 247, 248, 0.82);
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		padding: 0.45rem 0.65rem;
+		text-transform: uppercase;
+	}
+
+	.mission-map-zone--1 {
+		left: 12%;
+		top: 27%;
+	}
+	.mission-map-zone--2 {
+		right: 9%;
+		top: 21%;
+	}
+	.mission-map-zone--3 {
+		left: 42%;
+		top: 10%;
+	}
+	.mission-map-zone--4 {
+		left: 16%;
+		bottom: 13%;
+	}
+	.mission-map-zone--5 {
+		right: 14%;
+		bottom: 15%;
+	}
+
+	.mission-map-signal-grid {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		gap: 0.7rem;
+		margin-top: 1rem;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.mission-map-signal {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 0.7rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.05);
+		color: #ff9b5e;
+		padding: 0.85rem;
+	}
+
+	.mission-map-signal p {
+		color: #f5f7f8;
+		font-size: 0.86rem;
+		font-weight: 800;
+	}
+
+	.mission-map-signal span {
+		display: block;
+		margin-top: 0.1rem;
+		color: rgba(245, 247, 248, 0.56);
+		font-size: 0.78rem;
+		font-weight: 700;
+	}
+
+	:global([data-theme='light']) .mission-map-section {
+		background: #f3f6fb;
+	}
+
+	:global([data-theme='light']) .mission-map-kpi,
+	:global([data-theme='light']) .mission-map-board {
+		background: rgba(255, 255, 255, 0.9);
+		border-color: rgba(15, 31, 68, 0.12);
+		box-shadow: 0 24px 70px rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .mission-map-kpi p,
+	:global([data-theme='light']) .mission-map-board-head p,
+	:global([data-theme='light']) .mission-map-signal p {
+		color: #182033;
+	}
+
+	:global([data-theme='light']) .mission-map-board-head,
+	:global([data-theme='light']) .mission-map-canvas,
+	:global([data-theme='light']) .mission-map-signal,
+	:global([data-theme='light']) .mission-map-zone {
+		background: rgba(255, 255, 255, 0.72);
+		border-color: rgba(15, 31, 68, 0.12);
+	}
+
+	:global([data-theme='light']) .mission-map-board-head span,
+	:global([data-theme='light']) .mission-map-signal span,
+	:global([data-theme='light']) .mission-map-zone {
+		color: #526070;
+	}
+
+	@keyframes mission-route-flow {
+		to {
+			stroke-dashoffset: -48;
+		}
+	}
+
+	@keyframes mission-node-pulse {
+		0%,
+		100% {
+			opacity: 0.58;
+			transform: scale(0.88);
+		}
+
+		50% {
+			opacity: 1;
+			transform: scale(1.08);
+		}
+	}
+
+	@keyframes mission-sweep {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@media (max-width: 640px) {
+		.mission-map-signal-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.mission-map-zone {
+			font-size: 0.58rem;
+			padding: 0.35rem 0.48rem;
+		}
+	}
+</style>

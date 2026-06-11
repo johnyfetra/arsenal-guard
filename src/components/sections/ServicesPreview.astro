@@ -3,154 +3,183 @@ import ArrowRight from 'lucide-astro/ArrowRight';
 import Check from 'lucide-astro/Check';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
-import { copy, routeMap, type Lang } from '../../lib/i18n';
-import { plans, services } from '../../lib/site';
-import type { Service } from '../../lib/site';
+import { localizedPath, routeMap, type Lang } from '../../lib/i18n';
 
-interface Props { lang: Lang; mode?: 'services' | 'pricing' }
+interface Props {
+	lang: Lang;
+	mode?: 'services' | 'pricing';
+}
 const { lang, mode = 'services' } = Astro.props;
 
-const planDetails = {
-	Starter: {
-		description: {
-			fr: 'Pour maintenir les parcours critiques et obtenir un signal QA régulier sans alourdir votre équipe.',
-			en: 'For maintaining critical journeys and keeping a steady QA signal without adding team overhead.',
-		},
-		perks: {
-			fr: [
-				'2 à 3 tests E2E ciblés/mois',
-				'Maintenance légère des tests instables',
-				'Revue CI mensuelle',
-				'Synthèse priorisée des risques',
-			],
-			en: [
-				'2 to 3 targeted E2E tests/month',
-				'Light flaky test maintenance',
-				'Monthly CI review',
-				'Prioritized risk summary',
-			],
-		},
-	},
-	Growth: {
-		description: {
-			fr: 'Pour les équipes qui livrent souvent et veulent accélérer la couverture E2E avec un suivi QA actif.',
-			en: 'For teams shipping often that need to grow E2E coverage with active QA follow-up.',
-		},
-		perks: {
-			fr: [
-				'5 à 8 tests E2E/mois',
-				'Stabilisation continue des flakies',
-				'Tests bloquants intégrés en CI/CD',
-				'Reporting qualité et arbitrage release',
-			],
-			en: [
-				'5 to 8 E2E tests/month',
-				'Continuous flaky test stabilization',
-				'Blocking tests integrated in CI/CD',
-				'Quality reporting and release arbitration',
-			],
-		},
-	},
-	Pro: {
-		description: {
-			fr: 'Pour les produits à forte cadence qui ont besoin d’un ownership QA plus complet sur plusieurs squads.',
-			en: 'For high-velocity products that need broader QA ownership across several squads.',
-		},
-		perks: {
-			fr: [
-				'8 à 12 tests E2E/mois',
-				'Maintenance avancée et refactor de suite',
-				'Support CI/CD prioritaire',
-				'Roadmap QA mensuelle avec métriques',
-			],
-			en: [
-				'8 to 12 E2E tests/month',
-				'Advanced maintenance and suite refactoring',
-				'Priority CI/CD support',
-				'Monthly QA roadmap with metrics',
-			],
-		},
-	},
-};
+const labels =
+	lang === 'fr'
+		? {
+				eyebrow: mode === 'pricing' ? 'Forfaits de garde' : 'Modes d’intervention',
+				title:
+					mode === 'pricing'
+						? 'Choisissez votre niveau de garde release.'
+						: 'Trois manières d’entrer dans la ligne de défense.',
+				lead: 'On peut intervenir en reconnaissance courte, fortifier votre E2E, ou tenir une garde QA récurrente selon votre cadence produit.',
+				allServices: 'Voir tous les services',
+				detail: 'Voir le détail',
+				recommended: 'Recommandé',
+				start: 'Démarrer',
+				items: [
+					{
+						eyebrow: 'Reconnaissance',
+						title: 'Express QA Audit',
+						description:
+							'Cartographie rapide des parcours critiques, signaux existants et risques release prioritaires.',
+						price: '600 € TTC',
+						href: routeMap.audit,
+						featured: false,
+						perks: [
+							'Carte des risques produit',
+							'Revue des tests existants',
+							'Backlog QA priorisé',
+							'Restitution actionnable',
+						],
+					},
+					{
+						eyebrow: 'Fortification',
+						title: 'E2E Framework Setup',
+						description:
+							'Playwright ou Cypress sur les flux qui méritent un garde-fou automatique avant chaque release.',
+						price: '1 600 € TTC',
+						href: routeMap.automation,
+						featured: true,
+						perks: [
+							'Architecture maintenable',
+							'3 tests E2E critiques',
+							'Conventions et fixtures',
+							'Documentation de reprise',
+						],
+					},
+					{
+						eyebrow: 'Garde continue',
+						title: 'Forfait QA mensuel',
+						description:
+							'Une sentinelle QA récurrente pour les équipes qui livrent souvent et veulent un signal stable.',
+						price: 'Dès 1 100 € TTC/mois',
+						href: routeMap.retainer,
+						featured: false,
+						perks: ['Nouveaux tests chaque mois', 'Maintenance flakies', 'Support CI/CD', 'Reporting release'],
+					},
+				],
+			}
+		: {
+				eyebrow: mode === 'pricing' ? 'Guard plans' : 'Intervention modes',
+				title: mode === 'pricing' ? 'Choose your release guard level.' : 'Three ways to enter the defense line.',
+				lead: 'We can step in for a short recon, fortify your E2E coverage, or run recurring QA guard duty according to your product cadence.',
+				allServices: 'View all services',
+				detail: 'View details',
+				recommended: 'Recommended',
+				start: 'Start',
+				items: [
+					{
+						eyebrow: 'Recon',
+						title: 'Express QA Audit',
+						description: 'Fast mapping of critical journeys, existing signals and priority release risks.',
+						price: '€600 incl. VAT',
+						href: routeMap.audit,
+						featured: false,
+						perks: ['Product risk map', 'Existing test review', 'Prioritized QA backlog', 'Actionable readout'],
+					},
+					{
+						eyebrow: 'Fortification',
+						title: 'E2E Framework Setup',
+						description: 'Playwright or Cypress on the flows that deserve an automated guardrail before every release.',
+						price: '€1,600 incl. VAT',
+						href: routeMap.automation,
+						featured: true,
+						perks: [
+							'Maintainable architecture',
+							'3 critical E2E tests',
+							'Conventions and fixtures',
+							'Handover documentation',
+						],
+					},
+					{
+						eyebrow: 'Continuous guard',
+						title: 'Monthly QA plan',
+						description: 'A recurring QA sentinel for teams that ship often and need a stable quality signal.',
+						price: 'From €1,100/mo',
+						href: routeMap.retainer,
+						featured: false,
+						perks: ['New tests each month', 'Flaky maintenance', 'CI/CD support', 'Release reporting'],
+					},
+				],
+			};
 
-const pricingItems = plans.map((item) => ({
-	eyebrow: item.volume,
-	title: item.name,
-	description: planDetails[item.name as keyof typeof planDetails].description[lang],
-	price: item.price,
-	featured: item.featured,
-	perks: planDetails[item.name as keyof typeof planDetails].perks[lang],
-}));
-
-const homeServices = services.filter((s: Service) => s.featuredOnHome === true).slice(0, 3)
-const serviceItems = homeServices.map((item: Service) => ({
-	eyebrow: item.kicker,
-	title: item.title,
-	description: item.description,
-	price: item.tiers ? (item.tiers.find((t) => t.featured)?.price ?? item.price) : item.price,
-	featured: false,
-	perks: item.deliverables.slice(0, 4),
-}));
-
-const items = mode === 'pricing' ? pricingItems : serviceItems;
-const labels = lang === 'fr'
-	? { pricing: 'Tarification', offers: 'Offres', detail: 'Voir le détail', recommended: 'Recommandé', start: 'Démarrer' }
-	: { pricing: 'Pricing', offers: 'Offers', detail: 'View details', recommended: 'Recommended', start: 'Start' };
+const items = labels.items;
 ---
 
-<section class="pricing-section section-skew-top section-band relative z-20">
+<section id="mission-modes" class="pricing-section section-skew-top section-band relative z-20">
 	<Container>
-		<div class="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end reveal">
+		<div class="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end">
 			<div>
-				<p class="section-eyebrow">{mode === 'pricing' ? labels.pricing : labels.offers}</p>
+				<p class="section-eyebrow">{labels.eyebrow}</p>
 				<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">
-					{mode === 'pricing' ? copy[lang].sections.pricing : copy[lang].nav.services}
+					{labels.title}
 				</h2>
+				<p class="mt-4 max-w-2xl text-muted leading-relaxed" data-reveal>{labels.lead}</p>
 			</div>
 			<Button href={routeMap.services} lang={lang} variant="ghost">
-				{labels.detail} <ArrowRight class="size-4" />
+				{labels.allServices}
+				<ArrowRight class="size-4" />
 			</Button>
 		</div>
 
 		<div class="pricing-grid grid gap-5 md:grid-cols-3 md:items-stretch">
-			{items.map((item, index) => (
-				<div
-					class={`pricing-card reveal flex flex-col ${item.featured ? 'pricing-card--featured' : ''}`}
-					style={`--reveal-delay:${index * 80}ms`}
-				>
-					{item.featured && (
-						<div class="mb-4 flex items-center justify-between">
-							<span class="pricing-badge">{labels.recommended}</span>
-						</div>
-					)}
-					<p class="text-xs font-bold uppercase tracking-[0.16em] text-orange-400">{item.eyebrow}</p>
-					<h3 class="mt-3 text-2xl font-extrabold">{item.title}</h3>
-					<p class="mt-2 text-muted text-sm leading-relaxed">{item.description}</p>
+			{
+				items.map((item, index) => (
+					<div
+						class={`pricing-card reveal flex flex-col ${item.featured ? 'pricing-card--featured' : ''}`}
+						style={`--reveal-delay:${index * 80}ms`}
+					>
+						{item.featured && (
+							<div class="mb-4 flex items-center justify-between">
+								<span class="pricing-badge">{labels.recommended}</span>
+							</div>
+						)}
+						<p class="text-xs font-bold uppercase tracking-[0.16em] text-orange-400">{item.eyebrow}</p>
+						<h3 class="mt-3 text-2xl font-extrabold">{item.title}</h3>
+						<p class="mt-2 text-muted text-sm leading-relaxed">{item.description}</p>
 
-					<div class="my-6 border-t border-white/10"></div>
+						<div class="my-6 border-t border-white/10" />
 
-					<p class="pricing-price">
-						{item.price.replace(/\/mois/, '')}<span>{item.price.includes('/mois') ? '/mois' : ''}</span>
-					</p>
+						<p class="pricing-price">
+							{item.price.replace(/\/mois/, '')}
+							<span>{item.price.includes('/mois') ? '/mois' : ''}</span>
+						</p>
 
-					<ul class="mt-6 space-y-2.5 flex-1">
-						{item.perks.map((perk) => (
-							<li class="flex items-start gap-2 text-sm text-muted">
-								<Check class="mt-0.5 size-4 flex-shrink-0 text-orange-400" />
-								{perk}
-							</li>
-						))}
-					</ul>
+						<ul class="mt-6 space-y-2.5 flex-1">
+							{item.perks.map((perk) => (
+								<li class="flex items-start gap-2 text-sm text-muted">
+									<Check class="mt-0.5 size-4 flex-shrink-0 text-orange-400" />
+									{perk}
+								</li>
+							))}
+						</ul>
 
-					{item.featured && (
-						<div class="mt-6">
-							<Button href={routeMap.quote} lang={lang} class="w-full justify-center">
-								{labels.start}
-							</Button>
-						</div>
-					)}
-				</div>
-			))}
+						{item.featured && (
+							<div class="mt-6">
+								<Button href={item.href} lang={lang} class="w-full justify-center">
+									{labels.start}
+								</Button>
+							</div>
+						)}
+						{!item.featured && (
+							<a
+								href={localizedPath(lang, item.href)}
+								class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-orange-400 hover:underline"
+							>
+								{labels.detail} <ArrowRight class="size-3.5" />
+							</a>
+						)}
+					</div>
+				))
+			}
 		</div>
 	</Container>
 </section>

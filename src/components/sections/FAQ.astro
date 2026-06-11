@@ -1,53 +1,119 @@
 ---
 import Container from '../ui/Container.astro';
-import { copy, type Lang } from '../../lib/i18n';
-import { faq } from '../../lib/site';
-interface Props { lang: Lang; items?: string[][] }
+import type { Lang } from '../../lib/i18n';
+interface Props {
+	lang: Lang;
+	items?: string[][];
+}
 const { lang, items: passedItems } = Astro.props;
-const localizedFaq = lang === 'fr'
-	? faq
-	: [
-		['Why use a QA service instead of hiring?', 'You get faster impact, senior expertise and budget flexibility without a long recruitment cycle.'],
-		['How does remote collaboration with Madagascar work?', 'We use comfortable European overlap, weekly checkpoints, transparent backlogs and visible deliverables in your tools.'],
-		['How fast can we start?', 'An audit can start within a few days. A monthly plan usually needs one onboarding week.'],
-		['Are your tests maintainable?', 'Yes. Conventions, selectors, fixtures and reports are designed so your developers can own them.'],
-		['How do you protect confidentiality?', 'NDA available, limited access, least-privilege principles and no sharing of client data.'],
-		['How does billing work?', 'Tax-inclusive invoicing, bank transfer and optional deposit for one-off missions.'],
-		['Do you work with early-stage startups?', 'Yes when the scope is clear: audit, critical MVP journey or lightweight E2E setup.'],
-		['How do we choose one-off or monthly?', 'One-off is best for a targeted issue. Monthly is best for continuous release cadence.'],
-	];
+const localizedFaq =
+	lang === 'fr'
+		? [
+				[
+					'Quand faut-il appeler Arsenal Guard ?',
+					'Avant une release sensible, quand la CI ne suffit plus, quand une suite E2E devient instable, ou quand votre équipe a besoin d’un regard QA externe sans recrutement.',
+				],
+				[
+					'Avez-vous besoin du code source ?',
+					'Pas toujours. Une reconnaissance QA peut démarrer avec un accès staging. L’accès code devient utile pour l’automatisation, la maintenabilité et l’intégration CI/CD.',
+				],
+				[
+					'Comment travaillez-vous à distance depuis Madagascar ?',
+					'Avec un overlap Europe confortable, des points courts, un backlog visible, des accès limités et des livrables directement exploitables par votre équipe.',
+				],
+				[
+					'Les tests restent-ils chez nous ?',
+					'Oui. Les conventions, fixtures, selectors et rapports sont faits pour que vos développeurs puissent reprendre la suite sans dépendance.',
+				],
+				[
+					'Que se passe-t-il si un risque est critique ?',
+					'Il est signalé rapidement, documenté avec preuves, puis classé pour décision : blocage release, correction prioritaire, garde-fou CI ou surveillance.',
+				],
+				[
+					'Comment protégez-vous la confidentialité ?',
+					'NDA possible, principe du moindre privilège, comptes dédiés, accès limités et aucune diffusion de données client.',
+				],
+				[
+					'Peut-on commencer par une petite mission ?',
+					'Oui. Le QA Snapshot ou l’Express QA Audit sont conçus pour ouvrir le terrain rapidement avant d’automatiser ou de passer en garde mensuelle.',
+				],
+				[
+					'Comment choisir ponctuel ou mensuel ?',
+					'Ponctuel pour cartographier ou débloquer un risque précis. Mensuel pour tenir une cadence release continue avec un signal qualité régulier.',
+				],
+			]
+		: [
+				[
+					'When should we call Arsenal Guard?',
+					'Before a sensitive release, when CI is no longer enough, when an E2E suite gets unstable, or when your team needs an external QA eye without hiring.',
+				],
+				[
+					'Do you need source-code access?',
+					'Not always. QA recon can start with staging access. Code access becomes useful for automation, maintainability and CI/CD integration.',
+				],
+				[
+					'How does remote work from Madagascar happen?',
+					'With comfortable European overlap, short checkpoints, a visible backlog, limited access and deliverables your team can use immediately.',
+				],
+				[
+					'Do the tests stay with us?',
+					'Yes. Conventions, fixtures, selectors and reports are designed so your developers can own the suite without dependency.',
+				],
+				[
+					'What happens when a risk is critical?',
+					'It is raised quickly, documented with evidence, then ranked for decision: release block, priority fix, CI guardrail or monitoring.',
+				],
+				[
+					'How do you protect confidentiality?',
+					'NDA available, least-privilege access, dedicated accounts, limited permissions and no sharing of client data.',
+				],
+				[
+					'Can we start with a small mission?',
+					'Yes. QA Snapshot and Express QA Audit are designed to open the terrain quickly before automation or a monthly guard plan.',
+				],
+				[
+					'How do we choose one-off or monthly?',
+					'One-off is best to map or unblock a precise risk. Monthly is best for continuous release cadence and regular quality signal.',
+				],
+			];
 const items = passedItems ?? localizedFaq;
 const contactHref = lang === 'fr' ? 'contact' : '/en/contact';
 ---
 
-<section class="relative overflow-hidden py-16 md:py-32">
-	<!-- diagonal accent -->
-	<div
-		class="absolute inset-0 -z-10 opacity-30"
-		aria-hidden="true"
-		style="background: linear-gradient(155deg, rgba(10,21,48,0.6) 0%, transparent 45%);"
-	></div>
+<section id="rules-of-engagement" class="faq-section relative overflow-hidden py-16 md:py-32">
+	<div class="faq-section-angle" aria-hidden="true"></div>
 
 	<Container>
-		<div class="mb-10 grid gap-6 md:mb-14 md:grid-cols-[1fr_auto] md:items-end reveal">
+		<div class="mb-10 grid gap-6 md:mb-14 md:grid-cols-[1fr_auto] md:items-end">
 			<div>
-				<p class="section-eyebrow">FAQ</p>
-				<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">{copy[lang].sections.faq}</h2>
+				<p class="section-eyebrow">{lang === 'fr' ? 'Règles d’engagement' : 'Rules of engagement'}</p>
+				<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">
+					{
+						lang === 'fr'
+							? 'Les questions à clarifier avant d’ouvrir le canal QA.'
+							: 'Questions to clarify before opening the QA channel.'
+					}
+				</h2>
 			</div>
-			<p class="max-w-xs text-sm text-muted leading-relaxed">
-				{lang === 'fr' ? 'Une question non couverte ?' : 'Question not covered?'} <a href={contactHref} class="text-orange-400 hover:underline">{lang === 'fr' ? 'Écrivez-nous.' : 'Contact us.'}</a>
+			<p class="max-w-xs text-sm text-muted leading-relaxed" data-reveal>
+				{lang === 'fr' ? 'Une question non couverte ?' : 'Question not covered?'}
+				<a href={contactHref} class="text-orange-400 hover:underline"
+					>{lang === 'fr' ? 'Écrivez-nous.' : 'Contact us.'}</a
+				>
 			</p>
 		</div>
 
 		<div class="grid gap-3 md:grid-cols-2">
-			{items.map(([question, answer], index) => (
-				<div class="faq-item reveal" style={`--reveal-delay:${index * 40}ms`}>
-					<details>
-						<summary class="faq-item summary">{question}</summary>
-						<p class="faq-answer">{answer}</p>
-					</details>
-				</div>
-			))}
+			{
+				items.map(([question, answer], index) => (
+					<div class="faq-item reveal" style={`--reveal-delay:${index * 40}ms`}>
+						<details>
+							<summary class="faq-item summary">{question}</summary>
+							<p class="faq-answer">{answer}</p>
+						</details>
+					</div>
+				))
+			}
 		</div>
 	</Container>
 </section>

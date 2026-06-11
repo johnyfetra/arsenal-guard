@@ -11,57 +11,58 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const content = lang === 'fr'
-	? {
-		eyebrow: 'Le vrai risque release',
-		title: 'La plupart des bugs ne sont pas invisibles. Ils ne sont pas assignés au bon niveau de risque.',
-		lead: 'Arsenal Guard transforme les signaux dispersés en décisions lisibles avant production.',
-		problems: [
-			{
-				icon: AlertTriangle,
-				title: 'Suites E2E instables',
-				text: 'Les flakies finissent ignorés, puis le signal qualité disparaît exactement quand vous en avez besoin.',
-				meta: 'Signal bruité',
-			},
-			{
-				icon: CircleOff,
-				title: 'Régressions manuelles trop tardives',
-				text: 'Le test manuel arrive en bout de chaîne, sous pression, sans couverture claire des parcours critiques.',
-				meta: 'Risque non cadré',
-			},
-			{
-				icon: GitPullRequestDraft,
-				title: 'CI verte, produit cassé',
-				text: 'Les pipelines passent, mais les parcours métier qui comptent pour vos utilisateurs restent vulnérables.',
-				meta: 'Fausse confiance',
-			},
-		],
-	}
-	: {
-		eyebrow: 'The real release risk',
-		title: 'Most bugs are not hidden. They are not owned at the right level of risk.',
-		lead: 'Arsenal Guard turns scattered signals into readable release decisions before production.',
-		problems: [
-			{
-				icon: AlertTriangle,
-				title: 'Unstable E2E suites',
-				text: 'Flaky tests get ignored, then the quality signal disappears exactly when the team needs it.',
-				meta: 'Noisy signal',
-			},
-			{
-				icon: CircleOff,
-				title: 'Manual regressions too late',
-				text: 'Manual QA arrives at the end of the chain, under pressure, without clear critical-flow coverage.',
-				meta: 'Unframed risk',
-			},
-			{
-				icon: GitPullRequestDraft,
-				title: 'Green CI, broken product',
-				text: 'Pipelines pass while the business journeys that matter to users remain exposed.',
-				meta: 'False confidence',
-			},
-		],
-	};
+const content =
+	lang === 'fr'
+		? {
+				eyebrow: 'Carte des risques',
+				title: 'Une release échoue rarement par manque d’outils. Elle échoue par angle mort.',
+				lead: 'Arsenal Guard classe les signaux dispersés comme une carte opérationnelle : ce qui menace la release, ce qui mérite surveillance, ce qui peut attendre.',
+				problems: [
+					{
+						icon: AlertTriangle,
+						title: 'Suites E2E instables',
+						text: 'Les flakies deviennent du bruit de fond. Le jour critique, plus personne ne sait si l’alerte est réelle.',
+						meta: 'Signal bruité',
+					},
+					{
+						icon: CircleOff,
+						title: 'Régressions manuelles trop tardives',
+						text: 'La vérification arrive en bout de chaîne, sous pression, sans couverture claire des parcours qui comptent.',
+						meta: 'Risque non cadré',
+					},
+					{
+						icon: GitPullRequestDraft,
+						title: 'CI verte, produit cassé',
+						text: 'Les pipelines passent pendant que les parcours métier restent exposés, hors champ de la garde automatisée.',
+						meta: 'Fausse confiance',
+					},
+				],
+			}
+		: {
+				eyebrow: 'Risk map',
+				title: 'A release rarely fails because of missing tools. It fails because of blind spots.',
+				lead: 'Arsenal Guard ranks scattered signals like an operational map: what threatens the release, what deserves monitoring, what can wait.',
+				problems: [
+					{
+						icon: AlertTriangle,
+						title: 'Unstable E2E suites',
+						text: 'Flaky tests become background noise. On the critical day, nobody knows whether the alert is real.',
+						meta: 'Noisy signal',
+					},
+					{
+						icon: CircleOff,
+						title: 'Manual regressions too late',
+						text: 'Checks arrive at the end of the chain, under pressure, without clear coverage of the journeys that matter.',
+						meta: 'Unframed risk',
+					},
+					{
+						icon: GitPullRequestDraft,
+						title: 'Green CI, broken product',
+						text: 'Pipelines pass while business journeys remain exposed, outside the automated guard line.',
+						meta: 'False confidence',
+					},
+				],
+			};
 ---
 
 <section class="release-problems section-band relative overflow-hidden py-20 md:py-32">
@@ -76,19 +77,21 @@ const content = lang === 'fr'
 		</div>
 
 		<div class="mt-12 grid gap-5 md:grid-cols-3">
-			{content.problems.map((item, index) => {
-				const Icon = item.icon;
-				return (
-					<article class="release-problem-card" data-reveal style={`--reveal-delay:${index * 80}ms`}>
-						<div class="release-problem-icon">
-							<Icon class="size-5" aria-hidden="true" />
-						</div>
-						<p class="release-problem-meta">{item.meta}</p>
-						<h3>{item.title}</h3>
-						<p>{item.text}</p>
-					</article>
-				);
-			})}
+			{
+				content.problems.map((item, index) => {
+					const Icon = item.icon;
+					return (
+						<article class="release-problem-card" data-reveal style={`--reveal-delay:${index * 80}ms`}>
+							<div class="release-problem-icon">
+								<Icon class="size-5" aria-hidden="true" />
+							</div>
+							<p class="release-problem-meta">{item.meta}</p>
+							<h3>{item.title}</h3>
+							<p>{item.text}</p>
+						</article>
+					);
+				})
+			}
 		</div>
 	</Container>
 </section>

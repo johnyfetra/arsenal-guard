@@ -14,51 +14,52 @@ interface Props {
 
 const { lang } = Astro.props;
 
-const hero = lang === 'fr'
-	? {
-		badge: 'Release Command · QA humaine + automation + CI/CD',
-		title: ['Vos releases', 'sans angle mort.'],
-		lead: 'Arsenal Guard combine QA manuelle senior, automatisation Playwright/Cypress et contrôle CI/CD pour livrer plus vite, sans perdre la maîtrise.',
-		primary: 'Planifier un audit QA',
-		secondary: 'Voir l’approche',
-		proof: 'Europe remote · Tests manuels · Automation · CI/CD ready',
-		radarTitle: 'Release readiness',
-		radarSubtitle: 'Signal qualité avant production',
-		layers: ['Human review', 'Automated checks', 'Release gate'],
-		signals: [
-			['Critical flows', '12 scénarios couverts', 'ready'],
-			['Regression suite', '2 flakies isolés', 'watch'],
-			['CI signal', 'Blocking tests actifs', 'pass'],
-			['Risk map', '3 priorités produit', 'review'],
-		],
-		stats: [
-			['72h', 'rapport priorisé'],
-			['5+', 'ans QA senior'],
-			['UTC+3', 'overlap Europe'],
-		],
-	}
-	: {
-		badge: 'Release Command · Human QA + automation + CI/CD',
-		title: ['Release confidence', 'without blind spots.'],
-		lead: 'Arsenal Guard combines senior manual QA, Playwright/Cypress automation and CI/CD release control for teams that need speed without blind spots.',
-		primary: 'Book a QA audit',
-		secondary: 'See the approach',
-		proof: 'Europe remote · Manual testing · Automation · CI/CD ready',
-		radarTitle: 'Release readiness',
-		radarSubtitle: 'Quality signal before production',
-		layers: ['Human review', 'Automated checks', 'Release gate'],
-		signals: [
-			['Critical flows', '12 journeys covered', 'ready'],
-			['Regression suite', '2 flakies isolated', 'watch'],
-			['CI signal', 'Blocking tests active', 'pass'],
-			['Risk map', '3 product priorities', 'review'],
-		],
-		stats: [
-			['72h', 'prioritized report'],
-			['5+', 'senior QA years'],
-			['UTC+3', 'Europe overlap'],
-		],
-	};
+const hero =
+	lang === 'fr'
+		? {
+				badge: 'Release Command · QA humaine + automation + CI/CD',
+				title: ['Vos releases', 'sans angle mort.'],
+				lead: 'Arsenal Guard combine QA manuelle senior, automatisation Playwright/Cypress et contrôle CI/CD pour livrer plus vite, sans perdre la maîtrise.',
+				primary: 'Planifier un audit QA',
+				secondary: 'Voir l’approche',
+				proof: 'Europe remote · Tests manuels · Automation · CI/CD ready',
+				radarTitle: 'Release readiness',
+				radarSubtitle: 'Signal qualité avant production',
+				layers: ['Human review', 'Automated checks', 'Release gate'],
+				signals: [
+					['Critical flows', '12 scénarios couverts', 'ready'],
+					['Regression suite', '2 flakies isolés', 'watch'],
+					['CI signal', 'Blocking tests actifs', 'pass'],
+					['Risk map', '3 priorités produit', 'review'],
+				],
+				stats: [
+					['72h', 'rapport priorisé'],
+					['5+', 'ans QA senior'],
+					['UTC+3', 'overlap Europe'],
+				],
+			}
+		: {
+				badge: 'Release Command · Human QA + automation + CI/CD',
+				title: ['Release confidence', 'without blind spots.'],
+				lead: 'Arsenal Guard combines senior manual QA, Playwright/Cypress automation and CI/CD release control for teams that need speed without blind spots.',
+				primary: 'Book a QA audit',
+				secondary: 'See the approach',
+				proof: 'Europe remote · Manual testing · Automation · CI/CD ready',
+				radarTitle: 'Release readiness',
+				radarSubtitle: 'Quality signal before production',
+				layers: ['Human review', 'Automated checks', 'Release gate'],
+				signals: [
+					['Critical flows', '12 journeys covered', 'ready'],
+					['Regression suite', '2 flakies isolated', 'watch'],
+					['CI signal', 'Blocking tests active', 'pass'],
+					['Risk map', '3 product priorities', 'review'],
+				],
+				stats: [
+					['72h', 'prioritized report'],
+					['5+', 'senior QA years'],
+					['UTC+3', 'Europe overlap'],
+				],
+			};
 
 const icons = [ShieldCheck, Bot, GitBranch, Activity];
 ---
@@ -72,18 +73,24 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 		<div class="hero-command-copy">
 			<p class="hero-command-badge">{hero.badge}</p>
 			<h1 class="hero-command-title">
-				{hero.title.map((line, index) => (
-					<span class={index === hero.title.length - 1 ? 'hero-command-title-accent' : ''}>{line}</span>
-				))}
+				{
+					hero.title.map((line, index) => (
+						<span class={index === hero.title.length - 1 ? 'hero-command-title-accent' : ''}>{line}</span>
+					))
+				}
 			</h1>
 			<p class="hero-command-lead">{hero.lead}</p>
 
-			<div class="hero-command-actions" role="group" aria-label={lang === 'fr' ? 'Actions principales' : 'Primary actions'}>
+			<div
+				class="hero-command-actions"
+				role="group"
+				aria-label={lang === 'fr' ? 'Actions principales' : 'Primary actions'}
+			>
 				<Button href={routeMap.quote} lang={lang}>
 					{hero.primary}
 					<ArrowRight class="size-4" aria-hidden="true" />
 				</Button>
-				<Button href="#release-approach" lang={lang} variant="secondary">
+				<Button href="#release-map" lang={lang} variant="secondary">
 					{hero.secondary}
 				</Button>
 			</div>
@@ -103,12 +110,14 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 					<ShieldCheck class="size-8" aria-hidden="true" />
 				</div>
 
-				{hero.layers.map((layer, index) => (
-					<div class={`release-layer release-layer--${index + 1}`}>
-						<span class="release-layer-dot" aria-hidden="true"></span>
-						{layer}
-					</div>
-				))}
+				{
+					hero.layers.map((layer, index) => (
+						<div class={`release-layer release-layer--${index + 1}`}>
+							<span class="release-layer-dot" aria-hidden="true" />
+							{layer}
+						</div>
+					))
+				}
 			</div>
 
 			<div class="release-panel">
@@ -120,28 +129,35 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 					<strong>94%</strong>
 				</div>
 				<div class="release-signal-list">
-					{hero.signals.map(([label, value, state], index) => {
-						const Icon = icons[index];
-						return (
-							<div class={`release-signal release-signal--${state}`}>
-								<Icon class="size-4" aria-hidden="true" />
-								<div>
-									<p>{label}</p>
-									<span>{value}</span>
+					{
+						hero.signals.map(([label, value, state], index) => {
+							const Icon = icons[index];
+							return (
+								<div class={`release-signal release-signal--${state}`}>
+									<Icon class="size-4" aria-hidden="true" />
+									<div>
+										<p>{label}</p>
+										<span>{value}</span>
+									</div>
 								</div>
-							</div>
-						);
-					})}
+							);
+						})
+					}
 				</div>
 			</div>
 
-			<div class="hero-command-stats" aria-label={lang === 'fr' ? 'Indicateurs Arsenal Guard' : 'Arsenal Guard indicators'}>
-				{hero.stats.map(([value, label]) => (
-					<div>
-						<strong>{value}</strong>
-						<span>{label}</span>
-					</div>
-				))}
+			<div
+				class="hero-command-stats"
+				aria-label={lang === 'fr' ? 'Indicateurs Arsenal Guard' : 'Arsenal Guard indicators'}
+			>
+				{
+					hero.stats.map(([value, label]) => (
+						<div>
+							<strong>{value}</strong>
+							<span>{label}</span>
+						</div>
+					))
+				}
 			</div>
 		</div>
 	</Container>
@@ -277,9 +293,7 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 		margin-left: auto;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 9999px;
-		background:
-			radial-gradient(circle, rgba(24, 214, 178, 0.08), transparent 52%),
-			rgba(255, 255, 255, 0.025);
+		background: radial-gradient(circle, rgba(24, 214, 178, 0.08), transparent 52%), rgba(255, 255, 255, 0.025);
 		box-shadow:
 			inset 0 0 70px rgba(24, 214, 178, 0.06),
 			0 34px 120px rgba(0, 0, 0, 0.38);
