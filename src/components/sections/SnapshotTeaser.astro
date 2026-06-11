@@ -105,9 +105,40 @@ const labels = lang === 'fr'
 
 <style>
 	.snapshot-card {
+		position: relative;
 		background: rgba(var(--color-surface-rgb, 15 31 68), 0.6);
 		border-color: rgba(255, 255, 255, 0.08);
 		transition: border-color 0.2s ease, transform 0.2s ease;
+		overflow: visible;
+	}
+
+	.snapshot-card::before {
+		content: '';
+		position: absolute;
+		inset: -1px;
+		border-radius: calc(1rem + 1px);
+		padding: 1px;
+		background: conic-gradient(
+			from var(--btn-border-angle),
+			transparent 230deg,
+			rgba(255, 160, 20, 0.6) 258deg,
+			rgba(255, 220, 90, 0.88) 275deg,
+			rgba(255, 160, 20, 0.6) 292deg,
+			transparent 320deg
+		);
+		-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: destination-out;
+		mask-composite: exclude;
+		opacity: 0;
+		transition: opacity 300ms ease;
+		animation: btn-border-spin 4s linear infinite;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	.snapshot-card:hover::before {
+		opacity: 1;
 	}
 
 	:global([data-theme='light']) .snapshot-card {
