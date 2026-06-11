@@ -18,4 +18,6 @@ modules:
     npmPackage: null
     repoUrl: null
 ides:
+  - claude-code
   - github-copilot
+  - codex
