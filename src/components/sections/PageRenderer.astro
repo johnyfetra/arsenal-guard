@@ -16,6 +16,8 @@ import Testimonials from './Testimonials.astro';
 import TierPricingTable from './TierPricingTable.astro';
 import SnapshotTeaser from './SnapshotTeaser.astro';
 import AutomationBridge from './AutomationBridge.astro';
+import Check from 'lucide-astro/Check';
+import Users from 'lucide-astro/Users';
 import QuoteForm from '../forms/QuoteForm.astro';
 import ContactForm from '../forms/ContactForm.astro';
 import johnyPortrait from '../../assets/images/johny-fetramalala.jpg';
@@ -258,11 +260,59 @@ const ui = lang === 'fr'
 				<TierPricingTable tiers={service.tiers} lang={lang} />
 			)}
 
-			<section class="py-24">
-				<Container class="grid gap-6 lg:grid-cols-3">
-					<Card><h2 class="text-2xl font-extrabold">{ui.deliverables}</h2><ul class="mt-5 space-y-3 text-muted">{service.deliverables.map((item) => <li>{item}</li>)}</ul></Card>
-					<Card><h2 class="text-2xl font-extrabold">{ui.process}</h2><ul class="mt-5 space-y-3 text-muted">{service.process.map((item) => <li>{item}</li>)}</ul></Card>
-					<Card><h2 class="text-2xl font-extrabold">{ui.forWhom}</h2><p class="mt-5 text-muted">{service.for}</p><Button class="mt-6" href={routeMap.quote} lang={lang}>{t.nav.quote}</Button></Card>
+			<section class="svc-detail-section py-16 md:py-24">
+				<Container>
+					<!-- Bento row 1: deliverables (wide) + process (narrow) -->
+					<div class="grid gap-4 lg:grid-cols-[1.65fr_1fr]">
+
+						<!-- Deliverables -->
+						<div class="svc-card reveal">
+							<p class="svc-eyebrow">
+								<Check class="size-3.5 flex-shrink-0" aria-hidden="true" />
+								{ui.deliverables}
+							</p>
+							<ul class="svc-rows mt-5">
+								{service.deliverables.map((item, i) => (
+									<li class={`svc-row ${i > 0 ? 'svc-row--divide' : ''}`}>
+										<span class="svc-row-icon">
+											<Check class="size-3.5 text-orange-400" aria-hidden="true" />
+										</span>
+										<span class="text-sm leading-relaxed text-muted">{item}</span>
+									</li>
+								))}
+							</ul>
+						</div>
+
+						<!-- Process steps -->
+						<div class="svc-card reveal" style="--reveal-delay:80ms">
+							<p class="svc-eyebrow">{ui.process}</p>
+							<ol class="svc-rows mt-5">
+								{service.process.map((item, i) => (
+									<li class={`svc-row ${i > 0 ? 'svc-row--divide' : ''}`}>
+										<span class="svc-step-num font-mono">0{i + 1}</span>
+										<span class="text-sm leading-relaxed text-muted">{item}</span>
+									</li>
+								))}
+							</ol>
+						</div>
+					</div>
+
+					<!-- Bento row 2: For whom — full-width feature banner -->
+					<div class="svc-for-whom mt-4 reveal" style="--reveal-delay:160ms">
+						<div class="svc-for-whom-body">
+							<p class="svc-eyebrow mb-4">
+								<Users class="size-3.5 flex-shrink-0" aria-hidden="true" />
+								{ui.forWhom}
+							</p>
+							<p class="text-base leading-relaxed md:text-lg">{service.for}</p>
+						</div>
+						<div class="svc-for-whom-cta">
+							<Button href={routeMap.quote} lang={lang}>{t.nav.quote}</Button>
+							<p class="mt-2.5 text-xs opacity-50">
+								{lang === 'fr' ? 'Réponse sous 24h · Sans engagement' : 'Response within 24h · No commitment'}
+							</p>
+						</div>
+					</div>
 				</Container>
 			</section>
 
@@ -385,3 +435,146 @@ const ui = lang === 'fr'
 
 	{page === 'notFound' && <section class="grid min-h-[70vh] place-items-center py-24"><Container class="text-center"><h1 class="text-6xl font-extrabold">404</h1><p class="mt-4 text-muted">{ui.notFound}</p><Button class="mt-8" href="/" lang={lang}>{ui.backHome}</Button></Container></section>}
 </Layout>
+
+<style>
+/* ── Service detail bento layout ──────────────────────────── */
+.svc-card {
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 1.5rem;
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(20px) saturate(150%);
+	-webkit-backdrop-filter: blur(20px) saturate(150%);
+	padding: 2rem;
+	box-shadow:
+		0 1px 0 rgba(255, 255, 255, 0.07) inset,
+		0 24px 64px rgba(5, 11, 26, 0.18);
+	transition:
+		border-color 200ms ease,
+		box-shadow 200ms ease;
+}
+
+:global([data-theme='light']) .svc-card {
+	background: rgba(255, 255, 255, 0.92);
+	border-color: rgba(15, 31, 68, 0.1);
+	box-shadow:
+		0 1px 0 rgba(255, 255, 255, 0.8) inset,
+		0 4px 28px rgba(15, 31, 68, 0.07);
+}
+
+.svc-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	font-size: 0.68rem;
+	font-weight: 800;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: #f39c12;
+}
+
+:global([data-theme='light']) .svc-eyebrow {
+	color: #c86f12;
+}
+
+.svc-rows {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.svc-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.85rem;
+	padding: 0.85rem 0;
+}
+
+.svc-row--divide {
+	border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+:global([data-theme='light']) .svc-row--divide {
+	border-top-color: rgba(15, 31, 68, 0.07);
+}
+
+.svc-row-icon {
+	flex-shrink: 0;
+	margin-top: 0.15rem;
+}
+
+.svc-step-num {
+	flex-shrink: 0;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	color: #f39c12;
+	opacity: 0.65;
+	margin-top: 0.15rem;
+	min-width: 1.75rem;
+}
+
+:global([data-theme='light']) .svc-step-num {
+	color: #c86f12;
+}
+
+/* ── For whom — gradient feature banner ───────────────────── */
+.svc-for-whom {
+	border: 1px solid rgba(230, 126, 34, 0.2);
+	border-radius: 1.5rem;
+	background: linear-gradient(
+		130deg,
+		rgba(230, 126, 34, 0.1) 0%,
+		rgba(15, 31, 68, 0.7) 45%,
+		rgba(10, 21, 48, 0.88) 100%
+	);
+	backdrop-filter: blur(20px) saturate(150%);
+	-webkit-backdrop-filter: blur(20px) saturate(150%);
+	padding: 2rem 2.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.75rem;
+	box-shadow:
+		0 1px 0 rgba(255, 200, 100, 0.08) inset,
+		0 0 0 1px rgba(230, 126, 34, 0.06),
+		0 24px 64px rgba(5, 11, 26, 0.22);
+}
+
+@media (min-width: 768px) {
+	.svc-for-whom {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		padding: 2.25rem 2.75rem;
+	}
+}
+
+.svc-for-whom-body {
+	max-width: 44rem;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.svc-for-whom-cta {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+	.svc-for-whom-cta {
+		align-items: center;
+	}
+}
+
+:global([data-theme='light']) .svc-for-whom {
+	background: linear-gradient(130deg, rgba(230, 126, 34, 0.07) 0%, #ffffff 55%);
+	border-color: rgba(211, 84, 0, 0.22);
+	box-shadow:
+		0 0 0 1px rgba(211, 84, 0, 0.06),
+		0 20px 56px rgba(15, 31, 68, 0.09);
+}
+
+:global([data-theme='light']) .svc-for-whom-body {
+	color: #182033;
+}
+</style>
