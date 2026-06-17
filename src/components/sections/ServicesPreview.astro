@@ -14,11 +14,11 @@ const { lang, mode = 'services' } = Astro.props;
 const labels =
 	lang === 'fr'
 		? {
-				eyebrow: mode === 'pricing' ? 'Forfaits de garde' : 'Modes d’intervention',
+				eyebrow: mode === 'pricing' ? 'Forfaits de garde' : "Modes d'intervention",
 				title:
 					mode === 'pricing'
 						? 'Choisissez votre niveau de garde release.'
-						: 'Trois manières d’entrer dans la ligne de défense.',
+						: "Trois manières d'entrer dans la ligne de défense.",
 				lead: 'On peut intervenir en reconnaissance courte, fortifier votre E2E, ou tenir une garde QA récurrente selon votre cadence produit.',
 				allServices: 'Voir tous les services',
 				detail: 'Voir le détail',
