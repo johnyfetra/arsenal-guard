@@ -8,14 +8,23 @@ interface Props {
 }
 
 const { lang, path } = Astro.props;
+const a11y = lang === 'fr'
+	? {
+		button: 'Choisir la langue',
+		list: 'Choisir la langue',
+	}
+	: {
+		button: 'Select language',
+		list: 'Select language',
+	};
 ---
 
 <div class="language-menu relative" data-language-menu>
-	<button class="language-menu-button" type="button" aria-label="Select language" aria-haspopup="listbox" aria-expanded="false" data-language-menu-button>
+	<button class="language-menu-button" type="button" aria-label={a11y.button} aria-haspopup="listbox" aria-expanded="false" data-language-menu-button>
 		<span class="language-menu-flag" aria-hidden="true">{languageFlags[lang]}</span>
 		<ChevronDown class="size-3.5 opacity-60" aria-hidden="true" />
 	</button>
-	<div class="language-menu-list" role="listbox" aria-label="Select language" data-language-menu-list>
+	<div class="language-menu-list" role="listbox" aria-label={a11y.list} data-language-menu-list>
 		{languages.map((item) => (
 			<a class="language-menu-option" href={localizedPath(item, path)} role="option" aria-selected={item === lang}>
 				<span class="language-menu-flag" aria-hidden="true">{languageFlags[item]}</span>

@@ -20,10 +20,14 @@ const nav = [
 	[t.nav.contact, routeMap.contact],
 ];
 
-// Strip locale prefix to get canonical route for active-state detection
-const routePath = path.replace(/^\/en\b/, '') || '/';
-const isActive = (href: string) =>
-	href === '/' ? routePath === '/' : routePath.startsWith(href);
+// Strip locale prefix to get canonical route for active-state detection.
+const routePath = path.replace(/^\/en\b/, '').replace(/^\/|\/$/g, '');
+const normalizeHref = (href: string) => href.replace(/^\/|\/$/g, '');
+const isCurrent = (href: string) => normalizeHref(href) === routePath;
+const isActive = (href: string) => {
+	const normalizedHref = normalizeHref(href);
+	return normalizedHref === '' ? routePath === '' : routePath === normalizedHref || routePath.startsWith(`${normalizedHref}/`);
+};
 
 const a11y =
 	lang === 'fr'
@@ -59,7 +63,7 @@ const a11y =
 				<a
 					class:list={['nav-link', { 'nav-link--active': isActive(href) }]}
 					href={localizedPath(lang, href)}
-					aria-current={isActive(href) ? 'page' : undefined}
+					aria-current={isCurrent(href) ? 'page' : isActive(href) ? 'location' : undefined}
 				>
 					{label}
 				</a>
@@ -70,9 +74,9 @@ const a11y =
 		<div class="nav-controls">
 
 			<div class="hidden sm:block"><LanguageSwitcher lang={lang} path={path} /></div>
-			<ThemeToggle />
+			<ThemeToggle lang={lang} />
 
-			<Button href={routeMap.quote} lang={lang} class="nav-cta hidden sm:inline-flex !min-h-0 !px-4 !py-2 !text-xs">
+			<Button href={routeMap.quote} lang={lang} class="nav-cta hidden sm:inline-flex !px-4 !text-xs">
 				{t.nav.quote}
 			</Button>
 
@@ -98,7 +102,7 @@ const a11y =
 				<a
 					class:list={['nav-mobile-link', { 'nav-mobile-link--active': isActive(href) }]}
 					href={localizedPath(lang, href)}
-					aria-current={isActive(href) ? 'page' : undefined}
+					aria-current={isCurrent(href) ? 'page' : isActive(href) ? 'location' : undefined}
 				>
 					{label}
 					<span class="nav-mobile-arrow" aria-hidden="true">→</span>
