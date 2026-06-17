@@ -594,4 +594,92 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 			animation: none;
 		}
 	}
+
+	/* ── Light theme ─────────────────────────────────────────────── */
+	:global([data-theme='light']) .hero-command {
+		background:
+			linear-gradient(118deg, rgba(211, 84, 0, 0.07), transparent 26%),
+			linear-gradient(242deg, rgba(15, 156, 131, 0.06), transparent 32%),
+			linear-gradient(135deg, #fffaf2 0%, #f4f8ff 52%, #eaf1fb 100%);
+		color: #182033;
+	}
+
+	:global([data-theme='light']) .hero-command-grid {
+		background-image:
+			linear-gradient(rgba(15, 31, 68, 0.07) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(15, 31, 68, 0.07) 1px, transparent 1px);
+	}
+
+	:global([data-theme='light']) .hero-command-badge {
+		background: rgba(15, 156, 131, 0.09);
+		border-color: rgba(15, 156, 131, 0.26);
+		color: #0a6b5a;
+	}
+
+	:global([data-theme='light']) .hero-command-title { color: #182033; }
+
+	:global([data-theme='light']) .hero-command-title-accent {
+		background: linear-gradient(95deg, #d35400 0%, #c07e14 46%, #0f9c83 100%);
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	:global([data-theme='light']) .hero-command-lead { color: rgba(24, 32, 51, 0.68); }
+	:global([data-theme='light']) .hero-command-proof { color: rgba(24, 32, 51, 0.5); }
+
+	:global([data-theme='light']) .release-radar {
+		border-color: rgba(15, 31, 68, 0.14);
+		background:
+			radial-gradient(circle, rgba(15, 156, 131, 0.07), transparent 52%),
+			rgba(15, 31, 68, 0.03);
+		box-shadow: inset 0 0 50px rgba(15, 156, 131, 0.04), 0 24px 80px rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .release-radar-rings span {
+		border-color: rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .release-radar-rings span:nth-child(2) {
+		border-color: rgba(15, 156, 131, 0.18);
+	}
+
+	:global([data-theme='light']) .release-radar-rings span:nth-child(3) {
+		border-color: rgba(211, 84, 0, 0.18);
+	}
+
+	:global([data-theme='light']) .release-layer {
+		background: rgba(255, 255, 255, 0.88);
+		border-color: rgba(15, 31, 68, 0.13);
+		color: #182033;
+	}
+
+	:global([data-theme='light']) .release-panel {
+		background: rgba(255, 255, 255, 0.92);
+		border-color: rgba(15, 31, 68, 0.12);
+		box-shadow: 0 20px 70px rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .release-panel-head p { color: #182033; }
+	:global([data-theme='light']) .release-panel-head span { color: #526070; }
+
+	:global([data-theme='light']) .release-signal {
+		background: rgba(15, 31, 68, 0.04);
+		border-color: rgba(15, 31, 68, 0.09);
+	}
+
+	:global([data-theme='light']) .release-signal p { color: #182033; }
+	:global([data-theme='light']) .release-signal span { color: #526070; }
+
+	:global([data-theme='light']) .hero-command-stats {
+		background: rgba(255, 255, 255, 0.9);
+		border-color: rgba(15, 31, 68, 0.12);
+	}
+
+	:global([data-theme='light']) .hero-command-stats div + div {
+		border-color: rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .hero-command-stats strong { color: #182033; }
+	:global([data-theme='light']) .hero-command-stats span { color: #526070; }
 </style>
