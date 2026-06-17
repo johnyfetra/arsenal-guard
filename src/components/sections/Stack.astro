@@ -1,5 +1,6 @@
 ---
 import Container from '../ui/Container.astro';
+import SectionIllustration from '../illustrations/SectionIllustration.astro';
 import type { Lang } from '../../lib/i18n';
 interface Props {
 	lang: Lang;
@@ -129,6 +130,7 @@ const labels =
 					<span></span>
 					<p>{labels.consoleTitle}</p>
 				</div>
+				<SectionIllustration variant="pipeline" lang={lang} class="armory-pipeline-illustration" />
 				<div class="armory-console-lines">
 					{
 						labels.consoleRows.map(([name, status]) => (

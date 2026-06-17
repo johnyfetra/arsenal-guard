@@ -2,6 +2,7 @@
 import AlertTriangle from 'lucide-astro/AlertTriangle';
 import CircleOff from 'lucide-astro/CircleOff';
 import GitPullRequestDraft from 'lucide-astro/GitPullRequestDraft';
+import SectionIllustration from '../illustrations/SectionIllustration.astro';
 import Container from '../ui/Container.astro';
 import type { Lang } from '../../lib/i18n';
 
@@ -65,7 +66,7 @@ const content =
 			};
 ---
 
-<section class="release-problems section-band relative overflow-hidden py-20 md:py-32">
+<section id="release-risk" class="release-problems section-band relative overflow-hidden py-20 md:py-32">
 	<div class="release-problems-line" aria-hidden="true"></div>
 	<Container>
 		<div class="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
@@ -74,6 +75,10 @@ const content =
 				<h2 class="mt-4 max-w-3xl text-3xl font-extrabold md:text-5xl">{content.title}</h2>
 			</div>
 			<p class="max-w-2xl text-lg leading-relaxed text-muted lg:justify-self-end" data-reveal>{content.lead}</p>
+		</div>
+
+		<div class="section-visual-card section-visual-card--wide mt-10" data-reveal>
+			<SectionIllustration variant="risk-funnel" lang={lang} />
 		</div>
 
 		<div class="mt-12 grid gap-5 md:grid-cols-3">

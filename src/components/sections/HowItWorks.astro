@@ -3,6 +3,7 @@ import FileSearch from 'lucide-astro/FileSearch';
 import Flag from 'lucide-astro/Flag';
 import ShieldCheck from 'lucide-astro/ShieldCheck';
 import Waypoints from 'lucide-astro/Waypoints';
+import SectionIllustration from '../illustrations/SectionIllustration.astro';
 import Container from '../ui/Container.astro';
 import type { Lang } from '../../lib/i18n';
 interface Props {
@@ -67,13 +68,18 @@ const labels =
 			};
 ---
 
-<section class="how-section relative overflow-hidden py-16 md:py-32">
+<section id="qa-method" class="how-section relative overflow-hidden py-16 md:py-32">
 	<div class="how-section-track" aria-hidden="true"></div>
 	<Container>
-		<div class="mb-10 md:mb-14">
-			<p class="section-eyebrow">{labels.eyebrow}</p>
-			<h2 class="mt-4 max-w-4xl text-3xl font-extrabold md:text-5xl">{labels.title}</h2>
-			<p class="mt-5 max-w-3xl text-lg leading-relaxed text-muted" data-reveal>{labels.lead}</p>
+		<div class="mb-10 grid gap-8 md:mb-14 lg:grid-cols-[1fr_.78fr] lg:items-end">
+			<div>
+				<p class="section-eyebrow">{labels.eyebrow}</p>
+				<h2 class="mt-4 max-w-4xl text-3xl font-extrabold md:text-5xl">{labels.title}</h2>
+				<p class="mt-5 max-w-3xl text-lg leading-relaxed text-muted" data-reveal>{labels.lead}</p>
+			</div>
+			<div class="section-visual-card justify-self-start lg:justify-self-end" data-reveal>
+				<SectionIllustration variant="method-flow" lang={lang} />
+			</div>
 		</div>
 		<div class="grid gap-0 md:grid-cols-4 md:gap-0">
 			{

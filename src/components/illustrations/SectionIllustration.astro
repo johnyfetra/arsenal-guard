@@ -1,0 +1,417 @@
+---
+import type { Lang } from '../../lib/i18n';
+
+type Variant =
+	| 'risk-funnel'
+	| 'method-flow'
+	| 'report-matrix'
+	| 'pipeline'
+	| 'service-ladder'
+	| 'service-dossier'
+	| 'madagascar-bridge'
+	| 'intake-flow'
+	| 'direct-channel';
+
+interface Props {
+	variant: Variant;
+	lang?: Lang;
+	serviceId?: string;
+	class?: string;
+}
+
+const { variant, lang = 'fr', serviceId = '', class: className = '' } = Astro.props;
+
+const labels = lang === 'fr'
+	? {
+		risk: ['Couverture faible', 'Bug client', 'Recrutement lourd'],
+		method: ['Staging', 'Test manuel', 'Rapport', 'Plan'],
+		report: ['Rapport QA', 'Critique', 'Majeur', 'Mineur'],
+		pipeline: ['E2E', 'CI gate', 'Rapport', 'Jira'],
+		ladder: ['Snapshot', 'Audit', 'Automation', 'Mensuel'],
+		dossier: ['Dossier', 'Livrables', 'Process', 'Décision'],
+		bridge: ['Madagascar', 'UTC+3', 'Europe', 'FR'],
+		intake: ['Besoin', 'Périmètre', '24h', 'Devis'],
+		channel: ['Email', 'Message', 'Réponse 24h'],
+		kickers: {
+			risk: 'Flux de risque',
+			method: 'Flux QA',
+			pipeline: 'Pipeline qualité',
+			ladder: 'Niveaux service',
+			intake: 'Cadrage mission',
+		},
+	}
+	: {
+		risk: ['Low coverage', 'Customer bug', 'Heavy hiring'],
+		method: ['Staging', 'Manual test', 'Report', 'Plan'],
+		report: ['QA report', 'Critical', 'Major', 'Minor'],
+		pipeline: ['E2E', 'CI gate', 'Report', 'Jira'],
+		ladder: ['Snapshot', 'Audit', 'Automation', 'Monthly'],
+		dossier: ['Dossier', 'Deliverables', 'Process', 'Decision'],
+		bridge: ['Madagascar', 'UTC+3', 'Europe', 'FR'],
+		intake: ['Need', 'Scope', '24h', 'Quote'],
+		channel: ['Email', 'Message', '24h reply'],
+		kickers: {
+			risk: 'Risk flow',
+			method: 'QA flow',
+			pipeline: 'Quality pipeline',
+			ladder: 'Service ladder',
+			intake: 'Mission intake',
+		},
+	};
+
+const serviceVisual = serviceId.includes('automatis')
+	? 'automation'
+	: serviceId.includes('forfait')
+		? 'monthly'
+		: serviceId.includes('dedie')
+			? 'dedicated'
+			: serviceId.includes('audit')
+				? 'audit'
+				: 'snapshot';
+
+const ariaLabel = {
+	'risk-funnel': lang === 'fr' ? 'Illustration de la chaîne de risque release' : 'Release risk chain illustration',
+	'method-flow': lang === 'fr' ? 'Illustration du flux de mission QA' : 'QA mission flow illustration',
+	'report-matrix': lang === 'fr' ? 'Illustration de rapport QA priorisé' : 'Prioritized QA report illustration',
+	pipeline: lang === 'fr' ? 'Illustration de pipeline qualité' : 'Quality pipeline illustration',
+	'service-ladder': lang === 'fr' ? 'Illustration des niveaux de service' : 'Service levels illustration',
+	'service-dossier': lang === 'fr' ? 'Illustration de dossier service QA' : 'QA service dossier illustration',
+	'madagascar-bridge': lang === 'fr' ? 'Illustration de collaboration Madagascar Europe' : 'Madagascar Europe collaboration illustration',
+	'intake-flow': lang === 'fr' ? 'Illustration du cadrage de devis' : 'Quote intake illustration',
+	'direct-channel': lang === 'fr' ? 'Illustration de canal direct' : 'Direct channel illustration',
+}[variant];
+---
+
+<svg class={`section-illustration section-illustration--${variant} ${className}`} viewBox="0 0 520 340" role="img" aria-label={ariaLabel}>
+	<rect class="si-bg" x="1" y="1" width="518" height="338" rx="8"></rect>
+	<path class="si-grid" d="M40 1v338M100 1v338M160 1v338M220 1v338M280 1v338M340 1v338M400 1v338M460 1v338M1 58h518M1 116h518M1 174h518M1 232h518M1 290h518"></path>
+	<circle class="si-orbit si-orbit--a" cx="430" cy="88" r="72"></circle>
+	<circle class="si-orbit si-orbit--b" cx="90" cy="250" r="48"></circle>
+
+	{variant === 'risk-funnel' && (
+		<g>
+			<path class="si-route si-route--risk" d="M92 96 C190 76 208 158 272 164 C344 172 354 238 428 228"></path>
+			{labels.risk.map((label, index) => (
+				<g class={`si-node si-node--${index + 1}`}>
+					<circle class="si-node-halo" cx={index === 0 ? 92 : index === 1 ? 272 : 428} cy={index === 0 ? 96 : index === 1 ? 164 : 228} r="33"></circle>
+					<circle class="si-node-core" cx={index === 0 ? 92 : index === 1 ? 272 : 428} cy={index === 0 ? 96 : index === 1 ? 164 : 228} r="10"></circle>
+					<text x={index === 0 ? 54 : index === 1 ? 224 : 376} y={index === 0 ? 150 : index === 1 ? 218 : 282}>{label}</text>
+				</g>
+			))}
+			<path class="si-alert" d="M270 124l34 58h-68l34-58Z"></path>
+			<text class="si-kicker" x="44" y="46">{labels.kickers.risk}</text>
+		</g>
+	)}
+
+	{variant === 'method-flow' && (
+		<g>
+			<path class="si-route" d="M74 172 H446"></path>
+			{labels.method.map((label, index) => (
+				<g class={`si-step si-step--${index + 1}`}>
+					<rect x={48 + index * 116} y="118" width="76" height="76" rx="8"></rect>
+					<circle cx={86 + index * 116} cy="156" r="15"></circle>
+					<text x={64 + index * 116} y="224">{label}</text>
+					<text class="si-step-num" x={78 + index * 116} y="161">0{index + 1}</text>
+				</g>
+			))}
+			<path class="si-scanline" d="M80 92 H438"></path>
+			<text class="si-kicker" x="44" y="46">{labels.kickers.method}</text>
+		</g>
+	)}
+
+	{variant === 'report-matrix' && (
+		<g>
+			<rect class="si-doc" x="70" y="54" width="238" height="232" rx="8"></rect>
+			<path class="si-doc-line" d="M102 102h142M102 132h170M102 162h124"></path>
+			<g class="si-matrix">
+				<rect x="338" y="86" width="114" height="142" rx="8"></rect>
+				<path d="M338 132h114M338 178h114M376 86v142M414 86v142"></path>
+				<circle cx="395" cy="155" r="8"></circle>
+				<circle cx="433" cy="201" r="8"></circle>
+			</g>
+			<g class="si-badges">
+				{labels.report.slice(1).map((label, index) => (
+					<g>
+						<rect x="102" y={198 + index * 28} width="104" height="20" rx="8"></rect>
+						<text x="116" y={212 + index * 28}>{label}</text>
+					</g>
+				))}
+			</g>
+			<text class="si-kicker" x="96" y="82">{labels.report[0]}</text>
+		</g>
+	)}
+
+	{variant === 'pipeline' && (
+		<g>
+			<path class="si-route" d="M70 170 C156 118 200 220 270 170 S382 118 450 170"></path>
+			{labels.pipeline.map((label, index) => (
+				<g class={`si-pipe si-pipe--${index + 1}`}>
+					<rect x={46 + index * 116} y={index % 2 === 0 ? 106 : 178} width="92" height="54" rx="8"></rect>
+					<text x={68 + index * 116} y={index % 2 === 0 ? 138 : 210}>{label}</text>
+				</g>
+			))}
+			<rect class="si-gate" x="232" y="138" width="56" height="56" rx="8"></rect>
+			<path class="si-check" d="M248 166l10 11 20-25"></path>
+			<text class="si-kicker" x="44" y="46">{labels.kickers.pipeline}</text>
+		</g>
+	)}
+
+	{variant === 'service-ladder' && (
+		<g>
+			{labels.ladder.map((label, index) => (
+				<g>
+					<rect class={`si-ladder si-ladder--${index + 1}`} x={62 + index * 88} y={220 - index * 40} width="84" height={54 + index * 40} rx="8"></rect>
+					<text x={74 + index * 88} y={250 - index * 40}>{label}</text>
+				</g>
+			))}
+			<path class="si-route" d="M76 92 C178 46 300 48 438 88"></path>
+			<circle class="si-node-core" cx="438" cy="88" r="11"></circle>
+			<text class="si-kicker" x="44" y="46">{labels.kickers.ladder}</text>
+		</g>
+	)}
+
+	{variant === 'service-dossier' && (
+		<g class={`si-service si-service--${serviceVisual}`}>
+			<rect class="si-doc" x="74" y="58" width="196" height="224" rx="8"></rect>
+			<rect class="si-panel" x="304" y="78" width="132" height="168" rx="8"></rect>
+			<path class="si-doc-line" d="M102 112h120M102 144h136M102 176h104"></path>
+			<path class="si-route" d="M270 170h34"></path>
+			{labels.dossier.slice(1).map((label, index) => (
+				<g>
+					<circle class="si-node-core" cx="330" cy={116 + index * 44} r="7"></circle>
+					<text x="350" y={121 + index * 44}>{label}</text>
+				</g>
+			))}
+			<path class="si-check" d="M114 226l16 16 36-48"></path>
+			<text class="si-kicker" x="100" y="88">{labels.dossier[0]}</text>
+		</g>
+	)}
+
+	{variant === 'madagascar-bridge' && (
+		<g>
+			<path class="si-map si-map--mg" d="M138 88c34 28 46 72 38 116-6 35-24 60-50 78-22-30-26-70-18-112 7-37 14-62 30-82Z"></path>
+			<path class="si-map si-map--eu" d="M368 82c44 10 72 36 78 78-18 32-54 48-94 42-26-4-50-18-66-40 14-46 42-72 82-80Z"></path>
+			<path class="si-route" d="M178 168 C244 110 298 110 364 164"></path>
+			<path class="si-route si-route--muted" d="M182 210 C252 260 318 258 390 210"></path>
+			<circle class="si-node-core" cx="178" cy="168" r="10"></circle>
+			<circle class="si-node-core" cx="364" cy="164" r="10"></circle>
+			<text x="84" y="310">{labels.bridge[0]}</text>
+			<text x="238" y="144">{labels.bridge[1]}</text>
+			<text x="376" y="254">{labels.bridge[2]}</text>
+			<text class="si-kicker" x="44" y="46">{labels.bridge[3]} · EU</text>
+		</g>
+	)}
+
+	{variant === 'intake-flow' && (
+		<g>
+			<rect class="si-panel" x="62" y="70" width="396" height="200" rx="8"></rect>
+			{labels.intake.map((label, index) => (
+				<g>
+					<rect x={86 + index * 92} y={124 + (index % 2) * 34} width="72" height="58" rx="8"></rect>
+					<text x={100 + index * 92} y={157 + (index % 2) * 34}>{label}</text>
+				</g>
+			))}
+			<path class="si-route" d="M158 152h32M250 186h32M342 152h32"></path>
+			<text class="si-kicker" x="86" y="100">{labels.kickers.intake}</text>
+		</g>
+	)}
+
+	{variant === 'direct-channel' && (
+		<g>
+			<path class="si-route" d="M92 166 C162 96 236 244 304 164 S400 102 446 166"></path>
+			<rect class="si-panel" x="72" y="78" width="150" height="82" rx="8"></rect>
+			<rect class="si-panel" x="298" y="178" width="150" height="82" rx="8"></rect>
+			<path class="si-doc-line" d="M100 112h88M100 136h64M326 212h88M326 236h64"></path>
+			<circle class="si-node-core" cx="260" cy="170" r="22"></circle>
+			<path class="si-check" d="M250 170l8 9 17-22"></path>
+			<text x="88" y="206">{labels.channel[0]}</text>
+			<text x="316" y="136">{labels.channel[1]}</text>
+			<text class="si-kicker" x="44" y="46">{labels.channel[2]}</text>
+		</g>
+	)}
+</svg>
+
+<style>
+	.section-illustration {
+		display: block;
+		width: 100%;
+		max-width: 34rem;
+		color: var(--page-text);
+		overflow: visible;
+	}
+
+	.si-bg,
+	.si-panel,
+	.si-doc,
+	.si-step rect,
+	.si-pipe rect,
+	.si-ladder {
+		fill: color-mix(in srgb, var(--panel-bg) 72%, transparent);
+		stroke: color-mix(in srgb, var(--border-soft) 88%, transparent);
+		stroke-width: 1.2;
+	}
+
+	.si-grid {
+		fill: none;
+		stroke: color-mix(in srgb, var(--border-soft) 32%, transparent);
+		stroke-width: 1;
+	}
+
+	.si-orbit {
+		fill: none;
+		stroke-width: 1;
+	}
+
+	.si-orbit--a {
+		stroke: rgba(24, 214, 178, 0.18);
+	}
+
+	.si-orbit--b {
+		stroke: rgba(255, 106, 42, 0.18);
+	}
+
+	.si-route,
+	.si-scanline {
+		fill: none;
+		stroke: #18d6b2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 3;
+	}
+
+	.si-route--risk,
+	.si-route--muted {
+		stroke: #ff6a2a;
+	}
+
+	.si-route--muted {
+		opacity: 0.45;
+		stroke-width: 2;
+	}
+
+	.si-node-halo {
+		fill: rgba(24, 214, 178, 0.08);
+		stroke: rgba(24, 214, 178, 0.22);
+	}
+
+	.si-node-core,
+	.si-step circle {
+		fill: #05070a;
+		stroke: #ff6a2a;
+		stroke-width: 2;
+	}
+
+	.si-alert {
+		fill: rgba(255, 106, 42, 0.13);
+		stroke: rgba(255, 106, 42, 0.72);
+		stroke-width: 2;
+	}
+
+	.si-doc-line,
+	.si-matrix path {
+		fill: none;
+		stroke: color-mix(in srgb, var(--page-text) 42%, transparent);
+		stroke-linecap: round;
+		stroke-width: 3;
+	}
+
+	.si-matrix rect,
+	.si-badges rect,
+	.si-gate {
+		fill: rgba(255, 106, 42, 0.09);
+		stroke: rgba(255, 106, 42, 0.32);
+	}
+
+	.si-matrix circle {
+		fill: #ff6a2a;
+	}
+
+	.si-check {
+		fill: none;
+		stroke: #18d6b2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 5;
+	}
+
+	.si-map {
+		fill: rgba(24, 214, 178, 0.08);
+		stroke: rgba(24, 214, 178, 0.35);
+		stroke-width: 2;
+	}
+
+	.si-map--mg {
+		fill: rgba(255, 106, 42, 0.11);
+		stroke: rgba(255, 106, 42, 0.4);
+	}
+
+	.si-kicker,
+	.section-illustration text {
+		fill: color-mix(in srgb, var(--page-text) 82%, transparent);
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0;
+		text-transform: uppercase;
+	}
+
+	.si-kicker,
+	.si-step-num {
+		fill: #ff9b5e;
+	}
+
+	.si-badges text,
+	.si-step-num {
+		font-size: 10px;
+	}
+
+	.si-ladder--1 {
+		fill: rgba(24, 214, 178, 0.07);
+	}
+
+	.si-ladder--2 {
+		fill: rgba(255, 106, 42, 0.07);
+	}
+
+	.si-ladder--3 {
+		fill: rgba(24, 214, 178, 0.1);
+	}
+
+	.si-ladder--4 {
+		fill: rgba(255, 106, 42, 0.12);
+	}
+
+	:global([data-theme='light']) .si-bg,
+	:global([data-theme='light']) .si-panel,
+	:global([data-theme='light']) .si-doc,
+	:global([data-theme='light']) .si-step rect,
+	:global([data-theme='light']) .si-pipe rect,
+	:global([data-theme='light']) .si-ladder {
+		fill: rgba(255, 255, 255, 0.9);
+		stroke: rgba(15, 31, 68, 0.14);
+	}
+
+	:global([data-theme='light']) .si-grid {
+		stroke: rgba(15, 31, 68, 0.08);
+	}
+
+	:global([data-theme='light']) .si-node-core,
+	:global([data-theme='light']) .si-step circle {
+		fill: #ffffff;
+	}
+
+	:global([data-theme='light']) .section-illustration text {
+		fill: #182033;
+	}
+
+	:global([data-theme='light']) .si-kicker,
+	:global([data-theme='light']) .si-step-num {
+		fill: #c86f12;
+	}
+
+	@media (max-width: 768px) {
+		.section-illustration {
+			max-width: 100%;
+		}
+	}
+</style>

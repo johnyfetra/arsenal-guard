@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import Layout from '../layout/Layout.astro';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
+import SectionIllustration from '../illustrations/SectionIllustration.astro';
 import Hero from './Hero.astro';
 import CommandPageHero from './CommandPageHero.astro';
 import ReleaseProblems from './ReleaseProblems.astro';
@@ -268,6 +269,9 @@ const ui = lang === 'fr'
 						</div>
 						<p class="text-muted leading-relaxed" data-reveal>{localizedServiceIntro[lang]}</p>
 					</div>
+					<div class="section-visual-card section-visual-card--wide mb-10" data-reveal>
+						<SectionIllustration variant="service-ladder" lang={lang} />
+					</div>
 					<div class="grid gap-5 md:grid-cols-2">
 						{services.filter((s) => s.id === 'test-manuel-ponctuel' || s.id === 'audit-qa').map((item) => (
 							<article class="operation-card" data-reveal>
@@ -402,6 +406,10 @@ const ui = lang === 'fr'
 						</div>
 					</div>
 
+					<div class="section-visual-card section-visual-card--wide svc-dossier-visual mt-4 reveal" style="--reveal-delay:120ms">
+						<SectionIllustration variant="service-dossier" lang={lang} serviceId={service.id} />
+					</div>
+
 					<!-- Bento row 2: For whom — full-width feature banner -->
 					<div class="svc-for-whom mt-4 reveal" style="--reveal-delay:160ms">
 						<div class="svc-for-whom-body">
@@ -501,9 +509,14 @@ const ui = lang === 'fr'
 					</div>
 				</Container>
 			</section>
-			<section class="madagascar-section section-band border-y py-24">
+			<section id="madagascar-advantage" class="madagascar-section section-band border-y py-24">
 				<Container class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
-					<h2 class="text-3xl font-extrabold md:text-5xl">{ui.madagascarTitle}</h2>
+					<div>
+						<h2 class="text-3xl font-extrabold md:text-5xl">{ui.madagascarTitle}</h2>
+						<div class="section-visual-card mt-8" data-reveal>
+							<SectionIllustration variant="madagascar-bridge" lang={lang} />
+						</div>
+					</div>
 					<div class="grid gap-4 md:grid-cols-2">
 						{ui.madagascar.map(([title, text], index) => (
 							<article class="route-card" data-reveal style={`--reveal-delay:${index * 70}ms`}>
@@ -643,6 +656,7 @@ const ui = lang === 'fr'
 						<p class="section-eyebrow">{lang === 'fr' ? 'Brief requis' : 'Required brief'}</p>
 						<h2>{lang === 'fr' ? 'Un cadrage clair évite une mission floue.' : 'A clear frame avoids a vague mission.'}</h2>
 						<p>{t.descriptions.quote}</p>
+						<SectionIllustration variant="intake-flow" lang={lang} class="contact-signal-illustration" />
 					</div>
 					<QuoteForm lang={lang} />
 				</Container>
@@ -674,6 +688,7 @@ const ui = lang === 'fr'
 						<p>{t.descriptions.contact}</p>
 						<a href={`mailto:${site.email}`} class="contact-email">{site.email}</a>
 						<div class="contact-slot">{ui.contactSlot}</div>
+						<SectionIllustration variant="direct-channel" lang={lang} class="contact-signal-illustration" />
 					</div>
 					<ContactForm lang={lang} />
 				</Container>
