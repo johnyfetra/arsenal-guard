@@ -854,11 +854,27 @@ label:has(input[type='radio']) {
 
 .section-band {
 	background: var(--section-band);
-	border-color: var(--section-band-border);
+	/* Replace flat border with gradient fade — border-y width is kept for spacing but color is hidden */
+	border-color: transparent;
 	transition:
 		background-color 260ms ease,
 		border-color 260ms ease,
 		color 260ms ease;
+	/* Soft fade-in / fade-out instead of hard line */
+	mask-image: linear-gradient(
+		to bottom,
+		transparent 0,
+		#000 6%,
+		#000 94%,
+		transparent 100%
+	);
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		transparent 0,
+		#000 6%,
+		#000 94%,
+		transparent 100%
+	);
 }
 
 .step-card {
@@ -2591,6 +2607,1178 @@ section[id] {
 	}
 }
 
+/* ── Internal command pages ──────────────────────────────────── */
+
+.internal-hero {
+	--internal-hero-text: #ffffff;
+	--internal-hero-muted: rgba(255, 255, 255, 0.72);
+	--internal-hero-panel: rgba(8, 24, 39, 0.72);
+	--internal-hero-line: rgba(255, 255, 255, 0.13);
+	--internal-hero-signal: #18d6b2;
+	--internal-hero-alert: #ff8b4d;
+	min-height: min(45rem, 92vh);
+	padding-block: clamp(8rem, 13vw, 12rem) clamp(4.5rem, 8vw, 7rem);
+	background:
+		radial-gradient(circle at 14% 12%, rgba(255, 106, 42, 0.2), transparent 22rem),
+		radial-gradient(circle at 82% 18%, rgba(24, 214, 178, 0.13), transparent 24rem),
+		linear-gradient(135deg, #05070a 0%, #081827 48%, #0f1f44 100%);
+	color: var(--internal-hero-text);
+}
+
+.internal-hero--service,
+.internal-hero--legal {
+	background:
+		linear-gradient(118deg, rgba(255, 106, 42, 0.13), transparent 28rem),
+		radial-gradient(circle at 78% 16%, rgba(24, 214, 178, 0.14), transparent 23rem),
+		linear-gradient(135deg, #05070a 0%, #091a2b 54%, #102b3c 100%);
+}
+
+.internal-hero--form {
+	background:
+		radial-gradient(circle at 16% 18%, rgba(24, 214, 178, 0.16), transparent 22rem),
+		radial-gradient(circle at 74% 12%, rgba(255, 106, 42, 0.18), transparent 25rem),
+		linear-gradient(135deg, #05070a 0%, #0b1728 45%, #141f35 100%);
+}
+
+.internal-hero--error {
+	background:
+		repeating-linear-gradient(135deg, rgba(255, 106, 42, 0.08) 0 1px, transparent 1px 18px),
+		radial-gradient(circle at 48% 20%, rgba(230, 126, 34, 0.22), transparent 24rem),
+		linear-gradient(135deg, #05070a 0%, #101420 100%);
+}
+
+.internal-hero-grid {
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+	background-size: 46px 46px;
+	mask-image: linear-gradient(115deg, #000 0%, rgba(0, 0, 0, 0.72) 46%, transparent 78%);
+	opacity: 0.34;
+	pointer-events: none;
+}
+
+.internal-hero-beam {
+	position: absolute;
+	width: min(30rem, 48vw);
+	aspect-ratio: 1;
+	border-radius: 9999px;
+	filter: blur(18px);
+	opacity: 0.55;
+	pointer-events: none;
+	animation: internal-beam-drift 14s ease-in-out infinite alternate;
+}
+
+.internal-hero-beam--signal {
+	left: -12rem;
+	bottom: 8%;
+	background: radial-gradient(circle, rgba(24, 214, 178, 0.14), transparent 68%);
+}
+
+.internal-hero-beam--shield {
+	right: -10rem;
+	top: 4rem;
+	background: radial-gradient(circle, rgba(255, 106, 42, 0.18), transparent 68%);
+	animation-delay: -4s;
+}
+
+.internal-hero h1 {
+	color: var(--internal-hero-text);
+	letter-spacing: 0;
+	text-wrap: balance;
+}
+
+.internal-hero h1 + p {
+	color: var(--internal-hero-muted);
+}
+
+.internal-hero-stats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0;
+	width: min(100%, 42rem);
+	margin-top: 2rem;
+	overflow: hidden;
+	border: 1px solid var(--internal-hero-line);
+	border-radius: 0.75rem;
+	background: rgba(255, 255, 255, 0.07);
+	backdrop-filter: blur(18px) saturate(150%);
+}
+
+.internal-hero-stats div {
+	display: grid;
+	gap: 0.35rem;
+	min-width: 0;
+	padding: 1rem;
+}
+
+.internal-hero-stats div + div {
+	border-left: 1px solid var(--internal-hero-line);
+}
+
+.internal-hero-stats strong {
+	color: #ffffff;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: clamp(1rem, 2vw, 1.45rem);
+	font-weight: 500;
+	line-height: 1.1;
+	white-space: nowrap;
+}
+
+.internal-hero-stats span {
+	color: rgba(255, 255, 255, 0.62);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	line-height: 1.35;
+	text-transform: uppercase;
+}
+
+.internal-hero-panel {
+	position: relative;
+	overflow: hidden;
+	border: 1px solid var(--internal-hero-line);
+	border-radius: 0.85rem;
+	background:
+		linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 48%),
+		var(--internal-hero-panel);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.1),
+		0 30px 90px rgba(0, 0, 0, 0.28);
+	padding: clamp(1rem, 2vw, 1.4rem);
+	backdrop-filter: blur(22px) saturate(150%);
+}
+
+.internal-hero-panel::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(90deg, rgba(24, 214, 178, 0.12), transparent 28%),
+		repeating-linear-gradient(0deg, transparent 0 17px, rgba(255, 255, 255, 0.035) 17px 18px);
+	opacity: 0.42;
+	pointer-events: none;
+}
+
+.internal-hero-panel-head,
+.internal-hero-checks {
+	position: relative;
+	z-index: 1;
+}
+
+.internal-hero-panel-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	border-bottom: 1px solid var(--internal-hero-line);
+	padding-bottom: 1rem;
+	color: var(--internal-hero-signal);
+}
+
+.internal-hero-panel-head p {
+	color: #ffffff;
+	font-weight: 800;
+}
+
+.internal-hero-panel-head span {
+	color: rgba(255, 255, 255, 0.58);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.7rem;
+	text-transform: uppercase;
+}
+
+.internal-hero-radar {
+	position: relative;
+	display: grid;
+	width: min(17rem, 78vw);
+	aspect-ratio: 1;
+	place-items: center;
+	margin: 1.6rem auto;
+	border: 1px solid rgba(24, 214, 178, 0.16);
+	border-radius: 9999px;
+	background:
+		radial-gradient(circle, rgba(24, 214, 178, 0.13), transparent 58%),
+		radial-gradient(circle, transparent 0 49%, rgba(255, 255, 255, 0.07) 50% 51%, transparent 52%);
+}
+
+.internal-hero-radar-ring,
+.internal-hero-radar-sweep {
+	position: absolute;
+	border-radius: inherit;
+	pointer-events: none;
+}
+
+.internal-hero-radar-ring {
+	border: 1px solid rgba(24, 214, 178, 0.18);
+}
+
+.internal-hero-radar-ring--one {
+	inset: 18%;
+}
+
+.internal-hero-radar-ring--two {
+	inset: 35%;
+	border-color: rgba(255, 106, 42, 0.18);
+}
+
+.internal-hero-radar-sweep {
+	inset: 0;
+	background: conic-gradient(from 0deg, rgba(24, 214, 178, 0.36), transparent 28%, transparent);
+	mask-image: radial-gradient(circle, transparent 0 13%, #000 14% 72%, transparent 73%);
+	animation: internal-radar-sweep 4s linear infinite;
+}
+
+.internal-hero-radar-core {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	width: 4.7rem;
+	aspect-ratio: 1;
+	place-items: center;
+	border: 1px solid rgba(255, 106, 42, 0.36);
+	border-radius: 0.8rem;
+	background: rgba(255, 106, 42, 0.12);
+	color: #ff9b5e;
+	box-shadow: 0 0 32px rgba(255, 106, 42, 0.22);
+}
+
+.internal-hero-checks {
+	display: grid;
+	gap: 0.65rem;
+}
+
+.internal-hero-checks div {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 0.75rem;
+	align-items: center;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 0.65rem;
+	background: rgba(255, 255, 255, 0.045);
+	padding: 0.8rem;
+}
+
+.internal-hero-checks span,
+.internal-hero-checks strong {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.68rem;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.internal-hero-checks span {
+	color: var(--internal-hero-alert);
+}
+
+.internal-hero-checks p {
+	color: rgba(255, 255, 255, 0.74);
+	font-size: 0.9rem;
+	font-weight: 700;
+}
+
+.internal-hero-checks strong {
+	color: var(--internal-hero-signal);
+}
+
+.operation-roster,
+.briefing-grid-section {
+	background:
+		linear-gradient(90deg, rgba(255, 106, 42, 0.06), transparent 32%),
+		linear-gradient(270deg, rgba(24, 214, 178, 0.055), transparent 34%);
+}
+
+.operation-card,
+.mission-ledger-card,
+.identity-card,
+.value-tile,
+.route-card,
+.case-card,
+.article-card,
+.contact-signal,
+.legal-panel,
+.command-form {
+	border: 1px solid var(--border-soft);
+	background:
+		linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 54%),
+		color-mix(in srgb, var(--panel-bg) 90%, transparent);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.08),
+		0 24px 70px rgba(5, 11, 26, 0.16);
+	backdrop-filter: blur(20px) saturate(150%);
+}
+
+.operation-card,
+.mission-ledger-card,
+.identity-card,
+.route-card,
+.case-card,
+.article-card,
+.contact-signal,
+.legal-panel,
+.command-form {
+	border-radius: 0.75rem;
+}
+
+.operation-card {
+	position: relative;
+	overflow: hidden;
+	min-height: 19rem;
+	padding: clamp(1.25rem, 3vw, 1.8rem);
+}
+
+.operation-card::before,
+.case-card::before,
+.article-card::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #ff6a2a, #18d6b2, transparent);
+	opacity: 0.72;
+}
+
+.operation-card::after {
+	content: '';
+	position: absolute;
+	right: -3rem;
+	bottom: -3rem;
+	width: 10rem;
+	aspect-ratio: 1;
+	border: 1px solid rgba(24, 214, 178, 0.16);
+	border-radius: 9999px;
+	opacity: 0.75;
+}
+
+.operation-card--compact {
+	min-height: 17rem;
+}
+
+.operation-card-kicker,
+.article-card-meta {
+	color: #18d6b2;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.7rem;
+	font-weight: 500;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.operation-card h3,
+.mission-ledger-card h3,
+.identity-card h3,
+.value-tile h3,
+.route-card h3,
+.case-card h2,
+.article-card h2,
+.contact-signal h2 {
+	color: var(--page-text);
+	font-weight: 800;
+	line-height: 1.12;
+	text-wrap: balance;
+}
+
+.operation-card h3 {
+	margin-top: 0.65rem;
+	font-size: clamp(1.45rem, 2.5vw, 2.1rem);
+}
+
+.operation-card p:not(.operation-card-kicker),
+.identity-card p,
+.value-tile p,
+.route-card p,
+.case-card p,
+.article-card p:not(.article-card-meta),
+.contact-signal p,
+.legal-panel p {
+	color: var(--muted-text);
+	line-height: 1.7;
+}
+
+.operation-card > p:not(.operation-card-kicker) {
+	margin-top: 0.85rem;
+}
+
+.operation-card-meta {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+	align-items: center;
+	margin-top: 1.4rem;
+}
+
+.operation-card-meta span,
+.operation-card-meta strong,
+.ledger-row span,
+.contact-slot {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2rem;
+	border: 1px solid color-mix(in srgb, var(--border-soft) 82%, transparent);
+	border-radius: 9999px;
+	background: color-mix(in srgb, var(--panel-bg) 68%, transparent);
+	color: var(--page-text);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.74rem;
+	font-weight: 500;
+	padding: 0.35rem 0.7rem;
+}
+
+.operation-card-meta strong {
+	border-color: rgba(255, 106, 42, 0.35);
+	color: #ff9b5e;
+}
+
+.ops-ledger {
+	position: relative;
+}
+
+.ops-ledger::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(90deg, transparent 0 49%, rgba(255, 106, 42, 0.06) 49% 50%, transparent 50%),
+		linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+	background-size: 9rem 9rem, 100% 2.5rem;
+	opacity: 0.72;
+	pointer-events: none;
+}
+
+.mission-ledger-card {
+	position: relative;
+	z-index: 1;
+	padding: 1.15rem;
+}
+
+.mission-ledger-card h3 {
+	margin-bottom: 0.9rem;
+	font-size: 1.25rem;
+}
+
+.ledger-row {
+	display: grid;
+	gap: 0.6rem;
+	border-top: 1px solid color-mix(in srgb, var(--border-soft) 70%, transparent);
+	padding-block: 0.9rem;
+}
+
+.ledger-row:first-of-type {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.ledger-row p {
+	color: var(--page-text);
+	font-size: 0.92rem;
+	font-weight: 750;
+	line-height: 1.45;
+}
+
+.ledger-row span {
+	width: fit-content;
+	color: var(--muted-text);
+}
+
+.ledger-row strong {
+	color: #ff9b5e;
+}
+
+.about-mission-section {
+	position: relative;
+}
+
+.about-mission-section::before {
+	content: '';
+	position: absolute;
+	left: 8%;
+	top: 18%;
+	width: min(18rem, 38vw);
+	aspect-ratio: 1;
+	border: 1px solid rgba(255, 106, 42, 0.1);
+	border-radius: 9999px;
+	opacity: 0.55;
+	pointer-events: none;
+}
+
+.about-mission-copy {
+	border-left: 2px solid rgba(255, 106, 42, 0.35);
+	padding-left: 1.5rem;
+}
+
+.identity-grid-section {
+	background:
+		linear-gradient(118deg, rgba(24, 214, 178, 0.08), transparent 34%),
+		var(--section-band);
+}
+
+.identity-card,
+.value-tile,
+.route-card {
+	position: relative;
+	overflow: hidden;
+	padding: 1.35rem;
+}
+
+.identity-card span {
+	color: rgba(255, 106, 42, 0.78);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.8rem;
+}
+
+.identity-card h3,
+.route-card h3 {
+	margin-top: 0.85rem;
+	font-size: 1.35rem;
+}
+
+.identity-card p,
+.route-card p {
+	margin-top: 0.7rem;
+}
+
+.values-tactical-section {
+	background:
+		radial-gradient(circle at 84% 18%, rgba(255, 106, 42, 0.09), transparent 22rem),
+		radial-gradient(circle at 20% 80%, rgba(24, 214, 178, 0.08), transparent 22rem);
+}
+
+.value-tile {
+	min-height: 15rem;
+	border-radius: 0.65rem;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent),
+		color-mix(in srgb, var(--panel-bg) 78%, transparent);
+}
+
+.value-tile > span {
+	display: block;
+	width: 2.5rem;
+	height: 3px;
+	border-radius: 9999px;
+	background: linear-gradient(90deg, #ff6a2a, #18d6b2);
+}
+
+.value-tile h3 {
+	margin-top: 1.4rem;
+	font-size: 1.25rem;
+}
+
+.value-tile p {
+	margin-top: 0.75rem;
+	font-size: 0.93rem;
+}
+
+.madagascar-section {
+	background:
+		linear-gradient(90deg, rgba(255, 106, 42, 0.08), transparent 28%),
+		var(--section-band);
+}
+
+.route-card {
+	background:
+		linear-gradient(90deg, rgba(24, 214, 178, 0.075), transparent 44%),
+		color-mix(in srgb, var(--panel-bg) 86%, transparent);
+}
+
+.founder-dossier-section {
+	background:
+		linear-gradient(135deg, transparent 0 55%, rgba(255, 106, 42, 0.07) 55% 56%, transparent 56%),
+		linear-gradient(45deg, transparent 0 62%, rgba(24, 214, 178, 0.055) 62% 63%, transparent 63%);
+}
+
+.about-final-call {
+	position: relative;
+	overflow: hidden;
+	background:
+		radial-gradient(circle at 50% 0%, rgba(255, 106, 42, 0.22), transparent 26rem),
+		linear-gradient(135deg, #05070a 0%, #081827 54%, #102b3c 100%);
+}
+
+.about-final-call::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+	background-size: 42px 42px;
+	mask-image: radial-gradient(circle at center, #000 0%, transparent 72%);
+}
+
+.about-final-call > * {
+	position: relative;
+	z-index: 1;
+}
+
+.case-dossier-section {
+	background:
+		linear-gradient(135deg, rgba(255, 106, 42, 0.08), transparent 30%),
+		linear-gradient(220deg, rgba(24, 214, 178, 0.06), transparent 34%);
+}
+
+.case-card,
+.article-card {
+	position: relative;
+	overflow: hidden;
+	min-height: 17rem;
+	padding: 1.35rem;
+}
+
+.case-card span {
+	display: inline-flex;
+	align-items: center;
+	min-height: 1.8rem;
+	border: 1px solid rgba(255, 106, 42, 0.3);
+	border-radius: 9999px;
+	color: #ff9b5e;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.7rem;
+	padding-inline: 0.7rem;
+}
+
+.case-card h2,
+.article-card h2 {
+	margin-top: 1.2rem;
+	font-size: clamp(1.35rem, 2vw, 1.75rem);
+}
+
+.case-card p,
+.article-card p:not(.article-card-meta) {
+	margin-top: 0.85rem;
+}
+
+.article-card {
+	display: flex;
+	flex-direction: column;
+}
+
+.article-card :where(a) {
+	margin-top: auto;
+	width: fit-content;
+}
+
+.form-command-section {
+	background:
+		radial-gradient(circle at 14% 18%, rgba(24, 214, 178, 0.08), transparent 21rem),
+		linear-gradient(118deg, rgba(255, 106, 42, 0.06), transparent 32%);
+}
+
+.contact-signal {
+	position: sticky;
+	top: 6rem;
+	overflow: hidden;
+	padding: 1.4rem;
+}
+
+.contact-signal::after {
+	content: '';
+	position: absolute;
+	right: -4rem;
+	bottom: -4rem;
+	width: 12rem;
+	aspect-ratio: 1;
+	border: 1px solid rgba(24, 214, 178, 0.16);
+	border-radius: 9999px;
+}
+
+.contact-signal h2 {
+	margin-top: 1rem;
+	font-size: clamp(1.7rem, 3vw, 2.6rem);
+}
+
+.contact-signal p:not(.section-eyebrow) {
+	margin-top: 1rem;
+}
+
+.contact-email {
+	display: inline-flex;
+	margin-top: 1.3rem;
+	color: #18d6b2;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.9rem;
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.contact-email:hover {
+	color: #ff9b5e;
+}
+
+.contact-slot {
+	margin-top: 1.3rem;
+	color: var(--muted-text);
+}
+
+.command-form {
+	padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.command-form .hidden,
+.command-form [hidden] {
+	display: none !important;
+}
+
+.command-form-progress {
+	display: grid;
+	gap: 0.75rem;
+	margin-bottom: 1.4rem;
+}
+
+.command-form-progress > div:first-child {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.command-form-progress p,
+.command-form-progress span,
+.form-secure-note {
+	color: var(--muted-text);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.68rem;
+	font-weight: 500;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.command-progress-track {
+	height: 0.55rem;
+	overflow: hidden;
+	border: 1px solid color-mix(in srgb, var(--border-soft) 74%, transparent);
+	border-radius: 9999px;
+	background: color-mix(in srgb, var(--page-bg) 70%, transparent);
+}
+
+.command-progress-track span {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: linear-gradient(90deg, #ff6a2a, #f6c057);
+	box-shadow: 0 0 24px rgba(255, 106, 42, 0.26);
+	transition: width 220ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.quote-step {
+	display: grid;
+	gap: 1.2rem;
+}
+
+.quote-fieldset {
+	min-width: 0;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.quote-step[hidden] {
+	display: none;
+}
+
+.quote-step-head {
+	display: flex;
+	gap: 0.9rem;
+	align-items: flex-start;
+}
+
+.quote-step-head > span {
+	display: grid;
+	flex: 0 0 auto;
+	width: 2.55rem;
+	aspect-ratio: 1;
+	place-items: center;
+	border: 1px solid rgba(255, 106, 42, 0.32);
+	border-radius: 0.65rem;
+	background: rgba(255, 106, 42, 0.1);
+	color: #ff9b5e;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.74rem;
+}
+
+.quote-step-head h2 {
+	color: var(--page-text);
+	font-size: clamp(1.45rem, 3vw, 2.15rem);
+	font-weight: 800;
+	line-height: 1.12;
+}
+
+.quote-step-head p {
+	margin-top: 0.35rem;
+	color: var(--muted-text);
+	line-height: 1.6;
+}
+
+.choice-grid,
+.field-grid {
+	display: grid;
+	gap: 0.85rem;
+}
+
+.choice-grid {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-card {
+	position: relative;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0.75rem;
+	align-items: flex-start;
+	border: 1px solid var(--field-border);
+	border-radius: 0.65rem;
+	background: color-mix(in srgb, var(--field-bg) 76%, transparent);
+	padding: 0.95rem;
+	cursor: pointer;
+	transition:
+		border-color 160ms ease,
+		background-color 160ms ease,
+		transform 160ms ease;
+}
+
+.choice-card:hover,
+.choice-card:has(input:checked) {
+	border-color: rgba(255, 106, 42, 0.55);
+	background: rgba(255, 106, 42, 0.1);
+	transform: translateY(-1px);
+}
+
+.choice-card input {
+	margin-top: 0.2rem;
+	accent-color: #e67e22;
+}
+
+.choice-card strong,
+.form-field span {
+	display: block;
+	color: var(--page-text);
+	font-size: 0.9rem;
+	font-weight: 800;
+}
+
+.choice-card small {
+	display: block;
+	margin-top: 0.2rem;
+	color: var(--muted-text);
+	font-size: 0.78rem;
+	line-height: 1.45;
+}
+
+.field-grid {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-field {
+	display: grid;
+	gap: 0.45rem;
+}
+
+.form-field--wide {
+	grid-column: 1 / -1;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+	width: 100%;
+	border-radius: 0.65rem;
+	padding: 0.85rem 0.95rem;
+}
+
+.form-field textarea {
+	resize: vertical;
+}
+
+.form-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: 1.45rem;
+}
+
+.form-actions-right {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+}
+
+.form-secure-note {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.command-btn {
+	display: inline-flex;
+	min-height: 2.9rem;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
+	border-radius: 0.7rem;
+	font-size: 0.88rem;
+	font-weight: 800;
+	padding: 0.75rem 1rem;
+	transition:
+		background-color 160ms ease,
+		border-color 160ms ease,
+		color 160ms ease,
+		transform 160ms ease,
+		opacity 160ms ease;
+}
+
+.command-btn:hover {
+	transform: translateY(-1px);
+}
+
+.command-btn:disabled {
+	cursor: not-allowed;
+	opacity: 0.48;
+	transform: none;
+}
+
+.command-btn--primary {
+	border: 1px solid rgba(255, 106, 42, 0.38);
+	background: linear-gradient(90deg, #e67e22, #f39c12);
+	color: #ffffff;
+	box-shadow: 0 16px 35px rgba(230, 126, 34, 0.22);
+}
+
+.command-btn--secondary {
+	border: 1px solid var(--field-border);
+	background: color-mix(in srgb, var(--panel-bg) 72%, transparent);
+	color: var(--page-text);
+}
+
+.form-status {
+	margin-top: 1rem;
+	border: 1px solid rgba(24, 214, 178, 0.26);
+	border-radius: 0.65rem;
+	background: rgba(24, 214, 178, 0.075);
+	color: #18d6b2;
+	font-size: 0.9rem;
+	font-weight: 750;
+	padding: 0.8rem 0.95rem;
+}
+
+.legal-section {
+	background:
+		linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+		linear-gradient(180deg, rgba(255, 106, 42, 0.055), transparent 30%);
+	background-size: 3.5rem 100%, auto;
+}
+
+.legal-panel {
+	padding: clamp(1.4rem, 4vw, 2rem);
+}
+
+.legal-panel p + p {
+	margin-top: 1rem;
+}
+
+.operation-card:hover,
+.identity-card:hover,
+.value-tile:hover,
+.route-card:hover,
+.case-card:hover,
+.article-card:hover {
+	border-color: rgba(255, 106, 42, 0.35);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.09),
+		0 28px 78px rgba(5, 11, 26, 0.22);
+	transform: translateY(-2px);
+}
+
+:root[data-theme='light'] .internal-hero {
+	--internal-hero-text: #182033;
+	--internal-hero-muted: #526070;
+	--internal-hero-panel: rgba(255, 255, 255, 0.86);
+	--internal-hero-line: rgba(15, 31, 68, 0.13);
+	background:
+		radial-gradient(circle at 14% 12%, rgba(230, 126, 34, 0.13), transparent 22rem),
+		radial-gradient(circle at 82% 18%, rgba(15, 156, 131, 0.09), transparent 24rem),
+		linear-gradient(135deg, #fffaf2 0%, #f7f9fc 46%, #edf3fb 100%);
+	border-bottom: 1px solid rgba(15, 31, 68, 0.1);
+}
+
+:root[data-theme='light'] .internal-hero h1,
+:root[data-theme='light'] .internal-hero-stats strong,
+:root[data-theme='light'] .internal-hero-panel-head p {
+	color: #182033;
+}
+
+:root[data-theme='light'] .internal-hero h1 + p {
+	color: #526070;
+}
+
+:root[data-theme='light'] .internal-hero-grid {
+	background-image:
+		linear-gradient(rgba(15, 31, 68, 0.08) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(15, 31, 68, 0.08) 1px, transparent 1px);
+	opacity: 0.38;
+}
+
+:root[data-theme='light'] .internal-hero-stats,
+:root[data-theme='light'] .internal-hero-panel {
+	background: rgba(255, 255, 255, 0.78);
+	box-shadow: 0 24px 70px rgba(15, 31, 68, 0.1);
+}
+
+:root[data-theme='light'] .internal-hero-stats span,
+:root[data-theme='light'] .internal-hero-panel-head span,
+:root[data-theme='light'] .internal-hero-checks p {
+	color: #526070;
+}
+
+:root[data-theme='light'] .internal-hero-checks div {
+	border-color: rgba(15, 31, 68, 0.09);
+	background: rgba(15, 31, 68, 0.035);
+}
+
+:root[data-theme='light'] .operation-card,
+:root[data-theme='light'] .mission-ledger-card,
+:root[data-theme='light'] .identity-card,
+:root[data-theme='light'] .value-tile,
+:root[data-theme='light'] .route-card,
+:root[data-theme='light'] .case-card,
+:root[data-theme='light'] .article-card,
+:root[data-theme='light'] .contact-signal,
+:root[data-theme='light'] .legal-panel,
+:root[data-theme='light'] .command-form {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.12);
+	box-shadow: 0 18px 55px rgba(15, 31, 68, 0.08);
+}
+
+:root[data-theme='light'] .operation-card:hover,
+:root[data-theme='light'] .identity-card:hover,
+:root[data-theme='light'] .value-tile:hover,
+:root[data-theme='light'] .route-card:hover,
+:root[data-theme='light'] .case-card:hover,
+:root[data-theme='light'] .article-card:hover {
+	box-shadow: 0 24px 70px rgba(15, 31, 68, 0.12);
+}
+
+:root[data-theme='light'] .operation-card-meta strong,
+:root[data-theme='light'] .ledger-row strong,
+:root[data-theme='light'] .case-card span,
+:root[data-theme='light'] .quote-step-head > span {
+	color: #c86f12;
+}
+
+:root[data-theme='light'] .operation-card-kicker,
+:root[data-theme='light'] .article-card-meta,
+:root[data-theme='light'] .contact-email,
+:root[data-theme='light'] .form-status {
+	color: #0f8d77;
+}
+
+:root[data-theme='light'] .operation-card-meta span,
+:root[data-theme='light'] .operation-card-meta strong,
+:root[data-theme='light'] .ledger-row span,
+:root[data-theme='light'] .contact-slot,
+:root[data-theme='light'] .command-btn--secondary {
+	background: rgba(15, 31, 68, 0.035);
+	border-color: rgba(15, 31, 68, 0.12);
+}
+
+:root[data-theme='light'] .identity-grid-section,
+:root[data-theme='light'] .madagascar-section {
+	background:
+		linear-gradient(118deg, rgba(15, 156, 131, 0.06), transparent 34%),
+		#eef2f8;
+}
+
+:root[data-theme='light'] .command-progress-track {
+	background: rgba(15, 31, 68, 0.07);
+}
+
+:root[data-theme='light'] .choice-card {
+	background: #ffffff;
+	border-color: rgba(15, 31, 68, 0.14);
+}
+
+:root[data-theme='light'] .choice-card:hover,
+:root[data-theme='light'] .choice-card:has(input:checked) {
+	background: rgba(211, 84, 0, 0.06);
+	border-color: rgba(211, 84, 0, 0.42);
+}
+
+:root[data-theme='light'] .form-status {
+	background: rgba(15, 156, 131, 0.08);
+	border-color: rgba(15, 156, 131, 0.18);
+}
+
+@media (max-width: 1024px) {
+	.contact-signal {
+		position: relative;
+		top: auto;
+	}
+}
+
+@media (max-width: 768px) {
+	.internal-hero {
+		min-height: auto;
+		padding-block: 7.5rem 4rem;
+	}
+
+	.internal-hero h1 {
+		font-size: clamp(2.7rem, 14vw, 4.5rem);
+	}
+
+	.internal-hero-stats,
+	.choice-grid,
+	.field-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.internal-hero-stats div + div {
+		border-left: 0;
+		border-top: 1px solid var(--internal-hero-line);
+	}
+
+	.form-actions,
+	.form-actions-right {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.form-secure-note {
+		order: -1;
+	}
+
+	.command-btn {
+		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.internal-hero-beam,
+	.internal-hero-radar-sweep {
+		animation: none;
+	}
+}
+
+@keyframes internal-beam-drift {
+	from {
+		transform: translate3d(0, 0, 0) scale(0.96);
+	}
+	to {
+		transform: translate3d(2rem, 1rem, 0) scale(1.08);
+	}
+}
+
+@keyframes internal-radar-sweep {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 /* ── Animated border button ─────────────────────────────────── */
 
 @property --btn-border-angle {
@@ -2644,4 +3832,236 @@ section[id] {
 	to {
 		--btn-border-angle: 360deg;
 	}
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION IDENTITY SYSTEM — unique gradient bias per section type
+   Each section has a directional glow so no two sections look alike
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* About — Mission: warm drift from top-left */
+.about-mission-section {
+	background:
+		radial-gradient(ellipse 55% 45% at -5% 10%, rgba(230, 126, 34, 0.12) 0%, transparent 65%),
+		var(--page-bg);
+}
+
+/* About — Why Arsenal Guard: identity grid, right-biased cool glow */
+.identity-grid-section {
+	background:
+		radial-gradient(ellipse 60% 50% at 108% 20%, rgba(24, 214, 178, 0.07) 0%, transparent 60%),
+		var(--section-band);
+	perspective: 1100px; /* required for identity-card rotateX animation */
+}
+
+/* About — Values: bottom-center warm glow, no band */
+.values-tactical-section {
+	background:
+		radial-gradient(ellipse 70% 35% at 50% 115%, rgba(230, 126, 34, 0.11) 0%, transparent 60%),
+		var(--page-bg);
+}
+
+/* About — Madagascar: left warm glow + bottom right accent */
+.madagascar-section {
+	background:
+		radial-gradient(ellipse 50% 60% at -8% 50%, rgba(230, 126, 34, 0.10) 0%, transparent 55%),
+		radial-gradient(ellipse 40% 40% at 110% 90%, rgba(24, 214, 178, 0.06) 0%, transparent 55%),
+		var(--section-band);
+}
+
+/* About — Founder: strong top-center glow (portrait focal point) */
+.founder-dossier-section {
+	background:
+		radial-gradient(ellipse 65% 50% at 25% -10%, rgba(230, 126, 34, 0.14) 0%, transparent 60%),
+		var(--page-bg);
+}
+
+/* About — Final CTA: dark center with orange halo */
+.about-final-call {
+	background:
+		radial-gradient(ellipse 75% 60% at 50% 0%, rgba(230, 126, 34, 0.16) 0%, transparent 60%),
+		linear-gradient(180deg, var(--page-bg) 0%, rgba(8, 24, 39, 0.4) 100%),
+		var(--page-bg);
+}
+
+/* Services — Operation roster: cool diagonal left */
+.operation-roster {
+	background:
+		radial-gradient(ellipse 55% 55% at -5% 35%, rgba(24, 214, 178, 0.07) 0%, transparent 60%),
+		var(--page-bg);
+}
+
+/* Services — Ops ledger: warm right corner */
+.ops-ledger {
+	background:
+		radial-gradient(ellipse 55% 50% at 108% 25%, rgba(230, 126, 34, 0.10) 0%, transparent 55%),
+		var(--section-band);
+}
+
+/* Service detail — main dossier section */
+.svc-detail-section {
+	background:
+		radial-gradient(ellipse 50% 60% at 105% 15%, rgba(230, 126, 34, 0.10) 0%, transparent 55%),
+		var(--page-bg);
+}
+
+/* Cases — dossier grid: subtle center depth glow */
+.case-dossier-section {
+	background:
+		radial-gradient(ellipse 60% 50% at 50% 50%, rgba(230, 126, 34, 0.06) 0%, transparent 60%),
+		var(--page-bg);
+}
+
+/* Blog — briefing grid: cool top-right tone */
+.briefing-grid-section {
+	background:
+		radial-gradient(ellipse 50% 45% at 105% 5%, rgba(24, 214, 178, 0.06) 0%, transparent 55%),
+		var(--page-bg);
+}
+
+/* Forms (Quote / Contact): dark with focused center glow */
+.form-command-section {
+	background:
+		radial-gradient(ellipse 60% 55% at 50% -5%, rgba(230, 126, 34, 0.10) 0%, transparent 60%),
+		var(--page-bg);
+}
+
+/* Next mission section: orange left stripe accent */
+.next-mission-section {
+	background:
+		linear-gradient(90deg, rgba(230, 126, 34, 0.08) 0%, transparent 40%),
+		var(--section-band);
+}
+
+/* Light theme overrides — muted, no strong orange bleed */
+:root[data-theme='light'] .about-mission-section,
+:root[data-theme='light'] .values-tactical-section,
+:root[data-theme='light'] .founder-dossier-section,
+:root[data-theme='light'] .operation-roster,
+:root[data-theme='light'] .svc-detail-section,
+:root[data-theme='light'] .case-dossier-section,
+:root[data-theme='light'] .briefing-grid-section,
+:root[data-theme='light'] .form-command-section,
+:root[data-theme='light'] .about-final-call {
+	background: var(--page-bg);
+}
+
+:root[data-theme='light'] .identity-grid-section,
+:root[data-theme='light'] .madagascar-section,
+:root[data-theme='light'] .ops-ledger,
+:root[data-theme='light'] .next-mission-section {
+	background: var(--section-band);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO WAVE DIVIDER
+   ═══════════════════════════════════════════════════════════════════ */
+.hero-wave-divider {
+	position: absolute;
+	bottom: -1px;
+	left: 0;
+	right: 0;
+	height: clamp(48px, 7vw, 88px);
+	line-height: 0;
+	pointer-events: none;
+	z-index: 5;
+}
+
+.hero-wave-divider svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION SEPARATORS — varied clip-path / overlap / wave per section
+   Each boundary uses a different geometry so no two look alike
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Overlap-stack: section rises over prev with rounded top corners
+   Used by: identity-grid, madagascar (section-bands on About page) */
+.identity-grid-section,
+.madagascar-section {
+	border-radius: 2rem 2rem 0 0;
+	margin-top: -2rem;
+	position: relative;
+	z-index: 2;
+}
+
+/* Diagonal cut bottom: section visually tilts into the next
+   Used by: values-tactical-section, case-dossier-section */
+.values-tactical-section {
+	clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+	padding-bottom: 8rem; /* compensate for clip */
+}
+
+/* Reverse diagonal: founder section gets angular top-right cut */
+.founder-dossier-section {
+	clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
+	padding-top: 8rem;
+}
+
+/* Wave bottom: operation-roster fades into ops-ledger organically */
+.operation-roster::after {
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: -1px;
+	left: 0;
+	right: 0;
+	height: clamp(40px, 5vw, 70px);
+	background:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 70' preserveAspectRatio='none'%3E%3Cpath d='M0,35 C240,70 480,0 720,35 C960,70 1200,10 1440,35 L1440,70 L0,70 Z' fill='rgba(8,24,39,0.55)'/%3E%3C/svg%3E")
+		bottom / cover no-repeat;
+	pointer-events: none;
+}
+
+.operation-roster {
+	position: relative;
+}
+
+/* Skew top edge: next-mission-section has a slight tilt */
+.next-mission-section {
+	border-radius: 1.5rem 1.5rem 0 0;
+	margin-top: -1.5rem;
+	position: relative;
+	z-index: 3;
+}
+
+/* About-final-call: strong overlap with rounded corners */
+.about-final-call {
+	border-radius: 2.5rem 2.5rem 0 0;
+	margin-top: -2.5rem;
+	position: relative;
+	z-index: 4;
+}
+
+/* Disable clip-path on mobile where overflow clipping breaks layouts */
+@media (max-width: 768px) {
+	.values-tactical-section {
+		clip-path: none;
+		padding-bottom: 4rem;
+	}
+
+	.founder-dossier-section {
+		clip-path: none;
+		padding-top: 4rem;
+	}
+}
+
+/* Light theme: overlap sections keep white bg for clean stacking */
+:root[data-theme='light'] .identity-grid-section,
+:root[data-theme='light'] .madagascar-section,
+:root[data-theme='light'] .next-mission-section,
+:root[data-theme='light'] .about-final-call {
+	background: var(--page-bg);
+}
+
+/* Remove old generic .section-band styles that conflict with overlap */
+.identity-grid-section.section-band,
+.madagascar-section.section-band,
+.next-mission-section.section-band {
+	/* Override the mask-image fade — overlap approach is used instead */
+	mask-image: none;
+	-webkit-mask-image: none;
 }

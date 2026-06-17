@@ -17,47 +17,47 @@ const { lang } = Astro.props;
 const hero =
 	lang === 'fr'
 		? {
-				badge: 'Release Command · QA humaine + automation + CI/CD',
-				title: ['Vos releases', 'sans angle mort.'],
-				lead: 'Arsenal Guard combine QA manuelle senior, automatisation Playwright/Cypress et contrôle CI/CD pour livrer plus vite, sans perdre la maîtrise.',
-				primary: 'Planifier un audit QA',
-				secondary: 'Voir l’approche',
-				proof: 'Europe remote · Tests manuels · Automation · CI/CD ready',
-				radarTitle: 'Release readiness',
-				radarSubtitle: 'Signal qualité avant production',
-				layers: ['Human review', 'Automated checks', 'Release gate'],
+				badge: 'Test manuel · Rapport sous 72h · Sans engagement',
+				title: ['Vos bugs détectés', 'avant vos utilisateurs.'],
+				lead: "Toutes les entreprises n'ont pas besoin d'un QA à temps plein. Parfois, il suffit d'un regard externe ciblé — audit, tests manuels, couverture des parcours critiques — pour sécuriser une livraison sans recruter.",
+				primary: 'Demander un audit',
+				secondary: 'Voir les formules',
+				proof: 'Sans engagement · Réponse sous 24h · Dès 350 € HT',
+				radarTitle: 'Rapport de test',
+				radarSubtitle: 'Livré sous 72h',
+				layers: ['Tunnel de commande', 'Espace client', 'Parcours critique'],
 				signals: [
-					['Critical flows', '12 scénarios couverts', 'ready'],
-					['Regression suite', '2 flakies isolés', 'watch'],
-					['CI signal', 'Blocking tests actifs', 'pass'],
-					['Risk map', '3 priorités produit', 'review'],
+					['Login / Auth', 'Parcours validé', 'ready'],
+					['Paiement', '1 bug critique trouvé', 'watch'],
+					['Inscription', 'Formulaire testé', 'pass'],
+					['Dashboard', 'À couvrir', 'review'],
 				],
 				stats: [
-					['72h', 'rapport priorisé'],
+					['dès 350 €', 'HT · premier test'],
+					['72h', 'rapport livré'],
 					['5+', 'ans QA senior'],
-					['UTC+3', 'overlap Europe'],
 				],
 			}
 		: {
-				badge: 'Release Command · Human QA + automation + CI/CD',
-				title: ['Release confidence', 'without blind spots.'],
-				lead: 'Arsenal Guard combines senior manual QA, Playwright/Cypress automation and CI/CD release control for teams that need speed without blind spots.',
-				primary: 'Book a QA audit',
-				secondary: 'See the approach',
-				proof: 'Europe remote · Manual testing · Automation · CI/CD ready',
-				radarTitle: 'Release readiness',
-				radarSubtitle: 'Quality signal before production',
-				layers: ['Human review', 'Automated checks', 'Release gate'],
+				badge: 'Manual testing · Report in 72h · No commitment',
+				title: ['Your bugs caught', 'before your users do.'],
+				lead: 'Not every company needs a full-time QA engineer. Sometimes a targeted external review — audit, manual testing, critical journey coverage — is all it takes to ship safely without hiring.',
+				primary: 'Request an audit',
+				secondary: 'See the plans',
+				proof: 'No commitment · Reply in 24h · From €350 excl. VAT',
+				radarTitle: 'Test report',
+				radarSubtitle: 'Delivered in 72h',
+				layers: ['Checkout flow', 'User account', 'Critical journey'],
 				signals: [
-					['Critical flows', '12 journeys covered', 'ready'],
-					['Regression suite', '2 flakies isolated', 'watch'],
-					['CI signal', 'Blocking tests active', 'pass'],
-					['Risk map', '3 product priorities', 'review'],
+					['Login / Auth', 'Journey validated', 'ready'],
+					['Payment', '1 critical bug found', 'watch'],
+					['Sign-up', 'Form tested', 'pass'],
+					['Dashboard', 'To be covered', 'review'],
 				],
 				stats: [
-					['72h', 'prioritized report'],
+					['from €350', 'excl. VAT · first test'],
+					['72h', 'report delivered'],
 					['5+', 'senior QA years'],
-					['UTC+3', 'Europe overlap'],
 				],
 			};
 
@@ -161,6 +161,13 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 			</div>
 		</div>
 	</Container>
+
+	<!-- Wave divider — organic break from hero to next section -->
+	<div class="hero-wave-divider" aria-hidden="true">
+		<svg viewBox="0 0 1440 88" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M0,44 C240,88 480,0 720,44 C960,88 1200,12 1440,44 L1440,88 L0,88 Z" fill="#05070a" />
+		</svg>
+	</div>
 </section>
 
 <style>
