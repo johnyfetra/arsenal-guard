@@ -1,0 +1,762 @@
+---
+import ArrowRight from 'lucide-astro/ArrowRight';
+import Radar from 'lucide-astro/Radar';
+import ShieldCheck from 'lucide-astro/ShieldCheck';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import type { Lang } from '../../lib/i18n';
+
+interface Stat {
+	value: string;
+	label: string;
+}
+
+interface Props {
+	lang: Lang;
+	eyebrow: string;
+	title: string;
+	lead: string;
+	stats?: Stat[];
+	ctaLabel?: string;
+	ctaHref?: string;
+	secondaryLabel?: string;
+	secondaryHref?: string;
+	variant?: 'services' | 'service' | 'about' | 'content' | 'form' | 'legal' | 'error';
+}
+
+const {
+	lang,
+	eyebrow,
+	title,
+	lead,
+	stats = [],
+	ctaLabel,
+	ctaHref,
+	secondaryLabel,
+	secondaryHref,
+	variant = 'content',
+} = Astro.props;
+
+// Radar visual — form + service variants only
+const radarVisual = lang === 'fr'
+	? {
+		title: 'Command board',
+		sub: 'Signal release',
+		rows: ['Risque cadré', 'Parcours sous garde', 'Décision claire'],
+		state: 'Ready',
+	}
+	: {
+		title: 'Command board',
+		sub: 'Release signal',
+		rows: ['Risk framed', 'Journeys guarded', 'Decision clear'],
+		state: 'Ready',
+	};
+
+// Services board tiles
+const serviceTiles = lang === 'fr'
+	? [
+		{ id: '01', name: 'Snapshot', meta: '72h · Ponctuel' },
+		{ id: '02', name: 'Audit QA', meta: '5j · Risque' },
+		{ id: '03', name: 'Auto E2E', meta: 'CI/CD · Pipeline' },
+		{ id: '04', name: 'Mensuel', meta: 'Continu · NDA' },
+	]
+	: [
+		{ id: '01', name: 'Snapshot', meta: '72h · Punctual' },
+		{ id: '02', name: 'QA Audit', meta: '5d · Risk' },
+		{ id: '03', name: 'Auto E2E', meta: 'CI/CD · Pipeline' },
+		{ id: '04', name: 'Monthly', meta: 'Ongoing · NDA' },
+	];
+
+// Identity skills — about variant
+const skills = ['Cypress', 'Playwright', 'CI/CD', 'Postman', 'axe-core', 'Allure'];
+
+// Dossier list — content variant
+const dossiers = lang === 'fr'
+	? [
+		{ id: '01', name: 'Audit SaaS', tag: 'NDA' },
+		{ id: '02', name: 'Stabilisation E2E', tag: 'NDA' },
+		{ id: '03', name: 'Pipeline qualité', tag: 'OPEN' },
+		{ id: '04', name: 'Briefing QA', tag: 'OPEN' },
+	]
+	: [
+		{ id: '01', name: 'SaaS Audit', tag: 'NDA' },
+		{ id: '02', name: 'E2E Stabilisation', tag: 'NDA' },
+		{ id: '03', name: 'Quality Pipeline', tag: 'OPEN' },
+		{ id: '04', name: 'QA Briefing', tag: 'OPEN' },
+	];
+
+// Legal compliance rows
+const legalRows = lang === 'fr'
+	? ['RGPD · Cadre européen', 'NDA · Sur demande', 'Données · Sécurisées', 'No ads · Plausible']
+	: ['GDPR · European frame', 'NDA · On request', 'Data · Secured', 'No ads · Plausible'];
+---
+
+<section class={`internal-hero internal-hero--${variant} relative overflow-hidden`}>
+	<div class="internal-hero-grid" aria-hidden="true"></div>
+	<div class="internal-hero-beam internal-hero-beam--signal" aria-hidden="true"></div>
+	<div class="internal-hero-beam internal-hero-beam--shield" aria-hidden="true"></div>
+
+	<Container class="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,.95fr)_minmax(24rem,.72fr)] lg:items-center">
+		<!-- Copy side (all variants share this) -->
+		<div>
+			<p class="section-eyebrow">{eyebrow}</p>
+			<h1 class="mt-5 max-w-4xl text-5xl font-extrabold leading-[0.98] text-white md:text-7xl">{title}</h1>
+			<p class="mt-6 max-w-3xl text-lg leading-relaxed text-white/72 md:text-xl">{lead}</p>
+
+			{stats.length > 0 && (
+				<div class="internal-hero-stats" data-reveal>
+					{stats.map((stat) => (
+						<div>
+							<strong>{stat.value}</strong>
+							<span>{stat.label}</span>
+						</div>
+					))}
+				</div>
+			)}
+
+			{(ctaLabel && ctaHref) || (secondaryLabel && secondaryHref) ? (
+				<div class="mt-8 flex flex-col gap-3 sm:flex-row" data-reveal>
+					{ctaLabel && ctaHref && (
+						<Button href={ctaHref} lang={lang}>
+							{ctaLabel}
+							<ArrowRight class="size-4" aria-hidden="true" />
+						</Button>
+					)}
+					{secondaryLabel && secondaryHref && (
+						<Button href={secondaryHref} lang={lang} variant="secondary">
+							{secondaryLabel}
+						</Button>
+					)}
+				</div>
+			) : null}
+		</div>
+
+		<!-- ── SERVICES variant: QA mission board ──────────────────── -->
+		{variant === 'services' && (
+			<div class="vh-board internal-hero-panel scroll-float" data-scroll-depth="-9" data-reveal>
+				<div class="vh-board-header">
+					<span>QA BOARD</span>
+					<span class="vh-live">
+						<span class="vh-live-dot" aria-hidden="true"></span>
+						{serviceTiles.length} ACTIFS
+					</span>
+				</div>
+				<div class="vh-board-grid">
+					{serviceTiles.map((tile) => (
+						<div class="vh-board-tile">
+							<span class="vh-tile-id">{tile.id}</span>
+							<strong class="vh-tile-name">{tile.name}</strong>
+							<span class="vh-tile-meta">{tile.meta}</span>
+						</div>
+					))}
+				</div>
+				<div class="vh-board-footer">
+					<span class="vh-ok">● {lang === 'fr' ? 'Tous disponibles' : 'All available'}</span>
+					<span>NDA {lang === 'fr' ? 'sur demande' : 'on request'}</span>
+				</div>
+			</div>
+		)}
+
+		<!-- ── ABOUT variant: identity card ────────────────────────── -->
+		{variant === 'about' && (
+			<div class="vh-identity internal-hero-panel scroll-float" data-scroll-depth="-9" data-reveal>
+				<div class="vh-identity-topbar">
+					<span>{lang === 'fr' ? 'IDENTITÉ · FONDATEUR' : 'IDENTITY · FOUNDER'}</span>
+					<span class="vh-identity-status" aria-hidden="true"></span>
+				</div>
+				<div class="vh-identity-profile">
+					<div class="vh-identity-avatar" aria-hidden="true">JF</div>
+					<div class="vh-identity-meta">
+						<strong>Johny Fetramalala</strong>
+						<span>Lead QA Engineer</span>
+						<span class="vh-identity-loc">
+							<span class="vh-loc-dot" aria-hidden="true"></span>
+							UTC+3 · Madagascar
+						</span>
+					</div>
+				</div>
+				<div class="vh-identity-skills" role="list" aria-label="Technologies">
+					{skills.map((s) => <span class="vh-skill-pill" role="listitem">{s}</span>)}
+				</div>
+				<div class="vh-identity-metrics">
+					<div><strong>5+</strong><span>{lang === 'fr' ? 'ans terrain' : 'field years'}</span></div>
+					<div><strong>24h</strong><span>{lang === 'fr' ? 'réponse' : 'reply time'}</span></div>
+					<div><strong>EU</strong><span>{lang === 'fr' ? 'clients' : 'clients'}</span></div>
+				</div>
+			</div>
+		)}
+
+		<!-- ── CONTENT variant: dossier stack ──────────────────────── -->
+		{variant === 'content' && (
+			<div class="vh-dossier internal-hero-panel scroll-float" data-scroll-depth="-9" data-reveal>
+				<div class="vh-dossier-header">
+					<span>{lang === 'fr' ? 'DOSSIERS TERRAIN' : 'FIELD DOSSIERS'}</span>
+					<span class="vh-dossier-count">{dossiers.length}</span>
+				</div>
+				<div class="vh-dossier-list" role="list">
+					{dossiers.map((item, i) => (
+						<div class="vh-dossier-row" role="listitem" style={`--row-i: ${i}`}>
+							<span class="vh-dossier-num">{item.id}</span>
+							<p class="vh-dossier-name">{item.name}</p>
+							<span class={`vh-dossier-tag vh-dossier-tag--${item.tag === 'NDA' ? 'nda' : 'open'}`}>
+								{item.tag}
+							</span>
+						</div>
+					))}
+				</div>
+				<div class="vh-dossier-footer">
+					<span>● {lang === 'fr' ? 'Publication validée client' : 'Client-approved release'}</span>
+				</div>
+			</div>
+		)}
+
+		<!-- ── FORM + SERVICE variants: radar (signature visual) ─────── -->
+		{(variant === 'form' || variant === 'service') && (
+			<div class="internal-hero-panel scroll-float" data-scroll-depth="-9" data-reveal>
+				<div class="internal-hero-panel-head">
+					<div>
+						<p>{radarVisual.title}</p>
+						<span>{radarVisual.sub}</span>
+					</div>
+					<Radar class="size-5" aria-hidden="true" />
+				</div>
+				<div class="internal-hero-radar" aria-hidden="true">
+					<div class="internal-hero-radar-ring internal-hero-radar-ring--one"></div>
+					<div class="internal-hero-radar-ring internal-hero-radar-ring--two"></div>
+					<div class="internal-hero-radar-sweep"></div>
+					<div class="internal-hero-radar-core">
+						<ShieldCheck class="size-8" aria-hidden="true" />
+					</div>
+				</div>
+				<div class="internal-hero-checks">
+					{radarVisual.rows.map((row, index) => (
+						<div>
+							<span>0{index + 1}</span>
+							<p>{row}</p>
+							<strong>{radarVisual.state}</strong>
+						</div>
+					))}
+				</div>
+			</div>
+		)}
+
+		<!-- ── LEGAL variant: compliance shield ──────────────────────── -->
+		{variant === 'legal' && (
+			<div class="vh-legal internal-hero-panel scroll-float" data-scroll-depth="-9" data-reveal>
+				<div class="vh-legal-shield" aria-hidden="true">
+					<ShieldCheck class="size-10" />
+				</div>
+				<div class="vh-legal-list" role="list">
+					{legalRows.map((row, i) => (
+						<div class="vh-legal-row" role="listitem">
+							<span class="vh-legal-num">0{i + 1}</span>
+							<p>{row}</p>
+							<span class="vh-legal-check" aria-hidden="true">✓</span>
+						</div>
+					))}
+				</div>
+			</div>
+		)}
+
+		<!-- ── ERROR variant: terminal 404 ──────────────────────────── -->
+		{variant === 'error' && (
+			<div class="vh-error internal-hero-panel scroll-float" data-scroll-depth="-9" data-reveal aria-hidden="true">
+				<div class="vh-error-bar">
+					<span></span><span></span><span></span>
+					<span class="vh-error-title">SYSTEM.LOG</span>
+				</div>
+				<div class="vh-error-screen">
+					<p><span class="vh-prompt">$</span> route.scan(<span class="vh-str">'/'</span>)</p>
+					<p><span class="vh-prompt vh-err">!</span> 404: path_not_indexed</p>
+					<p><span class="vh-prompt">$</span> suggest.home()</p>
+					<p><span class="vh-prompt vh-ok-p">✓</span> / → available</p>
+					<p><span class="vh-prompt vh-ok-p">✓</span> /contact → open</p>
+					<p class="vh-cursor">▌</p>
+				</div>
+			</div>
+		)}
+
+	</Container>
+</section>
+
+<style>
+/* ── Shared panel base (vh = variant hero) ──────────────────── */
+
+/* SERVICES BOARD */
+.vh-board-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 1rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.vh-live {
+	display: flex;
+	align-items: center;
+	gap: 0.45rem;
+	color: #18d6b2;
+}
+
+.vh-live-dot {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 9999px;
+	background: #18d6b2;
+	box-shadow: 0 0 8px rgba(24, 214, 178, 0.8);
+	animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+	0%, 100% { opacity: 1; transform: scale(1); }
+	50%       { opacity: 0.55; transform: scale(0.7); }
+}
+
+.vh-board-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.65rem;
+}
+
+.vh-board-tile {
+	display: grid;
+	gap: 0.25rem;
+	border: 1px solid rgba(255, 255, 255, 0.09);
+	border-radius: 0.6rem;
+	background: rgba(255, 255, 255, 0.04);
+	padding: 0.85rem 0.9rem;
+	position: relative;
+	overflow: hidden;
+	transition: border-color 200ms ease;
+}
+
+.vh-board-tile::before {
+	content: '';
+	position: absolute;
+	top: 0; left: 0; right: 0;
+	height: 2px;
+	background: linear-gradient(90deg, #ff6a2a, transparent 70%);
+	opacity: 0.7;
+}
+
+.vh-board-tile:nth-child(even)::before {
+	background: linear-gradient(90deg, #18d6b2, transparent 70%);
+}
+
+.vh-tile-id {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	color: #ff8b4d;
+	text-transform: uppercase;
+}
+
+.vh-board-tile:nth-child(even) .vh-tile-id { color: #18d6b2; }
+
+.vh-tile-name {
+	font-size: 0.94rem;
+	font-weight: 800;
+	color: #ffffff;
+	display: block;
+}
+
+.vh-tile-meta {
+	font-size: 0.72rem;
+	color: rgba(255, 255, 255, 0.52);
+	display: block;
+}
+
+.vh-board-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 1rem;
+	padding-top: 0.85rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.45);
+}
+
+.vh-ok { color: #18d6b2; }
+
+/* IDENTITY CARD */
+.vh-identity-topbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 0.9rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.vh-identity-status {
+	width: 0.55rem;
+	height: 0.55rem;
+	border-radius: 9999px;
+	background: #18d6b2;
+	box-shadow: 0 0 10px rgba(24, 214, 178, 0.7);
+	animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+.vh-identity-profile {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.1rem;
+}
+
+.vh-identity-avatar {
+	flex-shrink: 0;
+	width: 3.4rem;
+	height: 3.4rem;
+	border-radius: 0.75rem;
+	background: linear-gradient(135deg, rgba(230, 126, 34, 0.4), rgba(255, 106, 42, 0.2));
+	border: 1px solid rgba(230, 126, 34, 0.35);
+	display: grid;
+	place-items: center;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 1rem;
+	font-weight: 700;
+	color: #ff9b5e;
+	box-shadow: 0 0 24px rgba(230, 126, 34, 0.18);
+}
+
+.vh-identity-meta {
+	display: grid;
+	gap: 0.18rem;
+}
+
+.vh-identity-meta strong {
+	color: #ffffff;
+	font-size: 0.96rem;
+	font-weight: 800;
+}
+
+.vh-identity-meta span {
+	color: rgba(255, 255, 255, 0.58);
+	font-size: 0.78rem;
+}
+
+.vh-identity-loc {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+}
+
+.vh-loc-dot {
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 9999px;
+	background: #18d6b2;
+}
+
+.vh-identity-skills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin-bottom: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vh-skill-pill {
+	border: 1px solid rgba(255, 255, 255, 0.13);
+	border-radius: 9999px;
+	background: rgba(255, 255, 255, 0.06);
+	color: rgba(255, 255, 255, 0.78);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.65rem;
+	font-weight: 700;
+	padding: 0.25rem 0.6rem;
+	letter-spacing: 0.04em;
+}
+
+.vh-identity-metrics {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 0.6rem;
+	overflow: hidden;
+}
+
+.vh-identity-metrics div {
+	display: grid;
+	gap: 0.15rem;
+	padding: 0.7rem 0.75rem;
+	text-align: center;
+}
+
+.vh-identity-metrics div + div {
+	border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vh-identity-metrics strong {
+	color: #ff9b5e;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 1.1rem;
+	font-weight: 700;
+}
+
+.vh-identity-metrics span {
+	color: rgba(255, 255, 255, 0.48);
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+/* DOSSIER */
+.vh-dossier-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 0.9rem;
+	margin-bottom: 0.5rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.vh-dossier-count {
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 9999px;
+	background: rgba(230, 126, 34, 0.25);
+	border: 1px solid rgba(230, 126, 34, 0.4);
+	color: #ff9b5e;
+	display: grid;
+	place-items: center;
+	font-size: 0.7rem;
+}
+
+.vh-dossier-list {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.vh-dossier-row {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 0.75rem;
+	border: 1px solid rgba(255, 255, 255, 0.07);
+	border-radius: 0.5rem;
+	background: rgba(255, 255, 255, 0.035);
+	padding: 0.7rem 0.8rem;
+	position: relative;
+	overflow: hidden;
+}
+
+.vh-dossier-row::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: #ff6a2a;
+	opacity: 0.6;
+}
+
+.vh-dossier-row:nth-child(3),
+.vh-dossier-row:nth-child(4) {
+	--row-accent: #18d6b2;
+}
+
+.vh-dossier-row:nth-child(3)::before,
+.vh-dossier-row:nth-child(4)::before {
+	background: #18d6b2;
+}
+
+.vh-dossier-num {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.65rem;
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.vh-dossier-name {
+	font-size: 0.88rem;
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.84);
+}
+
+.vh-dossier-tag {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	padding: 0.2rem 0.5rem;
+	border-radius: 9999px;
+}
+
+.vh-dossier-tag--nda {
+	background: rgba(255, 106, 42, 0.18);
+	border: 1px solid rgba(255, 106, 42, 0.35);
+	color: #ff8b4d;
+}
+
+.vh-dossier-tag--open {
+	background: rgba(24, 214, 178, 0.1);
+	border: 1px solid rgba(24, 214, 178, 0.25);
+	color: #18d6b2;
+}
+
+.vh-dossier-footer {
+	margin-top: 0.85rem;
+	padding-top: 0.8rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.07);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.38);
+}
+
+/* LEGAL */
+.vh-legal-shield {
+	display: flex;
+	justify-content: center;
+	padding: 1.2rem 0 1rem;
+	color: rgba(24, 214, 178, 0.7);
+}
+
+.vh-legal-list {
+	display: grid;
+	gap: 0.55rem;
+}
+
+.vh-legal-row {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 0.75rem;
+	border: 1px solid rgba(255, 255, 255, 0.07);
+	border-radius: 0.55rem;
+	background: rgba(255, 255, 255, 0.03);
+	padding: 0.7rem 0.85rem;
+}
+
+.vh-legal-num {
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.64rem;
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.35);
+}
+
+.vh-legal-row p {
+	font-size: 0.84rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.78);
+}
+
+.vh-legal-check {
+	font-size: 0.75rem;
+	color: #18d6b2;
+}
+
+/* ERROR TERMINAL */
+.vh-error-bar {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding-bottom: 0.85rem;
+	margin-bottom: 0.5rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vh-error-bar > span:not(.vh-error-title) {
+	width: 0.55rem;
+	height: 0.55rem;
+	border-radius: 9999px;
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.vh-error-bar > span:nth-child(1) { background: #ff5f57; }
+.vh-error-bar > span:nth-child(2) { background: #febc2e; }
+.vh-error-bar > span:nth-child(3) { background: #28c840; }
+
+.vh-error-title {
+	margin-left: auto;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.62rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.vh-error-screen {
+	display: grid;
+	gap: 0.5rem;
+	padding: 0.5rem 0;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.82rem;
+}
+
+.vh-error-screen p {
+	color: rgba(255, 255, 255, 0.7);
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+}
+
+.vh-prompt {
+	color: rgba(255, 255, 255, 0.35);
+	flex-shrink: 0;
+}
+
+.vh-err { color: #ff6a2a; }
+.vh-ok-p { color: #18d6b2; }
+
+.vh-str { color: #18d6b2; }
+
+.vh-cursor {
+	color: rgba(255, 255, 255, 0.7);
+	animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+	0%, 100% { opacity: 1; }
+	50%       { opacity: 0; }
+}
+
+/* Light theme: mute the panel glows */
+:global([data-theme='light']) .vh-board-tile,
+:global([data-theme='light']) .vh-dossier-row,
+:global([data-theme='light']) .vh-legal-row {
+	background: rgba(15, 31, 68, 0.05);
+	border-color: rgba(15, 31, 68, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.vh-live-dot,
+	.vh-identity-status,
+	.vh-cursor {
+		animation: none;
+	}
+}
+</style>
