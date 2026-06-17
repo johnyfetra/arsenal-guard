@@ -24,7 +24,7 @@ export interface Service {
 
 export const site = {
 	name: 'Arsenal Guard',
-	tagline: 'Release Command QA pour produits SaaS européens',
+	tagline: 'QA à la demande pour équipes qui livrent sans vouloir recruter un testeur à temps plein',
 	url: 'https://arsenalguard.com',
 	email: 'contact@arsenalguard.com',
 	founder: 'Johny Fetramalala',
@@ -57,14 +57,13 @@ export const steps = [
 ];
 
 export const stack = [
-	'Cypress',
 	'Playwright',
+	'Cypress',
 	'TypeScript',
-	'Angular',
-	'RxJS',
-	'NgRx',
-	'GitLab CI',
 	'GitHub Actions',
+	'GitLab CI',
+	'Postman',
+	'axe-core',
 	'AI-assisted QA',
 ];
 
@@ -78,7 +77,7 @@ export const services: Service[] = [
 		description:
 			'Un testeur humain parcourt vos pages et documente chaque anomalie — sans prérequis technique, livré sous 48 à 72 heures.',
 		duration: '1 à 5 jours selon le tier',
-		price: 'À partir de 350 € TTC',
+		price: 'À partir de 350 € HT',
 		for: "Pour toute équipe ou organisation qui veut un regard externe sur son produit web : audit d'un site en production, validation avant une release, test d'un parcours ciblé, ou partenaire QA ponctuel à appeler quand le besoin se présente. Sans setup. Sans engagement.",
 		deliverables: [
 			'Rapport de bugs structuré PDF (Critique / Majeur / Mineur / Cosmétique)',
@@ -117,9 +116,9 @@ export const services: Service[] = [
 			],
 		],
 		tiers: [
-			{ label: '3–4 pages testées · ~1,5 jour', price: '350 € TTC', featured: false },
-			{ label: '5–7 pages testées · ~2,5 jours', price: '550 € TTC', featured: true },
-			{ label: "Jusqu'à 20 pages · ~5 jours", price: '950 € TTC', featured: false },
+			{ label: '3–4 pages testées · ~1,5 jour', price: '350 € HT', featured: false },
+			{ label: '5–7 pages testées · ~2,5 jours', price: '550 € HT', featured: true },
+			{ label: "Jusqu'à 20 pages · ~5 jours", price: '950 € HT', featured: false },
 		],
 		nextStep: {
 			serviceId: 'tests-automatises',
@@ -137,7 +136,7 @@ export const services: Service[] = [
 		description:
 			'Audit rapide de votre plateforme: parcours critiques, couverture actuelle et recommandations actionnables.',
 		duration: '3 jours',
-		price: '600 € TTC',
+		price: '600 € HT',
 		for: 'CTO ou lead dev qui veut une photographie fiable du risque produit avant une release.',
 		deliverables: [
 			'Cartographie des parcours critiques',
@@ -170,7 +169,7 @@ export const services: Service[] = [
 		description:
 			'Bootstrap Cypress ou Playwright avec les premiers tests critiques, conventions et documentation équipe.',
 		duration: '7 jours',
-		price: '1 600 € TTC',
+		price: '1 600 € HT',
 		for: "Équipe qui veut démarrer proprement l'automatisation sans créer une suite fragile.",
 		deliverables: [
 			'Architecture Cypress ou Playwright',
@@ -203,7 +202,7 @@ export const services: Service[] = [
 		description:
 			'Service QA récurrent sans engagement long: nouveaux tests, maintenance, support CI/CD et reporting qualité.',
 		duration: '5 à 15 jours/mois',
-		price: 'À partir de 1 100 € TTC/mois',
+		price: 'À partir de 1 100 € HT/mois',
 		for: 'Startup ou SaaS qui livre souvent et veut un QA senior sans recrutement temps plein.',
 		deliverables: [
 			'3 à 5 nouveaux E2E par mois',
@@ -227,7 +226,7 @@ export const services: Service[] = [
 		kicker: 'Engagement dédié',
 		description: 'Un QA senior dédié à votre équipe pour les besoins soutenus, avec option supervision lead.',
 		duration: '20 jours/mois, minimum 3 mois',
-		price: '3 800 € TTC/mois',
+		price: '3 800 € HT/mois',
 		for: "Équipe scale-up qui a besoin d'un vrai ownership QA sur plusieurs sprints.",
 		deliverables: [
 			'QA senior intégré à vos rituels',
@@ -241,7 +240,7 @@ export const services: Service[] = [
 				'Quel fuseau horaire ?',
 				"Madagascar permet un recouvrement confortable avec l'Europe, notamment France, Belgique et Suisse.",
 			],
-			['Y a-t-il une supervision ?', 'Oui, une option Senior QA + Lead supervision est disponible à 4 500 € TTC/mois.'],
+			['Y a-t-il une supervision ?', 'Oui, une option Senior QA + Lead supervision est disponible à 4 500 € HT/mois.'],
 		],
 	},
 ];
@@ -253,68 +252,60 @@ export const punctualOffers: PunctualRow[] = [
 		name: 'QA Snapshot',
 		duration: '1 à 5 jours',
 		tiers: [
-			['3–4 pages', '350 € TTC'],
-			['5–7 pages ⭐', '550 € TTC'],
-			["Jusqu'à 20 pages", '950 € TTC'],
+			['3–4 pages', '350 € HT'],
+			['5–7 pages ⭐', '550 € HT'],
+			["Jusqu'à 20 pages", '950 € HT'],
 		],
 	},
-	['Express QA Audit', '3 jours', '600 € TTC'],
-	['Flaky Test Stabilization', '5-6 jours', '1 200 € TTC'],
-	['E2E Framework Setup + 3 tests', '7 jours', '1 600 € TTC'],
-	['CI/CD + Blocking Tests Setup', '8 jours', '1 800 € TTC'],
+	['Express QA Audit', '3 jours', '600 € HT'],
+	['Flaky Test Stabilization', '5-6 jours', '1 200 € HT'],
+	['E2E Framework Setup + 3 tests', '7 jours', '1 600 € HT'],
+	['CI/CD + Blocking Tests Setup', '8 jours', '1 800 € HT'],
 ];
 
 export const plans = [
-	{ name: 'Starter', volume: '5 jours/mois', price: '1 100 € TTC/mois', featured: false },
-	{ name: 'Growth', volume: '10 jours/mois', price: '2 000 € TTC/mois', featured: true },
-	{ name: 'Pro', volume: '15 jours/mois', price: '2 850 € TTC/mois', featured: false },
+	{ name: 'Starter', volume: '5 jours/mois', price: '1 100 € HT/mois', featured: false },
+	{ name: 'Growth', volume: '10 jours/mois', price: '2 000 € HT/mois', featured: true },
+	{ name: 'Pro', volume: '15 jours/mois', price: '2 850 € HT/mois', featured: false },
 ];
 
 export const dedicated = [
-	['Dedicated Senior QA', '20 jours/mois', '3 800 € TTC/mois'],
-	['Senior QA + Lead supervision', '20 jours/mois', '4 500 € TTC/mois'],
+	['Dedicated Senior QA', '20 jours/mois', '3 800 € HT/mois'],
+	['Senior QA + Lead supervision', '20 jours/mois', '4 500 € HT/mois'],
 ];
 
 export const faq = [
 	[
-		'Mon produit est déjà en production. Le QA Snapshot est-il utile pour moi ?',
-		"Absolument. Le QA Snapshot est conçu pour tous les produits en ligne — pas seulement pour les lancements. Audit d'un site existant, validation avant une mise à jour critique, regard tiers sur un parcours client : toutes ces situations sont couvertes, quelle que soit la maturité de votre produit.",
+		`Avez-vous besoin d'accès au code source ?`,
+		`Non. Pour un test manuel ou un audit, un accès à votre environnement staging (ou une URL de production avec un compte dédié) suffit. L'accès au code devient utile uniquement pour la mise en place de tests automatisés.`,
 	],
 	[
-		'Je suis développeur ou chef de projet en agence. Puis-je utiliser le Snapshot pour mes livrables clients ?',
-		'Oui. Beaucoup de nos clients sont des agences ou des freelances qui veulent livrer avec un rapport de bugs indépendant avant la réception. Le QA Snapshot devient votre assurance qualité externe, sans temps interne à y consacrer.',
+		`Vous allez m'imposer un framework front ou une techno particulière ?`,
+		`Pas du tout. Je suis framework-agnostique : je m'intègre à votre stack existante (React, Vue, Angular, Next, Svelte…). Côté tests automatisés, je travaille en Playwright et Cypress — les deux sont maintenables par vos devs.`,
 	],
 	[
-		"Pourquoi un service QA plutôt qu'un recrutement ?",
-		'Vous obtenez un impact rapide, une expertise senior et une flexibilité budgétaire sans cycle de recrutement long.',
+		`Combien de temps pour démarrer ?`,
+		`Un test manuel peut démarrer dès le lendemain du cadrage. Il suffit de partager un accès staging et de définir les parcours à couvrir. Pas de setup, pas d'onboarding long.`,
 	],
 	[
-		'Comment se passe la collaboration à distance avec Madagascar ?',
-		'Avec un recouvrement Europe confortable, des points hebdomadaires, un backlog transparent et des livrables visibles dans vos outils.',
+		`Que contient exactement le rapport livré ?`,
+		`Un rapport PDF structuré avec chaque bug classé Critique / Majeur / Mineur / Cosmétique, des captures annotées sur chaque bug critique, une matrice de couverture, et un plan d'action priorisé avec estimation. Vous savez exactement quoi corriger en premier et pourquoi.`,
 	],
 	[
-		'Quel est le délai de mise en place ?',
-		"Un audit peut démarrer en quelques jours. Un forfait mensuel demande généralement une semaine d'onboarding.",
+		`Comment garantissez-vous la confidentialité ?`,
+		`NDA possible avant tout démarrage, accès limités au strict nécessaire, principe du moindre privilège et aucun partage de vos données. Je travaille régulièrement sur des produits sensibles (santé, marques premium) : la confidentialité fait partie du métier.`,
 	],
 	[
-		'Vos tests sont-ils maintenables ?',
-		'Oui. Les conventions, selectors, fixtures et rapports sont pensés pour être repris par vos développeurs.',
+		`Les tests automatisés seront-ils repris par notre équipe ?`,
+		`C'est l'objectif. Les conventions, sélecteurs, fixtures et documentation sont pensés pour que vos devs s'approprient la suite sans dépendance. Vous repartez avec un actif maintenable, pas une boîte noire.`,
 	],
 	[
-		'Comment garantir la confidentialité ?',
-		'NDA possible, accès limités, principe du moindre privilège et aucun partage de données client.',
+		`Comment fonctionne la collaboration à distance depuis Madagascar ?`,
+		`Je suis en UTC+3, soit un large recouvrement avec les heures de bureau européennes. Francophone natif, points hebdomadaires, backlog transparent et livrables visibles dans vos outils (Jira, Slack, Linear).`,
 	],
 	[
-		'Quelles sont vos modalités de paiement ?',
-		'Facturation TTC, virement bancaire, acompte possible sur les missions ponctuelles.',
-	],
-	[
-		'Travaillez-vous avec des startups pré-amorçage ?',
-		'Oui si le périmètre est clair: audit, MVP critique ou mise en place E2E légère.',
-	],
-	[
-		'Comment choisir ponctuel ou forfait ?',
-		'Ponctuel pour débloquer un sujet ciblé. Forfait pour accompagner une cadence de livraison continue.',
+		`Quelle est la différence entre le test manuel et l'audit QA ?`,
+		`Le test manuel ponctuel, c'est un testeur humain qui parcourt vos pages et documente les anomalies réelles. L'audit QA est un diagnostic stratégique : il cartographie votre couverture actuelle et priorise ce qu'il faudrait automatiser. Les deux sont complémentaires — l'audit sert souvent de point de départ avant d'aller plus loin.`,
 	],
 ];
 
