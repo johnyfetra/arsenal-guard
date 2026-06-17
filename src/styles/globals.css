@@ -4051,6 +4051,13 @@ section[id] {
 	background: var(--page-bg);
 }
 
+/* about-final-call: section goes light, text must follow */
+:root[data-theme='light'] .about-final-call h2 { color: #182033; }
+:root[data-theme='light'] .about-final-call p { color: #526070; }
+
+/* about-final-call::before grid uses white lines — invisible on light bg, hide cleanly */
+:root[data-theme='light'] .about-final-call::before { display: none; }
+
 /* Remove old generic .section-band styles that conflict with overlap */
 .identity-grid-section.section-band,
 .madagascar-section.section-band,

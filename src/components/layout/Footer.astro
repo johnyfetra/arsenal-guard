@@ -421,9 +421,11 @@ const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'S
 :root[data-theme='light'] .site-footer-v2 {
 	background: #0f1f44;
 	color: #f5f7f8;
+	border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* In light mode the gradient band is too visible against a light section — hide it */
 :root[data-theme='light'] .site-footer-v2::before {
-	background: linear-gradient(to bottom, transparent 0%, #0f1f44 100%);
+	display: none;
 }
 </style>
