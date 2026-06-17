@@ -5,12 +5,17 @@ import Sun from 'lucide-astro/Sun';
 
 <button
 	type="button"
-	class="theme-toggle-icon inline-flex size-10 items-center justify-center rounded-xl text-current"
+	class="theme-switch"
 	aria-label="Toggle dark and light theme"
 	data-theme-toggle
 >
-	<Sun class="hidden size-4 dark:inline" aria-hidden="true" />
-	<Moon class="size-4 dark:hidden" aria-hidden="true" />
+	<span class="theme-switch-thumb" aria-hidden="true"></span>
+	<span class="theme-switch-slot">
+		<Sun class="size-[0.8rem]" aria-hidden="true" />
+	</span>
+	<span class="theme-switch-slot">
+		<Moon class="size-[0.8rem]" aria-hidden="true" />
+	</span>
 </button>
 
 <script is:inline>
@@ -27,10 +32,9 @@ import Sun from 'lucide-astro/Sun';
 		}, 120);
 	};
 	const saved = localStorage.getItem('theme');
-	const initial = saved || 'dark';
-	applyTheme(initial);
-	document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-		button.addEventListener('click', () => {
+	applyTheme(saved || 'dark');
+	document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+		btn.addEventListener('click', () => {
 			const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
 			animateThemeWave(next);
 		});

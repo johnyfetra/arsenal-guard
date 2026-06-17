@@ -1,8 +1,6 @@
 ---
-import Menu from 'lucide-astro/Menu';
-import X from 'lucide-astro/X';
-import LanguageSwitcher from '../i18n/LanguageSwitcher.astro';
 import ThemeToggle from '../ui/ThemeToggle.astro';
+import LanguageSwitcher from '../i18n/LanguageSwitcher.astro';
 import Button from '../ui/Button.astro';
 import { copy, localizedPath, routeMap, type Lang } from '../../lib/i18n';
 
@@ -13,6 +11,7 @@ interface Props {
 
 const { lang, path } = Astro.props;
 const t = copy[lang];
+
 const nav = [
 	[t.nav.services, routeMap.services],
 	[t.nav.about, routeMap.about],
@@ -20,50 +19,109 @@ const nav = [
 	[t.nav.blog, routeMap.blog],
 	[t.nav.contact, routeMap.contact],
 ];
-const a11y = lang === 'fr'
-	? { skip: 'Aller au contenu', nav: 'Navigation principale', menuOpen: 'Ouvrir le menu' }
-	: { skip: 'Skip to content', nav: 'Main navigation', menuOpen: 'Open menu' };
+
+// Strip locale prefix to get canonical route for active-state detection
+const routePath = path.replace(/^\/en\b/, '') || '/';
+const isActive = (href: string) =>
+	href === '/' ? routePath === '/' : routePath.startsWith(href);
+
+const a11y =
+	lang === 'fr'
+		? { skip: 'Aller au contenu', nav: 'Navigation principale', menuOpen: 'Ouvrir le menu' }
+		: { skip: 'Skip to content', nav: 'Main navigation', menuOpen: 'Open menu' };
 ---
 
-<a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-orange-500 focus:px-4 focus:py-2 focus:text-white" href="#main">{a11y.skip}</a>
-<header class="site-header sticky top-0 z-40 border-b" data-site-header>
-	<nav class="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8" aria-label={a11y.nav}>
-		<a href={localizedPath(lang, '/')} class="brand-link flex items-center gap-3 font-extrabold">
-			<span class="logo-mark grid size-12 place-items-center bg-transparent">
-				<img
-					src="/logo.png"
-					width="48"
-					height="48"
-					alt=""
-					class="size-12 object-contain"
-					loading="eager"
-					decoding="async"
-				/>
-			</span>
-			<span class="bg-transparent">Arsenal Guard</span>
+<a
+	class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-orange-500 focus:px-4 focus:py-2 focus:text-white"
+	href="#main"
+>{a11y.skip}</a>
+
+<header class="site-header" data-site-header>
+	<div class="nav-inner">
+
+		<!-- Brand -->
+		<a href={localizedPath(lang, '/')} class="nav-brand" aria-label="Arsenal Guard">
+			<img
+				src="/logo.png"
+				width="36"
+				height="36"
+				alt=""
+				class="nav-logo"
+				loading="eager"
+				decoding="async"
+			/>
+			<span class="nav-wordmark">Arsenal<span class="nav-wordmark-accent">Guard</span></span>
 		</a>
-		<div class="hidden items-center gap-6 lg:flex">
-			{nav.map(([label, href]) => <a class="nav-link text-sm font-semibold text-current opacity-80 transition hover:text-orange-400 hover:opacity-100" href={localizedPath(lang, href)}>{label}</a>)}
-		</div>
-		<div class="flex items-center gap-2">
+
+		<!-- Desktop links -->
+		<nav class="nav-links-desktop" aria-label={a11y.nav}>
+			{nav.map(([label, href]) => (
+				<a
+					class:list={['nav-link', { 'nav-link--active': isActive(href) }]}
+					href={localizedPath(lang, href)}
+					aria-current={isActive(href) ? 'page' : undefined}
+				>
+					{label}
+				</a>
+			))}
+		</nav>
+
+		<!-- Right controls -->
+		<div class="nav-controls">
+
 			<div class="hidden sm:block"><LanguageSwitcher lang={lang} path={path} /></div>
 			<ThemeToggle />
-			<Button href={routeMap.quote} lang={lang} class="hidden sm:inline-flex">{t.nav.quote}</Button>
-			<button class="mobile-menu-toggle lg:hidden" type="button" aria-label={a11y.menuOpen} aria-expanded="false" data-mobile-menu-toggle>
-				<Menu class="mobile-menu-icon-open size-5" aria-hidden="true" />
-				<X class="mobile-menu-icon-close hidden size-5" aria-hidden="true" />
+
+			<Button href={routeMap.quote} lang={lang} class="nav-cta hidden sm:inline-flex !min-h-0 !px-4 !py-2 !text-xs">
+				{t.nav.quote}
+			</Button>
+
+			<!-- Burger (mobile) -->
+			<button
+				class="nav-burger"
+				type="button"
+				aria-label={a11y.menuOpen}
+				aria-expanded="false"
+				data-mobile-menu-toggle
+			>
+				<span class="nav-burger-bar"></span>
+				<span class="nav-burger-bar"></span>
+				<span class="nav-burger-bar"></span>
 			</button>
 		</div>
-	</nav>
-	<div class="mobile-menu lg:hidden" data-mobile-menu hidden>
-		<div class="mx-auto grid max-w-7xl gap-3 px-4 pb-5 sm:px-6">
-			<div class="grid gap-1">
-				{nav.map(([label, href]) => <a class="mobile-nav-link" href={localizedPath(lang, href)}>{label}</a>)}
+	</div>
+
+	<!-- Mobile menu -->
+	<div class="nav-mobile" data-mobile-menu hidden>
+		<nav class="nav-mobile-links" aria-label={a11y.nav}>
+			{nav.map(([label, href]) => (
+				<a
+					class:list={['nav-mobile-link', { 'nav-mobile-link--active': isActive(href) }]}
+					href={localizedPath(lang, href)}
+					aria-current={isActive(href) ? 'page' : undefined}
+				>
+					{label}
+					<span class="nav-mobile-arrow" aria-hidden="true">→</span>
+				</a>
+			))}
+		</nav>
+		<div class="nav-mobile-footer">
+			<div class="nav-mobile-lang">
+				<a
+					href={localizedPath('fr', path)}
+					class:list={['nav-lang-btn', { 'nav-lang-btn--active': lang === 'fr' }]}
+					lang="fr"
+					hreflang="fr"
+				>FR</a>
+				<span class="nav-lang-sep" aria-hidden="true">·</span>
+				<a
+					href={localizedPath('en', path)}
+					class:list={['nav-lang-btn', { 'nav-lang-btn--active': lang === 'en' }]}
+					lang="en"
+					hreflang="en"
+				>EN</a>
 			</div>
-			<div class="flex items-center justify-between gap-3 border-t border-current/10 pt-3">
-				<LanguageSwitcher lang={lang} path={path} />
-				<Button href={routeMap.quote} lang={lang}>{t.nav.quote}</Button>
-			</div>
+			<Button href={routeMap.quote} lang={lang}>{t.nav.quote}</Button>
 		</div>
 	</div>
 </header>
@@ -72,8 +130,6 @@ const a11y = lang === 'fr'
 	const header = document.querySelector('[data-site-header]');
 	const menuToggle = document.querySelector('[data-mobile-menu-toggle]');
 	const mobileMenu = document.querySelector('[data-mobile-menu]');
-	const openIcon = menuToggle?.querySelector('.mobile-menu-icon-open');
-	const closeIcon = menuToggle?.querySelector('.mobile-menu-icon-close');
 
 	const updateHeader = () => {
 		header?.classList.toggle('is-scrolled', window.scrollY > 8);
@@ -84,18 +140,17 @@ const a11y = lang === 'fr'
 		mobileMenu.hidden = !open;
 		header?.classList.toggle('is-menu-open', open);
 		menuToggle.setAttribute('aria-expanded', String(open));
-		openIcon?.classList.toggle('hidden', open);
-		closeIcon?.classList.toggle('hidden', !open);
 	};
 
 	updateHeader();
 	addEventListener('scroll', updateHeader, { passive: true });
-	menuToggle?.addEventListener('click', () => setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true'));
-	mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-		if (link.closest('[data-language-menu]')) return;
-		setMenuOpen(false);
-	}));
-	addEventListener('keydown', (event) => {
-		if (event.key === 'Escape') setMenuOpen(false);
+	menuToggle?.addEventListener('click', () =>
+		setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true')
+	);
+	mobileMenu?.querySelectorAll('a').forEach((link) =>
+		link.addEventListener('click', () => setMenuOpen(false))
+	);
+	addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') setMenuOpen(false);
 	});
 </script>
