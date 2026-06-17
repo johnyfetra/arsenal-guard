@@ -17,12 +17,12 @@ const { lang } = Astro.props;
 const hero =
 	lang === 'fr'
 		? {
-				badge: 'Test manuel · Rapport sous 72h · Sans engagement',
-				title: ['Vos bugs détectés', 'avant vos utilisateurs.'],
-				lead: "Toutes les entreprises n'ont pas besoin d'un QA à temps plein. Parfois, il suffit d'un regard externe ciblé — audit, tests manuels, couverture des parcours critiques — pour sécuriser une livraison sans recruter.",
-				primary: 'Demander un audit',
+				badge: 'QA expert dédié · Releases sécurisées · Sans engagement',
+				title: ['Sécurisez votre produit', 'avant chaque livraison.'],
+				lead: "Un renfort QA expert teste vos parcours critiques, priorise les bugs et met en place les garde-fous E2E/CI dont votre équipe a besoin — sans recrutement, sans setup lourd, sans engagement long.",
+				primary: 'Sécuriser ma release',
 				secondary: 'Voir les formules',
-				proof: 'Sans engagement · Réponse sous 24h · Dès 350 € HT',
+				proof: 'Réponse sous 24h · Dès 350 € HT · Rapport sous 72h, paiement ensuite',
 				radarTitle: 'Rapport de test',
 				radarSubtitle: 'Livré sous 72h',
 				layers: ['Tunnel de commande', 'Espace client', 'Parcours critique'],
@@ -39,12 +39,12 @@ const hero =
 				],
 			}
 		: {
-				badge: 'Manual testing · Report in 72h · No commitment',
-				title: ['Your bugs caught', 'before your users do.'],
-				lead: 'Not every company needs a full-time QA engineer. Sometimes a targeted external review — audit, manual testing, critical journey coverage — is all it takes to ship safely without hiring.',
-				primary: 'Request an audit',
+				badge: 'Dedicated QA expertise · Safer releases · No commitment',
+				title: ['Secure your product', 'before every release.'],
+				lead: 'A dedicated QA expert tests your critical journeys, prioritizes bugs and sets up the E2E/CI guardrails your team needs — without hiring, heavy setup or long commitment.',
+				primary: 'Secure my release',
 				secondary: 'See the plans',
-				proof: 'No commitment · Reply in 24h · From €350 excl. VAT',
+				proof: 'Reply in 24h · From €350 excl. VAT · Report in 72h, payment after delivery',
 				radarTitle: 'Test report',
 				radarSubtitle: 'Delivered in 72h',
 				layers: ['Checkout flow', 'User account', 'Critical journey'],
@@ -90,7 +90,7 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 					{hero.primary}
 					<ArrowRight class="size-4" aria-hidden="true" />
 				</Button>
-				<Button href="#release-map" lang={lang} variant="secondary">
+				<Button href="#qa-recon" lang={lang} variant="secondary">
 					{hero.secondary}
 				</Button>
 			</div>
