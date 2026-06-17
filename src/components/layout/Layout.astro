@@ -143,6 +143,15 @@ const { title, description, lang, path, type, schema } = Astro.props;
 				'main section:not(.hero-shell) .surface',
 				'main section:not(.hero-shell) .step-card',
 				'main section:not(.hero-shell) form',
+				'main section:not(.hero-shell) .operation-card',
+				'main section:not(.hero-shell) .mission-ledger-card',
+				'main section:not(.hero-shell) .identity-card',
+				'main section:not(.hero-shell) .value-tile',
+				'main section:not(.hero-shell) .route-card',
+				'main section:not(.hero-shell) .case-card',
+				'main section:not(.hero-shell) .article-card',
+				'main section:not(.hero-shell) .contact-signal',
+				'main section:not(.hero-shell) .legal-panel',
 				'main section:not(.hero-shell) .logo-marquee',
 				'main section:not(.hero-shell) .about-portrait-group',
 				'main section:not(.hero-shell) .prose-ag',
@@ -150,7 +159,12 @@ const { title, description, lang, path, type, schema } = Astro.props;
 			].join(',');
 			const revealNodes = [...document.querySelectorAll(revealSelectors)].filter((node) => {
 				if (node.closest('[data-no-reveal]')) return false;
-				if (node.matches('h1, h2') && node.closest('.surface, .step-card, form, .logo-marquee, .prose-ag')) return false;
+				if (
+					node.matches('h1, h2') &&
+					node.closest(
+						'.surface, .step-card, form, .operation-card, .mission-ledger-card, .identity-card, .value-tile, .route-card, .case-card, .article-card, .contact-signal, .legal-panel, .logo-marquee, .prose-ag',
+					)
+				) return false;
 				return true;
 			});
 			revealNodes.forEach((node) => {

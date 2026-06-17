@@ -11,6 +11,6 @@
     <path d="M860 0 1200 340M930 0 1200 270M1000 0 1200 200"/>
   </g>
   <text x="90" y="220" fill="#fff" font-family="Inter, Arial" font-size="74" font-weight="800">Arsenal Guard</text>
-  <text x="92" y="310" fill="#F39C12" font-family="Inter, Arial" font-size="44" font-weight="700">Qualite. Automatisation. Impact.</text>
-  <text x="92" y="390" fill="#D8DEEA" font-family="Inter, Arial" font-size="28">Senior QA Engineer · Cypress · Playwright · CI/CD</text>
+  <text x="92" y="310" fill="#F39C12" font-family="Inter, Arial" font-size="44" font-weight="700">Release Command QA</text>
+  <text x="92" y="390" fill="#D8DEEA" font-family="Inter, Arial" font-size="28">QA Snapshot · Cypress · Playwright · CI/CD</text>
 </svg>
