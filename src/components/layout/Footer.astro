@@ -2,6 +2,7 @@
 import { copy, localizedPath, routeMap, type Lang } from '../../lib/i18n';
 import { site } from '../../lib/site';
 import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
 
 interface Props {
 	lang: Lang;
@@ -9,55 +10,369 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = copy[lang];
-const links = [
-	[t.nav.services, routeMap.services],
-	[t.nav.about, routeMap.about],
-	[t.nav.blog, routeMap.blog],
-	[t.nav.contact, routeMap.contact],
-	[lang === 'fr' ? 'Mentions légales' : 'Legal notice', routeMap.legal],
-	[lang === 'fr' ? 'Politique de confidentialité' : 'Privacy policy', routeMap.privacy],
+
+const navCols = [
+	{
+		label: lang === 'fr' ? 'Services' : 'Services',
+		links: [
+			[lang === 'fr' ? 'Tests manuels' : 'Manual testing', routeMap.snapshot],
+			[lang === 'fr' ? 'Audit QA' : 'QA audit', routeMap.audit],
+			[lang === 'fr' ? 'Automatisation E2E' : 'E2E automation', routeMap.automation],
+			[lang === 'fr' ? 'Forfait mensuel' : 'Monthly plan', routeMap.retainer],
+			[lang === 'fr' ? 'QA dédié' : 'Dedicated QA', routeMap.dedicated],
+		],
+	},
+	{
+		label: lang === 'fr' ? 'Ressources' : 'Resources',
+		links: [
+			[t.nav.about, routeMap.about],
+			[t.nav.blog, routeMap.blog],
+			[t.nav.cases, routeMap.cases],
+			[lang === 'fr' ? 'Mentions légales' : 'Legal notice', routeMap.legal],
+			[lang === 'fr' ? 'Confidentialité' : 'Privacy', routeMap.privacy],
+		],
+	},
 ];
-const footerCopy =
-	lang === 'fr'
-		? {
-				tagline: `${site.tagline}. Antananarivo, Madagascar — clients dans toute l’Europe.`,
-				nav: 'Navigation',
-				contact: 'Contact',
-				rights: 'Tous droits réservés.',
-			}
-		: {
-				tagline: 'Release Command QA for European SaaS products. Antananarivo, Madagascar — clients across Europe.',
-				nav: 'Navigation',
-				contact: 'Contact',
-				rights: 'All rights reserved.',
-			};
+
+const tagline = lang === 'fr'
+	? 'QA à la demande pour équipes qui livrent sans recruter.'
+	: 'On-demand QA for teams that ship without hiring.';
+
+const cta = lang === 'fr' ? 'Demander un devis' : 'Request a quote';
+const rights = lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.';
+const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'Service based in Antananarivo, Madagascar.';
 ---
 
-<footer class="site-footer border-t py-12">
-	<Container class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
-		<div>
-			<p class="text-lg font-extrabold text-white">{site.name}</p>
-			<p class="footer-muted mt-3 max-w-md text-sm">{footerCopy.tagline}</p>
+<footer class="site-footer-v2" role="contentinfo">
+	<!-- Organic wave top edge -->
+	<div class="footer-wave" aria-hidden="true">
+		<svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,0 L0,0 Z" fill="var(--page-bg)" />
+		</svg>
+	</div>
+
+	<Container>
+		<!-- Top row: brand + CTA -->
+		<div class="footer-top">
+			<div class="footer-brand">
+				<p class="footer-wordmark">{site.name}</p>
+				<p class="footer-tagline">{tagline}</p>
+			</div>
+			<div class="footer-cta-wrap">
+				<Button href={localizedPath(lang, routeMap.quote)} lang={lang}>
+					{cta}
+				</Button>
+				<p class="footer-cta-note">
+					{lang === 'fr' ? 'Réponse sous 24h · Sans engagement' : 'Reply in 24h · No commitment'}
+				</p>
+			</div>
 		</div>
-		<div>
-			<p class="font-bold text-white">{footerCopy.nav}</p>
-			<ul class="footer-muted mt-4 space-y-2 text-sm">
-				{
-					links.map(([label, href]) => (
-						<li>
-							<a class="footer-link" href={localizedPath(lang, href)}>
-								{label}
-							</a>
-						</li>
-					))
-				}
-			</ul>
+
+		<!-- Divider -->
+		<div class="footer-rule" aria-hidden="true"></div>
+
+		<!-- Middle: nav + contact -->
+		<div class="footer-mid">
+			<!-- Nav columns -->
+			{navCols.map((col) => (
+				<div class="footer-col">
+					<p class="footer-col-label">{col.label}</p>
+					<ul class="footer-col-list">
+						{col.links.map(([label, href]) => (
+							<li>
+								<a href={localizedPath(lang, href)} class="footer-link">
+									{label}
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+
+			<!-- Contact column -->
+			<div class="footer-col">
+				<p class="footer-col-label">Contact</p>
+				<div class="footer-contact-stack">
+					<a href={`mailto:${site.email}`} class="footer-link footer-email">
+						{site.email}
+					</a>
+					<a
+						href="https://linkedin.com/in/johny-qa"
+						class="footer-link footer-social"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<svg class="footer-social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+							<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+							<rect x="2" y="9" width="4" height="12"/>
+							<circle cx="4" cy="4" r="2"/>
+						</svg>
+						LinkedIn
+					</a>
+					<div class="footer-badge-row">
+						<span class="footer-badge">UTC+3</span>
+						<span class="footer-badge">Remote EU</span>
+						<span class="footer-badge">NDA</span>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div>
-			<p class="font-bold text-white">{footerCopy.contact}</p>
-			<a class="footer-link footer-accent mt-4 block text-sm" href={`mailto:${site.email}`}>{site.email}</a>
-			<p class="footer-muted mt-2 text-sm">linkedin.com/company/arsenal-guard</p>
-			<p class="footer-muted mt-2 text-sm">© 2026 Arsenal Guard. {footerCopy.rights}</p>
+
+		<!-- Divider -->
+		<div class="footer-rule" aria-hidden="true"></div>
+
+		<!-- Bottom bar: copyright + lang -->
+		<div class="footer-bottom">
+			<p class="footer-copy">
+				© 2026 {site.name} · {rights}
+			</p>
+			<p class="footer-made">{madeIn}</p>
+			<div class="footer-lang">
+				<a
+					href={lang === 'fr' ? '/' : `/${localizedPath('fr', routeMap.home)}`}
+					class={`footer-lang-btn ${lang === 'fr' ? 'footer-lang-btn--active' : ''}`}
+					lang="fr"
+				>
+					FR
+				</a>
+				<span aria-hidden="true">/</span>
+				<a
+					href={lang === 'en' ? '/' : `/en`}
+					class={`footer-lang-btn ${lang === 'en' ? 'footer-lang-btn--active' : ''}`}
+					lang="en"
+				>
+					EN
+				</a>
+			</div>
 		</div>
 	</Container>
 </footer>
+
+<style>
+.site-footer-v2 {
+	position: relative;
+	background:
+		radial-gradient(ellipse 60% 40% at 20% 100%, rgba(230, 126, 34, 0.08) 0%, transparent 60%),
+		radial-gradient(ellipse 50% 40% at 80% 80%, rgba(24, 214, 178, 0.05) 0%, transparent 55%),
+		linear-gradient(180deg, #020508 0%, #030a14 60%, #050b1a 100%);
+	color: #f5f7f8;
+	padding-top: 0; /* wave covers the top */
+	padding-bottom: 3rem;
+}
+
+.footer-wave {
+	display: block;
+	line-height: 0;
+	width: 100%;
+	height: clamp(36px, 5vw, 60px);
+	margin-bottom: 0;
+}
+
+.footer-wave svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.footer-top {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	padding: 2.5rem 0 0;
+}
+
+@media (min-width: 768px) {
+	.footer-top {
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 2rem;
+	}
+}
+
+.footer-wordmark {
+	font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	color: #ffffff;
+	line-height: 1;
+}
+
+.footer-tagline {
+	margin-top: 0.5rem;
+	font-size: 0.95rem;
+	color: rgba(255, 255, 255, 0.52);
+	max-width: 36rem;
+	line-height: 1.55;
+}
+
+.footer-cta-wrap {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+}
+
+.footer-cta-note {
+	font-size: 0.72rem;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	color: rgba(255, 255, 255, 0.38);
+	letter-spacing: 0.06em;
+	text-align: center;
+}
+
+.footer-rule {
+	height: 1px;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.1) 70%, transparent);
+	margin: 2.5rem 0;
+}
+
+.footer-mid {
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+	.footer-mid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+	.footer-mid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.footer-col-label {
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.4);
+	margin-bottom: 1rem;
+}
+
+.footer-col-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	gap: 0.6rem;
+}
+
+.footer-link {
+	color: rgba(255, 255, 255, 0.65);
+	text-decoration: none;
+	font-size: 0.9rem;
+	transition: color 150ms ease;
+}
+
+.footer-link:hover {
+	color: #f39c12;
+}
+
+.footer-contact-stack {
+	display: grid;
+	gap: 0.75rem;
+}
+
+.footer-email {
+	font-size: 0.88rem;
+	color: #ff9b5e;
+}
+
+.footer-email:hover {
+	color: #f39c12;
+}
+
+.footer-social {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.88rem;
+}
+
+.footer-social-icon {
+	width: 1rem;
+	height: 1rem;
+	flex-shrink: 0;
+}
+
+.footer-badge-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin-top: 0.25rem;
+}
+
+.footer-badge {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 9999px;
+	background: rgba(255, 255, 255, 0.05);
+	color: rgba(255, 255, 255, 0.5);
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	padding: 0.2rem 0.55rem;
+	text-transform: uppercase;
+}
+
+.footer-bottom {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+	.footer-bottom {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+	}
+}
+
+.footer-copy {
+	font-size: 0.8rem;
+	color: rgba(255, 255, 255, 0.38);
+}
+
+.footer-made {
+	font-size: 0.76rem;
+	color: rgba(255, 255, 255, 0.28);
+}
+
+.footer-lang {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-family: 'JetBrains Mono', ui-monospace, monospace;
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-lang-btn {
+	color: rgba(255, 255, 255, 0.45);
+	text-decoration: none;
+	transition: color 150ms ease;
+	letter-spacing: 0.08em;
+}
+
+.footer-lang-btn:hover {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.footer-lang-btn--active {
+	color: #f39c12;
+}
+
+/* Light theme overrides */
+:root[data-theme='light'] .site-footer-v2 {
+	background: #0f1f44;
+	color: #f5f7f8;
+}
+
+:root[data-theme='light'] .footer-wave svg path {
+	fill: var(--page-bg);
+}
+</style>
