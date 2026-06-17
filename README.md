@@ -7,15 +7,21 @@ Production-ready Astro website for Arsenal Guard, a senior freelance QA service 
 - Astro 5 with strict TypeScript
 - Tailwind CSS with custom navy/orange theme
 - Astro Content Collections for services, blog and cases
-- Native i18n routing for `fr`, `en`, `es`, `de`, `it`
+- Native i18n routing for `fr` and `en`
 - `@astrojs/sitemap`, `@astrojs/mdx`, `@astrojs/check`
-- Web3Forms-ready quote and contact forms
+- Resend-backed quote and contact forms via a Vercel Function
 
 ## Setup
 
 ```bash
 npm install
 npm run dev
+```
+
+Use the Vercel dev server when testing form submissions locally:
+
+```bash
+npm run dev:vercel
 ```
 
 Run checks and production build:
@@ -32,14 +38,14 @@ Copy `.env.example` and fill values as needed:
 
 ```bash
 PUBLIC_SITE_URL=https://arsenalguard.com
-PUBLIC_WEB3FORMS_KEY=
 PUBLIC_PLAUSIBLE_DOMAIN=
 RESEND_API_KEY=
-NOTION_API_KEY=
-NOTION_DATABASE_ID=
+CONTACT_TO_EMAIL=fetrajohny05@gmail.com
+CONTACT_FROM_EMAIL="Arsenal Guard <contact@arsenalguard.com>"
 ```
 
-`PUBLIC_WEB3FORMS_KEY` activates live form submission. Without it, forms show a local readiness message.
+`RESEND_API_KEY` activates live form submission through the `/api/contact` Vercel Function.
+Set `CONTACT_FROM_EMAIL` to an address on a domain verified in Resend.
 
 ## Content
 
@@ -47,7 +53,7 @@ Add blog articles in `src/content/blog` as MDX with frontmatter matching `src/co
 
 Update service pricing in `src/lib/site.ts`; content mirrors live in `src/content/services`.
 
-Translations are centralized in `src/lib/i18n.ts`, with JSON files under `src/i18n/{fr,en,es,de,it}` for future CMS or translator workflows.
+Translations are centralized in `src/lib/i18n.ts`.
 
 ## Deployment
 
