@@ -12,56 +12,56 @@ const { lang } = Astro.props;
 const labels =
 	lang === 'fr'
 		? {
-				eyebrow: 'Mission release',
-				title: 'Une opération QA lisible par produit, tech et management.',
-				lead: 'Le process reste court, mais discipliné : on reconnaît le terrain, on classe les risques, on fortifie les parcours critiques, puis on transmet une décision claire.',
+				eyebrow: 'Comment ça fonctionne',
+				title: 'Une intervention courte et bien cadrée peut déjà apporter une vraie valeur.',
+				lead: "Le QA n'a pas toujours besoin d'arriver pour 6 mois. Parfois, quelques jours suffisent pour éviter plusieurs semaines de corrections après la release.",
 				steps: [
 					{
 						icon: Waypoints,
-						phase: 'Reconnaître',
-						text: 'Parcours critiques, rôles utilisateurs, zones fragiles et signaux qualité déjà présents.',
+						phase: 'Je teste vos parcours',
+						text: "Je parcours vos pages comme un utilisateur réel : tunnel de commande, formulaire critique, espace client, parcours d'inscription. Les zones à risque en priorité absolue.",
 					},
 					{
 						icon: Flag,
-						phase: 'Prioriser',
-						text: 'Ce qui bloque la release, ce qui mérite surveillance et ce qui peut attendre sans danger.',
+						phase: 'Je livre un rapport',
+						text: 'Rapport structuré sous 72h : bugs Critique / Majeur / Mineur, captures annotées, recommandations claires. Pas un dump de tickets — un signal exploitable par votre équipe.',
 					},
 					{
 						icon: ShieldCheck,
-						phase: 'Fortifier',
-						text: 'Tests manuels ciblés, automation Playwright/Cypress et garde-fous CI/CD sur les flux clés.',
+						phase: "Je vous remets un plan d'action",
+						text: "Chaque bug est accompagné d'une estimation et d'une priorité. Votre équipe sait exactement quoi corriger en premier et pourquoi.",
 					},
 					{
 						icon: FileSearch,
-						phase: 'Transmettre',
-						text: 'Rapport release : anomalies, preuves, arbitrage et prochaines actions pour l’équipe.',
+						phase: 'Vous pouvez aller plus loin',
+						text: 'Si vous souhaitez verrouiller les parcours critiques durablement, je mets en place des tests automatisés (Playwright / Cypress) ou une mission QA récurrente selon votre cadence.',
 					},
 				],
 			}
 		: {
-				eyebrow: 'Release mission',
-				title: 'A QA operation readable by product, engineering and leadership.',
-				lead: 'The process stays short but disciplined: we read the terrain, rank the risks, fortify critical journeys, then transmit a clear release decision.',
+				eyebrow: 'How it works',
+				title: 'A short, well-scoped intervention can already make a real difference.',
+				lead: "QA doesn't always need to come in for 6 months. Sometimes a few days are enough to prevent several weeks of post-release fixes.",
 				steps: [
 					{
 						icon: Waypoints,
-						phase: 'Recon',
-						text: 'Critical journeys, user roles, fragile zones and existing quality signals.',
+						phase: 'I test your journeys',
+						text: 'I walk through your pages as a real user: checkout flow, critical forms, account area, sign-up journey. High-risk zones are the absolute priority.',
 					},
 					{
 						icon: Flag,
-						phase: 'Prioritize',
-						text: 'What blocks the release, what deserves monitoring and what can wait safely.',
+						phase: 'I deliver a report',
+						text: 'Structured report in 72h: Critical / Major / Minor bugs, annotated screenshots, clear recommendations. Not a ticket dump — an actionable signal for your team.',
 					},
 					{
 						icon: ShieldCheck,
-						phase: 'Fortify',
-						text: 'Targeted manual QA, Playwright/Cypress automation and CI/CD guardrails on key flows.',
+						phase: 'I give you an action plan',
+						text: 'Each bug comes with an estimate and a priority. Your team knows exactly what to fix first and why.',
 					},
 					{
 						icon: FileSearch,
-						phase: 'Report',
-						text: 'Release report: defects, evidence, arbitration and next actions for the team.',
+						phase: 'You can go further',
+						text: 'If you want to lock down critical journeys durably, I set up automated tests (Playwright / Cypress) or a recurring QA mission matched to your release cadence.',
 					},
 				],
 			};

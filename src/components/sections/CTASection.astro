@@ -10,24 +10,24 @@ const { lang } = Astro.props;
 const ctaMeta =
 	lang === 'fr'
 		? {
-				eyebrow: 'Canal QA prioritaire',
-				secondary: 'Ouvrir un échange 15 min',
-				title: 'Avant votre prochaine release, laissez Arsenal Guard lire le terrain.',
-				lead: 'Un diagnostic QA court suffit souvent à révéler les parcours critiques, les signaux CI fragiles et les garde-fous qui réduisent vraiment le risque.',
+				eyebrow: 'Avant votre prochaine livraison',
+				secondary: 'Voir les formules',
+				title: 'Faites tester vos parcours critiques avant que vos clients ne le fassent à votre place.',
+				lead: 'Décrivez votre besoin en quelques lignes : je reviens vers vous sous 24h avec un périmètre clair et un prix HT. Premier test possible dès 350 € HT, livré sous 72h.',
 				stats: [
 					{ value: '24h', label: 'Délai de réponse', counter: '24', suffix: 'h' },
-					{ value: '5+', label: 'Ans QA senior', counter: '5', suffix: '+' },
+					{ value: 'dès 350 €', label: 'HT · premier test' },
 					{ value: 'UTC+3', label: 'Overlap Europe' },
 				],
 			}
 		: {
-				eyebrow: 'Priority QA channel',
-				secondary: 'Open a 15-min exchange',
-				title: 'Before your next release, let Arsenal Guard read the terrain.',
-				lead: 'A short QA diagnostic is often enough to surface critical journeys, fragile CI signals and the guardrails that actually reduce release risk.',
+				eyebrow: 'Before your next release',
+				secondary: 'See the plans',
+				title: 'Get your critical journeys tested before your customers do it for you.',
+				lead: 'Describe your need in a few lines: I get back to you within 24h with a clear scope and a price. First test from €350 excl. VAT, delivered within 72h.',
 				stats: [
 					{ value: '24h', label: 'Response time', counter: '24', suffix: 'h' },
-					{ value: '5+', label: 'Senior QA years', counter: '5', suffix: '+' },
+					{ value: 'from €350', label: 'excl. VAT · first test' },
 					{ value: 'UTC+3', label: 'Europe overlap' },
 				],
 			};

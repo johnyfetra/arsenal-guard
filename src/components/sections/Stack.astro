@@ -7,10 +7,10 @@ interface Props {
 const { lang } = Astro.props;
 
 const categories = [
-	{ label: lang === 'fr' ? 'Sentinelles E2E' : 'E2E sentinels', items: ['Cypress', 'Playwright'] },
-	{ label: lang === 'fr' ? 'Terrain front' : 'Frontend terrain', items: ['TypeScript', 'Angular', 'RxJS', 'NgRx'] },
-	{ label: lang === 'fr' ? 'Gates CI/CD' : 'CI/CD gates', items: ['GitLab CI', 'GitHub Actions'] },
-	{ label: lang === 'fr' ? 'Analyse assistée' : 'Assisted analysis', items: ['AI-assisted QA'] },
+	{ label: lang === 'fr' ? 'Automation E2E' : 'E2E automation', items: ['Playwright', 'Cypress', 'TypeScript'] },
+	{ label: lang === 'fr' ? 'API & intégration' : 'API & integration', items: ['Postman', 'REST APIs', 'Contract testing'] },
+	{ label: lang === 'fr' ? 'CI/CD & gates qualité' : 'CI/CD & quality gates', items: ['GitHub Actions', 'GitLab CI', 'Tests bloquants'] },
+	{ label: lang === 'fr' ? 'Reporting & accessibilité' : 'Reporting & accessibility', items: ['Allure Reports', 'axe-core', 'AI-assisted QA'] },
 ];
 const stats =
 	lang === 'fr'
@@ -70,25 +70,25 @@ const stats =
 const labels =
 	lang === 'fr'
 		? {
-				eyebrow: 'Arsenal technique',
-				title: 'Des outils choisis pour protéger la release, pas pour décorer une stack.',
-				lead: 'Chaque technologie a une fonction claire : écrire des tests lisibles, faire remonter un signal fiable et laisser votre équipe reprendre la main.',
-				consoleTitle: 'Release gate',
+				eyebrow: 'Stack technique',
+				title: 'Les outils QA qui font le travail — framework-agnostique.',
+				lead: "Je m'intègre à votre stack front (React, Vue, Angular, Next, Svelte…), je ne l'impose pas. Ces outils me permettent de tester, automatiser et verrouiller vos releases — quelle que soit votre technologie.",
+				consoleTitle: 'Rapport de test',
 				consoleRows: [
-					['auth-flow.spec', 'guarded'],
-					['checkout-risk.map', 'review'],
-					['ci-blockers', 'armed'],
+					['login-flow.spec', 'passed'],
+					['checkout.spec', '1 bug critique'],
+					['inscription.spec', 'passed'],
 				],
 			}
 		: {
-				eyebrow: 'Technical arsenal',
-				title: 'Tools chosen to protect the release, not decorate a stack.',
-				lead: 'Every technology has a clear role: write readable tests, surface a reliable signal and let your team take ownership.',
-				consoleTitle: 'Release gate',
+				eyebrow: 'Technical stack',
+				title: 'QA tools that do the work — framework-agnostic.',
+				lead: 'I integrate with your front-end stack (React, Vue, Angular, Next, Svelte…), I don\'t impose it. These tools let me test, automate and lock down your releases — whatever your technology.',
+				consoleTitle: 'Test report',
 				consoleRows: [
-					['auth-flow.spec', 'guarded'],
-					['checkout-risk.map', 'review'],
-					['ci-blockers', 'armed'],
+					['login-flow.spec', 'passed'],
+					['checkout.spec', '1 critical bug'],
+					['signup.spec', 'passed'],
 				],
 			};
 ---

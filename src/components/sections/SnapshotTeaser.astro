@@ -21,22 +21,22 @@ if (!snapshot?.tiers) {
 const labels =
 	lang === 'fr'
 		? {
-				eyebrow: 'Reconnaissance avant release',
-				title: 'Envoyez une sentinelle QA sur vos parcours critiques.',
+				eyebrow: 'Test manuel ponctuel',
+				title: 'Trois formules selon la taille de votre périmètre.',
 				subtitle:
-					'Un testeur humain parcourt vos pages comme un utilisateur réel, documente les anomalies et livre un rapport priorisé sous 72h. Sans setup. Sans engagement.',
-				recommended: 'Recommandé',
-				custom: 'Terrain plus large ?',
-				customLink: 'Demander une mission sur mesure',
-				cta: 'Voir la mission complète',
+					'Un testeur humain parcourt vos pages comme un utilisateur réel, documente les anomalies et livre un rapport priorisé sous 72h. Sans setup. Sans engagement. Vous pouvez démarrer dès demain.',
+				recommended: 'Le plus choisi',
+				custom: "Besoin plus large ou besoin d'automatisation ?",
+				customLink: 'Demander un devis personnalisé',
+				cta: 'Voir tous les détails',
 				perTier: [
 					{
-						label: 'Patrouille ciblée',
+						label: 'Essentiel',
 						duration: '3–4 pages · ~1,5 jour',
 						perks: ['Rapport PDF structuré', 'Captures annotées', 'Bugs Critique / Majeur / Mineur'],
 					},
 					{
-						label: 'Garde standard',
+						label: 'Standard',
 						duration: '5–7 pages · ~2,5 jours',
 						perks: [
 							'Rapport PDF structuré',
@@ -46,7 +46,7 @@ const labels =
 						],
 					},
 					{
-						label: 'Périmètre complet',
+						label: 'Complet',
 						duration: "Jusqu'à 20 pages · ~5 jours",
 						perks: [
 							'Rapport PDF structuré',
@@ -59,27 +59,27 @@ const labels =
 				],
 			}
 		: {
-				eyebrow: 'Pre-release recon',
-				title: 'Send a QA sentinel through your critical journeys.',
+				eyebrow: 'One-off manual test',
+				title: 'Three plans based on the size of your scope.',
 				subtitle:
-					'A human tester walks through your pages like a real user, documents defects and delivers a prioritized report within 72h. No setup. No commitment.',
-				recommended: 'Recommended',
-				custom: 'Larger terrain?',
-				customLink: 'Request a custom mission',
-				cta: 'View full mission',
+					'A human tester walks through your pages like a real user, documents defects and delivers a prioritized report within 72h. No setup. No commitment. You can start tomorrow.',
+				recommended: 'Most popular',
+				custom: 'Larger scope or need automation?',
+				customLink: 'Request a custom quote',
+				cta: 'View full details',
 				perTier: [
 					{
-						label: 'Targeted patrol',
+						label: 'Essential',
 						duration: '3–4 pages · ~1.5 days',
 						perks: ['Structured PDF report', 'Annotated screenshots', 'Critical / Major / Minor bugs'],
 					},
 					{
-						label: 'Standard guard',
+						label: 'Standard',
 						duration: '5–7 pages · ~2.5 days',
 						perks: ['Structured PDF report', 'Annotated screenshots', 'Coverage matrix', 'UX quick wins'],
 					},
 					{
-						label: 'Full perimeter',
+						label: 'Complete',
 						duration: 'Up to 20 pages · ~5 days',
 						perks: [
 							'Structured PDF report',

@@ -14,52 +14,52 @@ const { lang } = Astro.props;
 const content =
 	lang === 'fr'
 		? {
-				eyebrow: 'Carte des risques',
-				title: 'Une release échoue rarement par manque d’outils. Elle échoue par angle mort.',
-				lead: 'Arsenal Guard classe les signaux dispersés comme une carte opérationnelle : ce qui menace la release, ce qui mérite surveillance, ce qui peut attendre.',
+				eyebrow: 'Le problème',
+				title: "Toutes les entreprises n'ont pas besoin d'un QA à temps plein.",
+				lead: "Parfois, le besoin est beaucoup plus ciblé. Et c'est souvent là que le blocage commence : \"On a besoin de tester, mais pas assez pour recruter un QA sur une mission longue.\"",
 				problems: [
 					{
 						icon: AlertTriangle,
-						title: 'Suites E2E instables',
-						text: 'Les flakies deviennent du bruit de fond. Le jour critique, plus personne ne sait si l’alerte est réelle.',
-						meta: 'Signal bruité',
+						title: 'La fonctionnalité part en prod sans couverture',
+						text: "Le tunnel de commande, le formulaire critique, le parcours d'inscription — validés à la main en interne, sous pression, sans test de non-régression. Les risques partent en production avec le code.",
+						meta: 'Peu de couverture',
 					},
 					{
 						icon: CircleOff,
-						title: 'Régressions manuelles trop tardives',
-						text: 'La vérification arrive en bout de chaîne, sous pression, sans couverture claire des parcours qui comptent.',
-						meta: 'Risque non cadré',
+						title: 'Le bug est détecté par un client, pas un testeur',
+						text: "Un utilisateur découvre le problème avant votre équipe. La release est en ligne, le tunnel de commande plante et chaque minute coûte. C'est le scénario que tout le monde veut éviter.",
+						meta: 'Trop tard',
 					},
 					{
 						icon: GitPullRequestDraft,
-						title: 'CI verte, produit cassé',
-						text: 'Les pipelines passent pendant que les parcours métier restent exposés, hors champ de la garde automatisée.',
-						meta: 'Fausse confiance',
+						title: "Recruter un QA à temps plein, c'est trop lourd",
+						text: "Trois mois pour recruter, six mois pour onboarder. Votre besoin est là maintenant — un renfort ciblé, au bon moment, pas un poste permanent que le volume ne justifie pas encore.",
+						meta: 'Sur-dimensionné',
 					},
 				],
 			}
 		: {
-				eyebrow: 'Risk map',
-				title: 'A release rarely fails because of missing tools. It fails because of blind spots.',
-				lead: 'Arsenal Guard ranks scattered signals like an operational map: what threatens the release, what deserves monitoring, what can wait.',
+				eyebrow: 'The problem',
+				title: 'Not every company needs a full-time QA engineer.',
+				lead: "Sometimes the need is much more targeted. And that's often where the bottleneck starts: \"We need to test, but not enough to hire a QA for a long engagement.\"",
 				problems: [
 					{
 						icon: AlertTriangle,
-						title: 'Unstable E2E suites',
-						text: 'Flaky tests become background noise. On the critical day, nobody knows whether the alert is real.',
-						meta: 'Noisy signal',
+						title: 'The feature ships without coverage',
+						text: "The payment module, the critical form, the sign-up journey — validated internally under pressure, no regression tests. Risks ship to production with the code.",
+						meta: 'Low coverage',
 					},
 					{
 						icon: CircleOff,
-						title: 'Manual regressions too late',
-						text: 'Checks arrive at the end of the chain, under pressure, without clear coverage of the journeys that matter.',
-						meta: 'Unframed risk',
+						title: 'The bug is found by a customer, not a tester',
+						text: "A user finds the issue before your team does. The release is live, the checkout is broken and every minute costs. This is the scenario everyone wants to prevent.",
+						meta: 'Too late',
 					},
 					{
 						icon: GitPullRequestDraft,
-						title: 'Green CI, broken product',
-						text: 'Pipelines pass while business journeys remain exposed, outside the automated guard line.',
-						meta: 'False confidence',
+						title: 'Hiring a full-time QA is too much overhead',
+						text: "Three months to hire, six months to onboard. Your need is now — a targeted specialist at the right moment, not a permanent role that your current volume doesn't justify.",
+						meta: 'Oversized',
 					},
 				],
 			};
