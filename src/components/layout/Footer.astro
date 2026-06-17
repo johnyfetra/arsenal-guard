@@ -44,13 +44,6 @@ const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'S
 ---
 
 <footer class="site-footer-v2" role="contentinfo">
-	<!-- Organic wave top edge -->
-	<div class="footer-wave" aria-hidden="true">
-		<svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-			<path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,0 L0,0 Z" fill="var(--page-bg)" />
-		</svg>
-	</div>
-
 	<Container>
 		<!-- Top row: brand + CTA -->
 		<div class="footer-top">
@@ -156,29 +149,28 @@ const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'S
 		radial-gradient(ellipse 50% 40% at 80% 80%, rgba(24, 214, 178, 0.05) 0%, transparent 55%),
 		linear-gradient(180deg, #020508 0%, #030a14 60%, #050b1a 100%);
 	color: #f5f7f8;
-	padding-top: 0; /* wave covers the top */
+	padding-top: 4rem;
 	padding-bottom: 3rem;
 }
 
-.footer-wave {
-	display: block;
-	line-height: 0;
-	width: 100%;
-	height: clamp(36px, 5vw, 60px);
-	margin-bottom: 0;
-}
-
-.footer-wave svg {
-	width: 100%;
-	height: 100%;
-	display: block;
+/* Gradient dissolve from last section into footer — Chanel-style seamless transition */
+.site-footer-v2::before {
+	content: '';
+	position: absolute;
+	top: -5rem;
+	left: 0;
+	right: 0;
+	height: 5rem;
+	background: linear-gradient(to bottom, transparent 0%, #020508 100%);
+	pointer-events: none;
+	z-index: 1;
 }
 
 .footer-top {
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
-	padding: 2.5rem 0 0;
+	padding: 0;
 }
 
 @media (min-width: 768px) {
@@ -223,7 +215,13 @@ const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'S
 
 .footer-rule {
 	height: 1px;
-	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.1) 70%, transparent);
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		rgba(255, 255, 255, 0.07) 12%,
+		rgba(255, 255, 255, 0.07) 88%,
+		transparent 100%
+	);
 	margin: 2.5rem 0;
 }
 
@@ -364,6 +362,59 @@ const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'S
 
 .footer-lang-btn--active {
 	color: #f39c12;
+}
+
+/* Mobile: center all footer content */
+@media (max-width: 767px) {
+	.footer-top {
+		align-items: center;
+		text-align: center;
+	}
+
+	.footer-brand {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.footer-tagline {
+		max-width: 28rem;
+	}
+
+	.footer-cta-wrap {
+		align-items: center;
+	}
+
+	.footer-mid {
+		text-align: center;
+	}
+
+	.footer-col-list {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.footer-contact-stack {
+		align-items: center;
+	}
+
+	.footer-social {
+		justify-content: center;
+	}
+
+	.footer-badge-row {
+		justify-content: center;
+	}
+
+	.footer-bottom {
+		align-items: center;
+		text-align: center;
+	}
+
+	.footer-lang {
+		justify-content: center;
+	}
 }
 
 /* Light theme overrides */

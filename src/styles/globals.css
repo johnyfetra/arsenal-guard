@@ -3954,23 +3954,17 @@ section[id] {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   HERO WAVE DIVIDER
+   HERO FADE BASE — gradient dissolve into first section (no wave)
    ═══════════════════════════════════════════════════════════════════ */
-.hero-wave-divider {
+.hero-fade-base {
 	position: absolute;
-	bottom: -1px;
+	bottom: 0;
 	left: 0;
 	right: 0;
-	height: clamp(48px, 7vw, 88px);
-	line-height: 0;
+	height: clamp(5rem, 10vw, 8rem);
+	background: linear-gradient(to bottom, transparent 0%, var(--page-bg) 100%);
 	pointer-events: none;
 	z-index: 5;
-}
-
-.hero-wave-divider svg {
-	width: 100%;
-	height: 100%;
-	display: block;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
