@@ -2,23 +2,17 @@
 import type { CollectionEntry } from 'astro:content';
 import Layout from '../layout/Layout.astro';
 import Container from '../ui/Container.astro';
-import Card from '../ui/Card.astro';
 import Button from '../ui/Button.astro';
 import Hero from './Hero.astro';
-import ValueProps from './ValueProps.astro';
+import CommandPageHero from './CommandPageHero.astro';
 import ReleaseProblems from './ReleaseProblems.astro';
-import MissionMap from './MissionMap.astro';
-import QualityLayer from './QualityLayer.astro';
 import HowItWorks from './HowItWorks.astro';
 import Stack from './Stack.astro';
-import ServicesPreview from './ServicesPreview.astro';
 import FAQ from './FAQ.astro';
 import CTASection from './CTASection.astro';
 import LogoCloud from './LogoCloud.astro';
-import Testimonials from './Testimonials.astro';
 import TierPricingTable from './TierPricingTable.astro';
 import SnapshotTeaser from './SnapshotTeaser.astro';
-import AutomationBridge from './AutomationBridge.astro';
 import Check from 'lucide-astro/Check';
 import Users from 'lucide-astro/Users';
 import QuoteForm from '../forms/QuoteForm.astro';
@@ -52,38 +46,39 @@ const ui = lang === 'fr'
 		process: 'Comment ça marche',
 		forWhom: 'Pour qui',
 		aboutKicker: 'Service QA premium',
-		aboutTitle: 'À propos d’Arsenal Guard',
+		aboutTitle: "À propos d'Arsenal Guard",
 		aboutLead: 'Service QA premium pour produits SaaS, e-commerce et plateformes web européens.',
 		missionTitle: 'Notre mission',
 		missionTexts: [
-			'Arsenal Guard est né d’une conviction : la qualité logicielle ne doit pas être un frein à la livraison. Elle doit devenir un filet clair, maintenable et utile aux équipes produit.',
-			'Nous accompagnons des startups et scale-ups européennes sur l’automatisation des tests E2E, la stabilisation des suites existantes, l’intégration CI/CD et la priorisation des risques qualité, depuis nos bureaux à Antananarivo, Madagascar.',
+			"Arsenal Guard est né d'une conviction : la qualité logicielle ne doit pas être un frein à la livraison. Elle doit devenir un filet clair, maintenable et utile aux équipes produit.",
+			"Nous accompagnons des startups et scale-ups européennes sur l'automatisation des tests E2E, la stabilisation des suites existantes, l'intégration CI/CD et la priorisation des risques qualité, depuis nos bureaux à Antananarivo, Madagascar.",
 		],
 		whyTitle: 'Pourquoi Arsenal Guard ?',
 		whyCards: [
 			['Spécialisation QA pure', 'Nous ne sommes pas un cabinet généraliste. La QA est notre seul métier : Cypress, Playwright, CI/CD, stratégie de test. Une expertise pointue, pas de dilution.'],
 			['Expertise francophone', 'Nos équipes parlent français nativement, comprennent vos enjeux métier et communiquent comme une extension de votre équipe interne.'],
-			['Coût offshore optimisé', 'Bénéficiez d’une qualité d’expertise équivalente au marché européen, avec un avantage tarifaire significatif grâce à notre implantation à Madagascar.'],
+			['Coût offshore optimisé', "Bénéficiez d'une qualité d'expertise équivalente au marché européen, avec un avantage tarifaire significatif grâce à notre implantation à Madagascar."],
 			['Évolution sur le long terme', 'Nos tests sont conçus pour grandir avec votre produit. Votre équipe peut reprendre la main à tout moment, sans dépendance.'],
 		],
 		valuesTitle: 'Nos valeurs',
 		values: [
 			['Qualité', 'La qualité est notre obsession. Chaque test que nous écrivons doit apporter une vraie valeur business, jamais cocher une case sans impact.'],
 			['Transparence', 'Nous facturons à la valeur, nous communiquons sans détour. Vous savez ce que vous payez, vous savez ce qui est livré.'],
-			['Évolution', 'Vos tests d’aujourd’hui doivent rester utiles demain. Nous construisons des suites qui grandissent avec votre produit, pas qui finissent à la corbeille.'],
-			['Fiabilité', 'Aucune régression critique ne doit atteindre votre production. C’est notre engagement et notre raison d’être.'],
+			['Évolution', "Vos tests d'aujourd'hui doivent rester utiles demain. Nous construisons des suites qui grandissent avec votre produit, pas qui finissent à la corbeille."],
+			['Fiabilité', "Aucune régression critique ne doit atteindre votre production. C'est notre engagement et notre raison d'être."],
 		],
 		madagascarTitle: 'Pourquoi Madagascar ?',
 		madagascar: [
 			['Équipe francophone native', 'Communication claire avec vos équipes produit, tech et management.'],
-			['Recouvrement Europe', 'Le fuseau UTC+3 offre un overlap confortable avec la France, la Belgique, la Suisse et l’Europe.'],
-			['Coût optimisé', 'Une expertise QA premium avec 40 à 50% d’économie par rapport à un staffing local équivalent.'],
-			['Talents techniques formés', 'Un vivier d’ingénieurs issus notamment de formations informatiques reconnues comme l’ENI.'],
+			['Recouvrement Europe', "Le fuseau UTC+3 offre un overlap confortable avec la France, la Belgique, la Suisse et l'Europe."],
+			['Coût optimisé', "Une expertise QA premium avec 40 à 50% d'économie par rapport à un staffing local équivalent."],
+			['Talents techniques formés', "Un vivier d'ingénieurs issus notamment de formations informatiques reconnues comme l'ENI."],
 		],
-		founderKicker: 'Notre fondateur',
+		founderKicker: 'Le fondateur',
+		aboutNextLabel: 'Découvrir les services Arsenal Guard.',
 		founderRole: 'Fondateur & Lead QA Engineer',
 		founderTexts: [
-			'Senior QA Engineer avec 5+ ans d’expérience sur des produits à fort enjeu. Diplômé en informatique, Master ENI Fianarantsoa.',
+			"Senior QA Engineer avec 5+ ans d'expérience sur des produits à fort enjeu. Diplômé en informatique, Master ENI Fianarantsoa.",
 			'Johny a accompagné des plateformes utilisées par Chanel, Sodexo et plusieurs scale-ups SaaS européennes avant de fonder Arsenal Guard avec la mission de démocratiser la QA premium pour les équipes produit.',
 		],
 		aboutCtaTitle: 'Faisons connaissance autour de votre projet.',
@@ -94,9 +89,41 @@ const ui = lang === 'fr'
 		legalEditor: 'Éditeur : Arsenal Guard, service QA premium basé à Antananarivo, Madagascar.',
 		legalData: 'Contact : {email}. Les données transmises via les formulaires sont utilisées uniquement pour répondre aux demandes commerciales. Vous pouvez demander leur suppression à tout moment.',
 		legalHosting: 'Hébergement recommandé : Vercel ou Cloudflare Pages. Analytics prévu : Cloudflare Web Analytics ou Plausible, sans cookies publicitaires.',
-		notFound: 'Cette page n’existe pas encore.',
+		notFound: "Cette page n'existe pas encore.",
 		backHome: 'Retour accueil',
 		qaNote: 'Automation · CI/CD · Risque',
+		servicesEyebrow: 'Board des missions QA',
+		servicesTitle: 'Choisissez la bonne ligne de défense pour votre release.',
+		servicesLead: 'Des missions ponctuelles aux forfaits mensuels, chaque service Arsenal Guard transforme le risque produit en signal clair, actionnable et maintenable.',
+		servicesPrimary: 'Voir les modes',
+		servicesSecondary: 'Demander un devis',
+		oneOffTitle: 'Interventions ponctuelles',
+		automationTitle: 'Automatisation & garde continue',
+		ledgerTitle: 'Ledger opérationnel',
+		serviceDuration: 'Durée',
+		serviceBudget: 'Budget',
+		serviceSignal: 'Signal',
+		serviceSignalValue: 'Release guarded',
+		nextStep: 'Étape suivante',
+		aboutHeroEyebrow: 'Poste de commandement',
+		casesEyebrow: 'Dossiers terrain',
+		casesTitle: 'Les missions publiques arrivent après validation client.',
+		casesLead: 'En attendant les études détaillées, voici les familles de dossiers qui structurent nos interventions QA.',
+		blogEyebrow: 'Briefing QA',
+		blogTitle: 'Guides de terrain pour mieux piloter vos releases.',
+		blogLead: 'Des articles courts, concrets, orientés décision : flakies, automation, IA et qualité produit.',
+		quoteEyebrow: 'Ouverture de mission',
+		quoteTitle: 'Décrivez le terrain, on prépare le plan QA.',
+		quoteLead: "Le formulaire collecte juste ce qu'il faut pour cadrer le risque, proposer une mission utile et répondre sous 24h ouvrées.",
+		contactEyebrow: 'Canal direct',
+		contactTitle: 'Ouvrons un canal clair avant votre prochaine release.',
+		contactLead: 'Une question, un audit, un besoin récurrent ou une urgence release : envoyez le signal, on répond vite.',
+		legalEyebrow: 'Cadre opérationnel',
+		privacyEyebrow: 'Confidentialité',
+		legalLead: 'Informations éditeur, hébergement, données de contact et cadre de confidentialité.',
+		notFoundEyebrow: 'Signal perdu',
+		notFoundTitle: "Cette route n'est pas surveillée.",
+		notFoundLead: "La page demandée n'existe pas encore ou a changé de position dans la carte.",
 	}
 	: {
 		serviceButton: 'View service',
@@ -125,7 +152,7 @@ const ui = lang === 'fr'
 		values: [
 			['Quality', 'Every test we write must create real business value, not just tick a coverage box.'],
 			['Transparency', 'We communicate directly and keep scope, priorities and deliverables visible.'],
-			['Evolution', 'Today’s tests must remain useful tomorrow. We build suites that grow with your product.'],
+			['Evolution', "Today's tests must remain useful tomorrow. We build suites that grow with your product."],
 			['Reliability', 'Critical regressions should not reach production. That is our commitment.'],
 		],
 		madagascarTitle: 'Why Madagascar?',
@@ -135,13 +162,14 @@ const ui = lang === 'fr'
 			['Optimized cost', 'Premium QA expertise with 40 to 50% savings compared with equivalent local staffing.'],
 			['Technical talent', 'A strong engineering talent pool from recognized computer science schools such as ENI.'],
 		],
-		founderKicker: 'Our founder',
+		founderKicker: 'The founder',
+		aboutNextLabel: 'Explore Arsenal Guard services.',
 		founderRole: 'Founder & Lead QA Engineer',
 		founderTexts: [
 			'Senior QA Engineer with 5+ years of experience on high-stakes products. Computer science graduate, Master ENI Fianarantsoa.',
 			'Johny supported platforms used by Chanel, Sodexo and several European SaaS scale-ups before founding Arsenal Guard to make premium QA more accessible to product teams.',
 		],
-		aboutCtaTitle: 'Let’s map your project together.',
+		aboutCtaTitle: "Let's map your project together.",
 		aboutCtaLead: 'We identify release risks, critical journeys and the first tests that will create real impact.',
 		casesComing: 'Publication after client approval.',
 		read: 'Read',
@@ -152,6 +180,38 @@ const ui = lang === 'fr'
 		notFound: 'This page does not exist yet.',
 		backHome: 'Back home',
 		qaNote: 'Automation · CI/CD · Risk',
+		servicesEyebrow: 'QA mission board',
+		servicesTitle: 'Choose the right defense line for your release.',
+		servicesLead: 'From one-off missions to monthly retainers, every Arsenal Guard service turns product risk into a clear, actionable and maintainable signal.',
+		servicesPrimary: 'View modes',
+		servicesSecondary: 'Request a quote',
+		oneOffTitle: 'One-off interventions',
+		automationTitle: 'Automation & continuous guard',
+		ledgerTitle: 'Operations ledger',
+		serviceDuration: 'Duration',
+		serviceBudget: 'Budget',
+		serviceSignal: 'Signal',
+		serviceSignalValue: 'Release guarded',
+		nextStep: 'Next step',
+		aboutHeroEyebrow: 'Command post',
+		casesEyebrow: 'Field dossiers',
+		casesTitle: 'Public missions arrive after client approval.',
+		casesLead: 'Until detailed studies are approved, these dossier families show how our QA interventions are structured.',
+		blogEyebrow: 'QA briefing',
+		blogTitle: 'Field guides for steering better releases.',
+		blogLead: 'Short, concrete, decision-oriented articles on flakies, automation, AI and product quality.',
+		quoteEyebrow: 'Open a mission',
+		quoteTitle: 'Describe the terrain, we prepare the QA plan.',
+		quoteLead: 'The form collects just enough context to frame the risk, propose a useful mission and reply within one business day.',
+		contactEyebrow: 'Direct channel',
+		contactTitle: 'Open a clear channel before your next release.',
+		contactLead: 'A question, an audit, a recurring need or a release emergency: send the signal and we reply fast.',
+		legalEyebrow: 'Operational frame',
+		privacyEyebrow: 'Confidentiality',
+		legalLead: 'Publisher details, hosting, contact data and confidentiality frame.',
+		notFoundEyebrow: 'Signal lost',
+		notFoundTitle: 'This route is not under watch.',
+		notFoundLead: 'The requested page does not exist yet or moved on the map.',
 	};
 ---
 
@@ -171,15 +231,9 @@ const ui = lang === 'fr'
 			<Hero lang={lang} />
 			<LogoCloud lang={lang} />
 			<ReleaseProblems lang={lang} />
-			<MissionMap lang={lang} />
-			<QualityLayer lang={lang} />
 			<HowItWorks lang={lang} />
-			<ValueProps lang={lang} />
 			<SnapshotTeaser lang={lang} />
-			<AutomationBridge lang={lang} />
 			<Stack lang={lang} />
-			<ServicesPreview lang={lang} mode="services" />
-			<Testimonials lang={lang} />
 			<FAQ lang={lang} />
 			<CTASection lang={lang} />
 		</>
@@ -187,64 +241,105 @@ const ui = lang === 'fr'
 
 	{page === 'services' && (
 		<>
-			<section class="bg-mesh py-24 md:py-32">
+			<CommandPageHero
+				lang={lang}
+				variant="services"
+				eyebrow={ui.servicesEyebrow}
+				title={ui.servicesTitle}
+				lead={ui.servicesLead}
+				ctaLabel={ui.servicesPrimary}
+				ctaHref="#service-modes"
+				secondaryLabel={ui.servicesSecondary}
+				secondaryHref={routeMap.quote}
+				stats={[
+					{ value: '72h', label: lang === 'fr' ? 'Snapshot possible' : 'Snapshot possible' },
+					{ value: '5+', label: lang === 'fr' ? 'ans QA senior' : 'senior QA years' },
+					{ value: 'UTC+3', label: lang === 'fr' ? 'overlap Europe' : 'Europe overlap' },
+				]}
+			/>
+			<section id="service-modes" class="operation-roster py-20 md:py-28">
 				<Container>
-					<h1 class="max-w-4xl text-5xl font-extrabold text-white md:text-7xl">{t.nav.services}</h1>
-					<p class="mt-6 max-w-3xl text-lg text-white/80">{localizedServiceIntro[lang]}</p>
-				</Container>
-			</section>
-			<section class="py-24">
-				<Container>
-					<h2 class="mb-6 text-sm font-bold uppercase tracking-[0.14em] text-orange-400 reveal">
-						{lang === 'fr' ? 'Tests manuels' : 'Manual testing'}
-					</h2>
+					<div class="mb-10 grid gap-5 md:grid-cols-[.8fr_1.2fr] md:items-end">
+						<div>
+							<p class="section-eyebrow">{ui.oneOffTitle}</p>
+							<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">
+								{lang === 'fr' ? "Reconnaître le terrain avant d'engager la suite." : 'Read the terrain before engaging the suite.'}
+							</h2>
+						</div>
+						<p class="text-muted leading-relaxed" data-reveal>{localizedServiceIntro[lang]}</p>
+					</div>
 					<div class="grid gap-5 md:grid-cols-2">
 						{services.filter((s) => s.id === 'test-manuel-ponctuel' || s.id === 'audit-qa').map((item) => (
-							<Card>
-								<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">{item.kicker}</p>
-								<h2 class="mt-4 text-3xl font-extrabold">{item.title}</h2>
-								<p class="mt-3 text-muted">{item.description}</p>
-								<p class="mt-5 font-mono text-orange-400">{item.duration} · {item.price}</p>
+							<article class="operation-card" data-reveal>
+								<p class="operation-card-kicker">{item.kicker}</p>
+								<h3>{item.title}</h3>
+								<p>{item.description}</p>
+								<div class="operation-card-meta">
+									<span>{item.duration}</span>
+									<strong>{item.price}</strong>
+								</div>
 								<Button class="mt-6" href={`services/${item.id}`} lang={lang} variant="secondary">{ui.serviceButton}</Button>
-							</Card>
+							</article>
 						))}
 					</div>
 
-					<h2 class="mb-6 mt-14 text-sm font-bold uppercase tracking-[0.14em] text-orange-400 reveal">
-						{lang === 'fr' ? 'Automatisation & accompagnement' : 'Automation & retainers'}
-					</h2>
-					<div class="grid gap-5 md:grid-cols-2">
+					<div class="mb-10 mt-16 grid gap-5 md:grid-cols-[.8fr_1.2fr] md:items-end">
+						<div>
+							<p class="section-eyebrow">{ui.automationTitle}</p>
+							<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">
+								{lang === 'fr' ? 'Transformer le risque confirmé en garde-fou durable.' : 'Turn confirmed risk into durable guardrails.'}
+							</h2>
+						</div>
+					</div>
+					<div class="grid gap-5 md:grid-cols-3">
 						{services.filter((s) => s.id !== 'test-manuel-ponctuel' && s.id !== 'audit-qa').map((item) => (
-							<Card>
-								<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">{item.kicker}</p>
-								<h2 class="mt-4 text-3xl font-extrabold">{item.title}</h2>
-								<p class="mt-3 text-muted">{item.description}</p>
-								<p class="mt-5 font-mono text-orange-400">{item.duration} · {item.price}</p>
+							<article class="operation-card operation-card--compact" data-reveal>
+								<p class="operation-card-kicker">{item.kicker}</p>
+								<h3>{item.title}</h3>
+								<p>{item.description}</p>
+								<div class="operation-card-meta">
+									<span>{item.duration}</span>
+									<strong>{item.price}</strong>
+								</div>
 								<Button class="mt-6" href={`services/${item.id}`} lang={lang} variant="secondary">{ui.serviceButton}</Button>
-							</Card>
+							</article>
 						))}
 					</div>
 				</Container>
 			</section>
-			<section class="section-band border-y py-24">
-				<Container class="grid gap-8 lg:grid-cols-3">
-					<div>
-						<h2 class="text-3xl font-extrabold">{ui.punctual}</h2>
+			<section class="ops-ledger section-band border-y py-20 md:py-28">
+				<Container>
+					<div class="mb-10">
+						<p class="section-eyebrow">{ui.ledgerTitle}</p>
+						<h2 class="mt-4 text-3xl font-extrabold md:text-5xl">
+							{lang === 'fr' ? 'Vue rapide des volumes et engagements.' : 'A quick view of volume and engagement.'}
+						</h2>
+					</div>
+					<div class="grid gap-5 lg:grid-cols-3">
+						<div class="mission-ledger-card" data-reveal>
+							<h3>{ui.punctual}</h3>
 						{punctualOffers.map((row: PunctualRow) =>
 							'tiers' in row
 								? (
-									<div class="mt-4">
-										<p class="font-semibold text-white">{row.name} · {row.duration}</p>
+									<div class="ledger-row">
+										<p>{row.name} · {row.duration}</p>
 										{row.tiers.map(([label, price]) => (
-											<p class="ml-3 mt-1 text-sm text-muted">{label} · <strong>{price}</strong></p>
+											<span>{label} · <strong>{price}</strong></span>
 										))}
 									</div>
 								)
-								: <p class="mt-4 text-muted">{row[0]} · {row[1]} · <strong>{row[2]}</strong></p>
+								: <div class="ledger-row"><p>{row[0]}</p><span>{row[1]} · <strong>{row[2]}</strong></span></div>
 						)}
+						</div>
+						<div class="mission-ledger-card" data-reveal>
+							<h3>{ui.monthly}</h3>
+							{plans.map((plan) => <div class="ledger-row"><p>{plan.name}</p><span>{plan.volume} · <strong>{plan.price}</strong></span></div>)}
+						</div>
+						<div class="mission-ledger-card" data-reveal>
+							<h3>{ui.dedicated}</h3>
+							{dedicated.map(([name, volume, price]) => <div class="ledger-row"><p>{name}</p><span>{volume} · <strong>{price}</strong></span></div>)}
+						</div>
 					</div>
-					<div><h2 class="text-3xl font-extrabold">{ui.monthly}</h2>{plans.map((plan) => <p class="mt-4 text-muted">{plan.name} · {plan.volume} · <strong>{plan.price}</strong></p>)}</div>
-					<div><h2 class="text-3xl font-extrabold">{ui.dedicated}</h2>{dedicated.map(([name, volume, price]) => <p class="mt-4 text-muted">{name} · {volume} · <strong>{price}</strong></p>)}</div>
 				</Container>
 			</section>
 			<CTASection lang={lang} />
@@ -253,26 +348,31 @@ const ui = lang === 'fr'
 
 	{page === 'service' && service && (
 		<>
-			<section class="bg-mesh py-24 md:py-32">
-				<Container>
-					<p class="font-bold uppercase tracking-[0.16em] text-orange-400">{service.kicker}</p>
-					<h1 class="mt-5 max-w-4xl text-5xl font-extrabold text-white md:text-7xl">{service.title}</h1>
-					<p class="mt-6 max-w-3xl text-lg text-white/80">{service.description}</p>
-					<p class="mt-8 font-mono text-xl text-orange-400">{service.duration} · {service.price}</p>
-				</Container>
-			</section>
+			<CommandPageHero
+				lang={lang}
+				variant="service"
+				eyebrow={service.kicker}
+				title={service.title}
+				lead={service.description}
+				ctaLabel={t.nav.quote}
+				ctaHref={routeMap.quote}
+				secondaryLabel={lang === 'fr' ? 'Voir les livrables' : 'See deliverables'}
+				secondaryHref="#service-dossier"
+				stats={[
+					{ value: service.duration, label: ui.serviceDuration },
+					{ value: service.price, label: ui.serviceBudget },
+					{ value: ui.serviceSignalValue, label: ui.serviceSignal },
+				]}
+			/>
 
 			{service.tiers && service.tiers.length > 0 && (
 				<TierPricingTable tiers={service.tiers} lang={lang} />
 			)}
 
-			<section class="svc-detail-section py-16 md:py-24">
+			<section id="service-dossier" class="svc-detail-section py-16 md:py-24">
 				<Container>
-					<!-- Bento row 1: deliverables (wide) + process (narrow) -->
 					<div class="grid gap-4 lg:grid-cols-[1.65fr_1fr]">
-
-						<!-- Deliverables -->
-						<div class="svc-card reveal">
+						<div class="svc-card svc-card--deliverables reveal">
 							<p class="svc-eyebrow">
 								<Check class="size-3.5 flex-shrink-0" aria-hidden="true" />
 								{ui.deliverables}
@@ -289,8 +389,7 @@ const ui = lang === 'fr'
 							</ul>
 						</div>
 
-						<!-- Process steps -->
-						<div class="svc-card reveal" style="--reveal-delay:80ms">
+						<div class="svc-card svc-card--process reveal" style="--reveal-delay:80ms">
 							<p class="svc-eyebrow">{ui.process}</p>
 							<ol class="svc-rows mt-5">
 								{service.process.map((item, i) => (
@@ -325,15 +424,16 @@ const ui = lang === 'fr'
 			<FAQ lang={lang} items={service.faq} />
 
 			{service.nextStep && (() => {
-				const nextService = services.find((s) => s.id === service.nextStep!.serviceId)
+				const nextStep = service.nextStep;
+				const nextService = services.find((s) => s.id === nextStep.serviceId);
 				return nextService ? (
-					<section class="section-band border-y py-16">
+					<section class="next-mission-section section-band border-y py-16">
 						<Container class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 							<div>
 								<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">
-									{lang === 'fr' ? 'Étape suivante' : 'Next step'}
+									{ui.nextStep}
 								</p>
-								<p class="mt-2 text-lg font-semibold">{service.nextStep!.label[lang]}</p>
+								<p class="mt-2 text-lg font-semibold">{nextStep.label[lang]}</p>
 							</div>
 							<Button href={`services/${nextService.id}`} lang={lang} variant="secondary" class="shrink-0">
 								{nextService.title}
@@ -349,63 +449,79 @@ const ui = lang === 'fr'
 
 	{page === 'about' && (
 		<>
-			<section class="about-hero py-24 md:py-32">
-				<Container class="grid gap-10 lg:grid-cols-[1fr_.75fr] lg:items-center">
-					<div>
-						<p class="about-hero-kicker font-bold uppercase tracking-[0.16em]">{ui.aboutKicker}</p>
-						<h1 class="about-hero-title mt-5 text-5xl font-extrabold md:text-7xl">{ui.aboutTitle}</h1>
-						<p class="about-hero-copy mt-6 max-w-3xl text-xl">{ui.aboutLead}</p>
-					</div>
-					<div class="about-hero-card relative mx-auto grid aspect-square w-full max-w-md place-items-center rounded-2xl p-8 shadow-glow backdrop-blur">
-						<div class="absolute inset-6 rounded-xl border border-orange-400/25"></div>
-						<div class="about-hero-inner absolute inset-14 rounded-xl"></div>
-						<div class="relative text-center">
-							<p class="about-hero-mark text-6xl font-extrabold">QA</p>
-							<p class="about-hero-note mt-3 text-sm font-bold uppercase tracking-[0.18em]">{ui.qaNote}</p>
-						</div>
-					</div>
-				</Container>
-			</section>
-			<section class="py-24">
+			<CommandPageHero
+				lang={lang}
+				variant="about"
+				eyebrow={ui.aboutHeroEyebrow}
+				title={ui.aboutTitle}
+				lead={ui.aboutLead}
+				ctaLabel={t.nav.quote}
+				ctaHref={routeMap.quote}
+				secondaryLabel={lang === 'fr' ? 'Voir la mission' : 'See the mission'}
+				secondaryHref="#about-mission"
+				stats={[
+					{ value: 'QA', label: ui.qaNote },
+					{ value: '5+', label: lang === 'fr' ? 'ans terrain' : 'field years' },
+					{ value: 'Europe', label: lang === 'fr' ? 'remote maîtrisé' : 'remote ready' },
+				]}
+			/>
+			<section id="about-mission" class="about-mission-section py-24">
 				<Container class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
 					<h2 class="text-3xl font-extrabold md:text-5xl">{ui.missionTitle}</h2>
-					<div class="space-y-5 text-lg text-muted">
+					<div class="about-mission-copy space-y-5 text-lg text-muted" data-reveal>
 						{ui.missionTexts.map((text) => <p>{text}</p>)}
 					</div>
 				</Container>
 			</section>
-			<section class="section-band border-y py-24">
+			<section class="identity-grid-section section-band border-y py-24">
 				<Container>
 					<h2 class="text-3xl font-extrabold md:text-5xl">{ui.whyTitle}</h2>
 					<div class="mt-10 grid gap-5 md:grid-cols-2">
-						{ui.whyCards.map(([title, text]) => <Card><h3 class="text-xl font-bold">{title}</h3><p class="mt-3 text-muted">{text}</p></Card>)}
+						{ui.whyCards.map(([title, text], index) => (
+							<article class="identity-card" data-reveal style={`--reveal-delay:${index * 70}ms`}>
+								<span>0{index + 1}</span>
+								<h3>{title}</h3>
+								<p>{text}</p>
+							</article>
+						))}
 					</div>
 				</Container>
 			</section>
-			<section class="py-24">
+			<section class="values-tactical-section py-24">
 				<Container>
 					<h2 class="text-3xl font-extrabold md:text-5xl">{ui.valuesTitle}</h2>
-					<div class="mt-8 grid gap-5 md:grid-cols-4">
-						{ui.values.map(([value, text]) => <Card><h3 class="text-xl font-bold">{value}</h3><p class="mt-3 text-muted">{text}</p></Card>)}
+					<div class="mt-8 grid gap-4 md:grid-cols-4">
+						{ui.values.map(([value, text], index) => (
+							<article class="value-tile" data-reveal style={`--reveal-delay:${index * 70}ms`}>
+								<span></span>
+								<h3>{value}</h3>
+								<p>{text}</p>
+							</article>
+						))}
 					</div>
 				</Container>
 			</section>
-			<section class="section-band border-y py-24">
+			<section class="madagascar-section section-band border-y py-24">
 				<Container class="grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
 					<h2 class="text-3xl font-extrabold md:text-5xl">{ui.madagascarTitle}</h2>
 					<div class="grid gap-4 md:grid-cols-2">
-						{ui.madagascar.map(([title, text]) => <Card><h3 class="text-xl font-bold">{title}</h3><p class="mt-3 text-muted">{text}</p></Card>)}
+						{ui.madagascar.map(([title, text], index) => (
+							<article class="route-card" data-reveal style={`--reveal-delay:${index * 70}ms`}>
+								<h3>{title}</h3>
+								<p>{text}</p>
+							</article>
+						))}
 					</div>
 				</Container>
 			</section>
 			<Stack lang={lang} />
-			<section class="py-24">
+			<section class="founder-dossier-section py-24">
 				<Container class="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
 					<div class="about-portrait-group relative mx-auto w-full max-w-sm lg:mx-0">
 						<div class="about-portrait-cage" aria-hidden="true"></div>
 						<div class="about-portrait-glow absolute -inset-4 rounded-[2rem] bg-orange-400/20 blur-2xl" aria-hidden="true"></div>
 						<div class="about-portrait-card relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-3 shadow-glow backdrop-blur">
-							<img src={johnyPortrait.src} alt={lang === 'fr' ? 'Portrait de Johny Fetramalala, fondateur d’Arsenal Guard' : 'Portrait of Johny Fetramalala, founder of Arsenal Guard'} width="1066" height="1026" decoding="async" class="about-portrait-img aspect-[4/5] w-full rounded-xl object-cover object-[50%_24%]" />
+							<img src={johnyPortrait.src} alt={lang === 'fr' ? "Portrait de Johny Fetramalala, fondateur d'Arsenal Guard" : 'Portrait of Johny Fetramalala, founder of Arsenal Guard'} width="1066" height="1026" decoding="async" class="about-portrait-img aspect-[4/5] w-full rounded-xl object-cover object-[50%_24%]" />
 						</div>
 					</div>
 					<div>
@@ -419,7 +535,18 @@ const ui = lang === 'fr'
 					</div>
 				</Container>
 			</section>
-			<section class="bg-mesh py-20">
+			<section class="next-mission-section section-band border-y py-16">
+				<Container class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+					<div>
+						<p class="text-sm font-bold uppercase tracking-[0.14em] text-orange-400">{ui.nextStep}</p>
+						<p class="mt-2 text-lg font-semibold">{ui.aboutNextLabel}</p>
+					</div>
+					<Button href={routeMap.services} lang={lang} variant="secondary" class="shrink-0">
+						{t.nav.services}
+					</Button>
+				</Container>
+			</section>
+			<section class="about-final-call py-20">
 				<Container class="text-center">
 					<h2 class="mx-auto max-w-3xl text-3xl font-extrabold text-white md:text-5xl">{ui.aboutCtaTitle}</h2>
 					<p class="mx-auto mt-5 max-w-2xl text-white/80">{ui.aboutCtaLead}</p>
@@ -429,17 +556,177 @@ const ui = lang === 'fr'
 		</>
 	)}
 
-	{page === 'cases' && <section class="py-24 md:py-32"><Container><h1 class="text-5xl font-extrabold md:text-7xl">{t.nav.cases}</h1><div class="mt-10 grid gap-5 md:grid-cols-3">{['Audit SaaS', 'Stabilisation E2E', 'Pipeline qualité'].map((item) => <Card><h2 class="text-2xl font-bold">{item}</h2><p class="mt-3 text-muted">{ui.casesComing}</p></Card>)}</div></Container></section>}
+	{page === 'cases' && (
+		<>
+			<CommandPageHero
+				lang={lang}
+				variant="content"
+				eyebrow={ui.casesEyebrow}
+				title={ui.casesTitle}
+				lead={ui.casesLead}
+				ctaLabel={t.nav.quote}
+				ctaHref={routeMap.quote}
+				stats={[
+					{ value: '3', label: lang === 'fr' ? 'familles de dossiers' : 'dossier families' },
+					{ value: 'NDA', label: lang === 'fr' ? 'respect client' : 'client respect' },
+					{ value: 'Soon', label: lang === 'fr' ? 'publication validée' : 'approved publication' },
+				]}
+			/>
+			<section class="case-dossier-section py-20 md:py-28">
+				<Container>
+					<div class="grid gap-5 md:grid-cols-3">
+						{['Audit SaaS', 'Stabilisation E2E', 'Pipeline qualité'].map((item, index) => (
+							<article class="case-card" data-reveal style={`--reveal-delay:${index * 80}ms`}>
+								<span>0{index + 1}</span>
+								<h2>{item}</h2>
+								<p>{ui.casesComing}</p>
+							</article>
+						))}
+					</div>
+				</Container>
+			</section>
+			<CTASection lang={lang} />
+		</>
+	)}
 
-	{page === 'blog' && <section class="py-24 md:py-32"><Container><h1 class="text-5xl font-extrabold md:text-7xl">Blog</h1><div class="mt-10 grid gap-5 md:grid-cols-3">{posts.map((post) => <Card><p class="text-sm text-orange-400">{post.data.readTime}</p><h2 class="mt-4 text-2xl font-bold">{post.data.title}</h2><p class="mt-3 text-muted">{post.data.description}</p><Button class="mt-6" href={`blog/${post.slug.replace(/^\d+-/, '')}`} lang={lang} variant="secondary">{ui.read}</Button></Card>)}</div></Container></section>}
+	{page === 'blog' && (
+		<>
+			<CommandPageHero
+				lang={lang}
+				variant="content"
+				eyebrow={ui.blogEyebrow}
+				title={ui.blogTitle}
+				lead={ui.blogLead}
+				stats={[
+					{ value: String(posts.length), label: lang === 'fr' ? 'briefings actifs' : 'active briefings' },
+					{ value: 'QA', label: lang === 'fr' ? 'focus terrain' : 'field focus' },
+					{ value: 'E2E', label: lang === 'fr' ? 'automation' : 'automation' },
+				]}
+			/>
+			<section class="briefing-grid-section py-20 md:py-28">
+				<Container>
+					<div class="grid gap-5 md:grid-cols-3">
+						{posts.map((post, index) => (
+							<article class="article-card" data-reveal style={`--reveal-delay:${index * 80}ms`}>
+								<p class="article-card-meta">{post.data.readTime}</p>
+								<h2>{post.data.title}</h2>
+								<p>{post.data.description}</p>
+								<Button class="mt-6" href={`blog/${post.slug.replace(/^\d+-/, '')}`} lang={lang} variant="secondary">{ui.read}</Button>
+							</article>
+						))}
+					</div>
+				</Container>
+			</section>
+			<CTASection lang={lang} />
+		</>
+	)}
 
-	{page === 'quote' && <section class="py-24 md:py-32"><Container class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><h1 class="text-5xl font-extrabold md:text-7xl">{t.nav.quote}</h1><p class="mt-6 text-lg text-muted">{t.descriptions.quote}</p></div><QuoteForm /></Container></section>}
+	{page === 'quote' && (
+		<>
+			<CommandPageHero
+				lang={lang}
+				variant="form"
+				eyebrow={ui.quoteEyebrow}
+				title={ui.quoteTitle}
+				lead={ui.quoteLead}
+				ctaLabel={lang === 'fr' ? 'Ouvrir le formulaire' : 'Open the form'}
+				ctaHref="#mission-intake"
+				stats={[
+					{ value: '24h', label: lang === 'fr' ? 'réponse ouvrée' : 'business reply' },
+					{ value: '4', label: lang === 'fr' ? 'étapes courtes' : 'short steps' },
+					{ value: 'NDA', label: lang === 'fr' ? 'possible' : 'available' },
+				]}
+			/>
+			<section id="mission-intake" class="form-command-section py-20 md:py-28">
+				<Container class="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-start">
+					<div class="contact-signal" data-reveal>
+						<p class="section-eyebrow">{lang === 'fr' ? 'Brief requis' : 'Required brief'}</p>
+						<h2>{lang === 'fr' ? 'Un cadrage clair évite une mission floue.' : 'A clear frame avoids a vague mission.'}</h2>
+						<p>{t.descriptions.quote}</p>
+					</div>
+					<QuoteForm lang={lang} />
+				</Container>
+			</section>
+		</>
+	)}
 
-	{page === 'contact' && <section class="py-24 md:py-32"><Container class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><h1 class="text-5xl font-extrabold md:text-7xl">{t.nav.contact}</h1><p class="mt-6 text-lg text-muted">{t.descriptions.contact}</p><p class="mt-6 font-mono text-orange-400">{site.email}</p><div class="surface mt-8 rounded-2xl p-6 text-muted">{ui.contactSlot}</div></div><ContactForm /></Container></section>}
+	{page === 'contact' && (
+		<>
+			<CommandPageHero
+				lang={lang}
+				variant="form"
+				eyebrow={ui.contactEyebrow}
+				title={ui.contactTitle}
+				lead={ui.contactLead}
+				ctaLabel={lang === 'fr' ? 'Envoyer le signal' : 'Send the signal'}
+				ctaHref="#secure-channel"
+				stats={[
+					{ value: '24h', label: lang === 'fr' ? 'réponse ouvrée' : 'business reply' },
+					{ value: site.location, label: lang === 'fr' ? 'base opérationnelle' : 'operations base' },
+					{ value: 'Remote', label: lang === 'fr' ? 'Europe' : 'Europe' },
+				]}
+			/>
+			<section id="secure-channel" class="form-command-section py-20 md:py-28">
+				<Container class="grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-start">
+					<div class="contact-signal" data-reveal>
+						<p class="section-eyebrow">{lang === 'fr' ? 'Signal direct' : 'Direct signal'}</p>
+						<h2>{t.nav.contact}</h2>
+						<p>{t.descriptions.contact}</p>
+						<a href={`mailto:${site.email}`} class="contact-email">{site.email}</a>
+						<div class="contact-slot">{ui.contactSlot}</div>
+					</div>
+					<ContactForm lang={lang} />
+				</Container>
+			</section>
+		</>
+	)}
 
-	{(page === 'legal' || page === 'privacy') && <section class="py-24 md:py-32"><Container class="max-w-3xl"><h1 class="text-5xl font-extrabold">{page === 'legal' ? getPageTitle(lang, 'legal') : getPageTitle(lang, 'privacy')}</h1><div class="prose-ag mt-8"><p>{ui.legalEditor}</p><p>{ui.legalData.replace('{email}', site.email)}</p><p>{ui.legalHosting}</p></div></Container></section>}
+	{(page === 'legal' || page === 'privacy') && (
+		<>
+			<CommandPageHero
+				lang={lang}
+				variant="legal"
+				eyebrow={page === 'legal' ? ui.legalEyebrow : ui.privacyEyebrow}
+				title={page === 'legal' ? getPageTitle(lang, 'legal') : getPageTitle(lang, 'privacy')}
+				lead={ui.legalLead}
+				stats={[
+					{ value: 'RGPD', label: lang === 'fr' ? 'cadre européen' : 'European frame' },
+					{ value: 'NDA', label: lang === 'fr' ? 'sur demande' : 'on request' },
+					{ value: 'No ads', label: lang === 'fr' ? 'pas de tracking pub' : 'no ad tracking' },
+				]}
+			/>
+			<section class="legal-section py-20 md:py-28">
+				<Container class="max-w-4xl">
+					<div class="legal-panel prose-ag" data-reveal>
+						<p>{ui.legalEditor}</p>
+						<p>{ui.legalData.replace('{email}', site.email)}</p>
+						<p>{ui.legalHosting}</p>
+					</div>
+				</Container>
+			</section>
+		</>
+	)}
 
-	{page === 'notFound' && <section class="grid min-h-[70vh] place-items-center py-24"><Container class="text-center"><h1 class="text-6xl font-extrabold">404</h1><p class="mt-4 text-muted">{ui.notFound}</p><Button class="mt-8" href="/" lang={lang}>{ui.backHome}</Button></Container></section>}
+	{page === 'notFound' && (
+		<>
+			<CommandPageHero
+				lang={lang}
+				variant="error"
+				eyebrow={ui.notFoundEyebrow}
+				title={ui.notFoundTitle}
+				lead={ui.notFoundLead}
+				ctaLabel={ui.backHome}
+				ctaHref="/"
+				secondaryLabel={t.nav.contact}
+				secondaryHref={routeMap.contact}
+				stats={[
+					{ value: '404', label: lang === 'fr' ? 'route absente' : 'missing route' },
+					{ value: 'Home', label: lang === 'fr' ? 'retour commandement' : 'back to command' },
+					{ value: 'Contact', label: lang === 'fr' ? 'canal ouvert' : 'channel open' },
+				]}
+			/>
+		</>
+	)}
 </Layout>
 
 <style>
