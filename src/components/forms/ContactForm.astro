@@ -55,8 +55,11 @@ const formCopy = lang === 'fr'
 	data-success={formCopy.status.success}
 	data-error={formCopy.status.error}
 	data-missing-key={formCopy.status.missingKey}
+	action="/api/contact"
+	method="post"
 >
-	<input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY ?? ''} />
+	<input type="hidden" name="form_type" value="contact" />
+	<input type="hidden" name="lang" value={lang} />
 	<input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
 
 	<div class="quote-step-head">
@@ -116,21 +119,22 @@ const formCopy = lang === 'fr'
 			if (submit instanceof HTMLButtonElement) submit.disabled = true;
 
 			const data = Object.fromEntries(new FormData(form));
-			if (data.botcheck) return;
 
 			try {
-				if (!data.access_key) throw new Error('Missing Web3Forms key');
-				const response = await fetch('https://api.web3forms.com/submit', {
+				const response = await fetch('/api/contact', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify(data),
 				});
-				if (!response.ok) throw new Error('Submission failed');
+				const result = await response.json().catch(() => ({}));
+				if (!response.ok) {
+					throw new Error(result.error === 'email_not_configured' ? 'Email channel unavailable' : 'Submission failed');
+				}
 				if (status) status.textContent = form.dataset.success || 'Message sent.';
 				form.reset();
 			} catch (error) {
 				if (status) {
-					status.textContent = error instanceof Error && error.message === 'Missing Web3Forms key'
+					status.textContent = error instanceof Error && error.message === 'Email channel unavailable'
 						? form.dataset.missingKey || form.dataset.error || 'Submission failed.'
 						: form.dataset.error || 'Submission failed.';
 				}
