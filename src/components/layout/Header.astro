@@ -129,11 +129,13 @@ const a11y =
 		</div>
 	</div>
 </header>
+<div class="nav-backdrop" aria-hidden="true" data-mobile-backdrop></div>
 
 <script is:inline>
 	const header = document.querySelector('[data-site-header]');
 	const menuToggle = document.querySelector('[data-mobile-menu-toggle]');
 	const mobileMenu = document.querySelector('[data-mobile-menu]');
+	const backdrop = document.querySelector('[data-mobile-backdrop]');
 
 	const updateHeader = () => {
 		header?.classList.toggle('is-scrolled', window.scrollY > 8);
@@ -144,6 +146,7 @@ const a11y =
 		mobileMenu.hidden = !open;
 		header?.classList.toggle('is-menu-open', open);
 		menuToggle.setAttribute('aria-expanded', String(open));
+		document.body.style.overflow = open ? 'hidden' : '';
 	};
 
 	updateHeader();
@@ -151,6 +154,7 @@ const a11y =
 	menuToggle?.addEventListener('click', () =>
 		setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true')
 	);
+	backdrop?.addEventListener('click', () => setMenuOpen(false));
 	mobileMenu?.querySelectorAll('a').forEach((link) =>
 		link.addEventListener('click', () => setMenuOpen(false))
 	);
