@@ -309,7 +309,17 @@ export const faq = [
 	],
 ];
 
-export const localizedServiceIntro: Record<Lang, string> = {
-	fr: 'Un test ponctuel pour auditer votre livraison — une mission courte pour débloquer vite — un forfait mensuel pour livrer sereinement — un QA dédié quand la qualité prime.',
-	en: 'One-time testing to audit your release — a short mission to unblock fast — a monthly retainer for continuous delivery — dedicated QA when quality drives the product.',
+export const localizedServiceIntro: Record<Lang, { label: string; sub: string }[]> = {
+	fr: [
+		{ label: 'Audit de release', sub: 'Vérifiez la qualité avant chaque mise en production.' },
+		{ label: 'Mission de déblocage', sub: 'Résolvez un point bloquant critique en quelques jours.' },
+		{ label: 'Forfait QA mensuel', sub: 'Livrez chaque sprint avec une couverture QA continue.' },
+		{ label: 'Ingénieur QA dédié', sub: 'Un QA intégré à votre équipe pour les projets exigeants.' },
+	],
+	en: [
+		{ label: 'Targeted release audit', sub: 'Spot quality issues before your next deployment goes live.' },
+		{ label: 'Fast unblock sprint', sub: 'Resolve a critical blocker in days, not weeks.' },
+		{ label: 'Monthly QA retainer', sub: 'Ship every sprint backed by continuous QA coverage.' },
+		{ label: 'Dedicated QA engineer', sub: 'A QA engineer embedded within your product team.' },
+	],
 };

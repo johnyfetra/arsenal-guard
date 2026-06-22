@@ -267,7 +267,17 @@ const ui = lang === 'fr'
 								{lang === 'fr' ? "Reconnaître le terrain avant d'engager la suite." : 'Read the terrain before engaging the suite.'}
 							</h2>
 						</div>
-						<p class="text-muted leading-relaxed" data-reveal>{localizedServiceIntro[lang]}</p>
+						<ol class="service-intro-list" data-reveal>
+							{localizedServiceIntro[lang].map((item, i) => (
+								<li class="service-intro-item">
+									<span class="service-intro-num">0{i + 1}</span>
+									<span class="service-intro-body">
+										<strong>{item.label}</strong>
+										<span>{item.sub}</span>
+									</span>
+								</li>
+							))}
+						</ol>
 					</div>
 					<div class="section-visual-card section-visual-card--wide mb-10" data-reveal>
 						<SectionIllustration variant="service-ladder" lang={lang} />
