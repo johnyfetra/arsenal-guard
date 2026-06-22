@@ -462,17 +462,19 @@ select option {
 	right: 0;
 	top: calc(100% + 0.45rem);
 	z-index: 60;
-	min-width: 9rem;
-	border: 1px solid color-mix(in srgb, var(--border-soft) 80%, transparent);
-	border-radius: 0.75rem;
-	background: color-mix(in srgb, var(--panel-bg) 96%, var(--page-bg));
-	backdrop-filter: blur(22px) saturate(160%);
-	-webkit-backdrop-filter: blur(22px) saturate(160%);
-	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
-	padding: 0.3rem;
+	min-width: 9.5rem;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 0.85rem;
+	background: rgba(12, 18, 32, 0.88);
+	backdrop-filter: blur(28px) saturate(180%);
+	-webkit-backdrop-filter: blur(28px) saturate(180%);
+	box-shadow:
+		0 0 0 0.5px rgba(255, 255, 255, 0.06),
+		0 16px 48px rgba(0, 0, 0, 0.36);
+	padding: 0.35rem;
 	opacity: 0;
 	visibility: hidden;
-	transform: translateY(-5px) scale(0.97);
+	transform: translateY(-6px) scale(0.96);
 	transform-origin: top right;
 	transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
 	pointer-events: none;
@@ -488,23 +490,47 @@ select option {
 .language-menu-option {
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
-	padding: 0.5rem 0.65rem;
-	border-radius: 0.5rem;
-	color: var(--page-text);
-	font-size: 0.84rem;
-	font-weight: 600;
+	gap: 0.55rem;
+	padding: 0.6rem 0.75rem;
+	border-radius: 0.55rem;
+	color: rgba(245, 247, 248, 0.88);
+	font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+	font-size: 0.9rem;
+	font-weight: 500;
 	text-decoration: none;
-	transition: background 120ms ease;
+	transition: background 120ms ease, color 120ms ease;
 }
 
 .language-menu-option:hover {
-	background: color-mix(in srgb, var(--panel-bg) 65%, transparent);
+	background: rgba(255, 255, 255, 0.08);
+	color: #f5f7f8;
 }
 
 .language-menu-option[aria-selected='true'] {
+	background: rgba(230, 126, 34, 0.14);
+	color: #ffb26f;
+}
+
+:root[data-theme='light'] .language-menu-list {
+	background: rgba(255, 255, 255, 0.92);
+	border-color: rgba(15, 31, 68, 0.1);
+	box-shadow:
+		0 0 0 0.5px rgba(15, 31, 68, 0.06),
+		0 16px 48px rgba(15, 31, 68, 0.12);
+}
+
+:root[data-theme='light'] .language-menu-option {
+	color: rgba(24, 32, 51, 0.82);
+}
+
+:root[data-theme='light'] .language-menu-option:hover {
+	background: rgba(15, 31, 68, 0.06);
+	color: #182033;
+}
+
+:root[data-theme='light'] .language-menu-option[aria-selected='true'] {
 	background: rgba(230, 126, 34, 0.1);
-	color: #e67e22;
+	color: #c95a00;
 }
 
 /* ── Theme pill switch — Sun ◀▶ Moon slider ─────────────────── */
