@@ -619,26 +619,30 @@ select option {
 	transform: translate(0, -50%);
 }
 
-.theme-wave {
+/* ── Theme transition overlay (Solar Eclipse technique) ───── */
+/* background is set inline by JS; only structural props live here */
+.theme-transition-overlay {
 	position: fixed;
+	inset: 0;
 	z-index: 9999;
 	pointer-events: none;
-	border-radius: 9999px;
-	transform: translate(-50%, -50%) scale(0);
-	background: radial-gradient(
-		circle,
-		transparent 0%,
-		rgba(243, 156, 18, 0.1) 20%,
-		rgba(243, 156, 18, 0.34) 26%,
-		rgba(255, 255, 255, 0.24) 28%,
-		rgba(243, 156, 18, 0.12) 33%,
-		transparent 45%
-	);
-	box-shadow:
-		0 0 64px rgba(230, 126, 34, 0.18),
-		inset 0 0 90px rgba(243, 156, 18, 0.08);
-	mix-blend-mode: screen;
-	will-change: transform, opacity;
+	/* clip-path animated by GSAP from circle(0px) → circle(maxRadius) */
+	will-change: clip-path, opacity;
+}
+
+/* Stars layer — only rendered during → dark transition */
+.theme-transition-overlay__stars {
+	position: absolute;
+	inset: 0;
+	/* Three staggered repeating dot patterns at sub-pixel radii */
+	background-image:
+		radial-gradient(circle, rgba(255, 255, 255, 0.9) 0.8px, transparent 0.8px),
+		radial-gradient(circle, rgba(255, 255, 255, 0.55) 0.5px, transparent 0.5px),
+		radial-gradient(circle, rgba(255, 255, 255, 0.75) 0.65px, transparent 0.65px);
+	background-size: 160px 160px, 110px 110px, 210px 210px;
+	background-position: 14px 38px, 70px 18px, 105px 82px;
+	pointer-events: none;
+	will-change: opacity;
 }
 
 .article-hero {
@@ -749,31 +753,8 @@ select option {
 	border-color: rgba(15, 31, 68, 0.12);
 }
 
-.theme-wave--light {
-	background: radial-gradient(
-		circle,
-		transparent 0%,
-		rgba(230, 126, 34, 0.08) 20%,
-		rgba(230, 126, 34, 0.3) 26%,
-		rgba(255, 255, 255, 0.42) 29%,
-		rgba(15, 31, 68, 0.08) 34%,
-		transparent 48%
-	);
-	mix-blend-mode: normal;
-}
-
-.theme-wave--dark {
-	background: radial-gradient(
-		circle,
-		transparent 0%,
-		rgba(243, 156, 18, 0.1) 20%,
-		rgba(243, 156, 18, 0.34) 26%,
-		rgba(83, 126, 210, 0.2) 29%,
-		rgba(255, 255, 255, 0.1) 34%,
-		transparent 48%
-	);
-	mix-blend-mode: screen;
-}
+/* .theme-wave--light / .theme-wave--dark removed — superseded by
+   .theme-transition-overlay with inline background set by GSAP script */
 
 label:has(input[type='radio']) {
 	border-color: var(--field-border);

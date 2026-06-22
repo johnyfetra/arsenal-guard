@@ -8,15 +8,10 @@ interface Props {
 }
 
 const { lang = 'fr' } = Astro.props;
-const labels = lang === 'fr'
-	? {
-		toLight: 'Passer au thème clair',
-		toDark: 'Passer au thème sombre',
-	}
-	: {
-		toLight: 'Switch to light theme',
-		toDark: 'Switch to dark theme',
-	};
+const labels =
+	lang === 'fr'
+		? { toLight: 'Passer au thème clair', toDark: 'Passer au thème sombre' }
+		: { toLight: 'Switch to light theme', toDark: 'Switch to dark theme' };
 ---
 
 <button
@@ -38,35 +33,190 @@ const labels = lang === 'fr'
 	</span>
 </button>
 
+<!--
+  is:inline — synchronous, no imports allowed.
+  Syncs aria-checked + aria-label to the theme already applied by the
+  <head> is:inline in Layout.astro. Runs immediately as the element parses.
+-->
 <script is:inline>
-	const applyTheme = (theme) => {
+	(function syncToggleAria() {
+		var theme = document.documentElement.dataset.theme || 'dark';
+		document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
+			var isDark = theme === 'dark';
+			btn.setAttribute('aria-checked', String(isDark));
+			btn.setAttribute(
+				'aria-label',
+				isDark
+					? btn.dataset.themeLabelLight || 'Switch to light theme'
+					: btn.dataset.themeLabelDark || 'Switch to dark theme',
+			);
+		});
+	})();
+</script>
+
+<!--
+  <script> (Vite-bundled module, TypeScript) — imports GSAP.
+  Astro de-duplicates this: runs once regardless of how many ThemeToggle
+  instances are rendered on the page.
+-->
+<script>
+	import gsap from 'gsap';
+
+	/* ── applyTheme ──────────────────────────────────────────────────────
+	   Single function that mutates all theme state:
+	   data-theme attribute, .dark class, localStorage, and every toggle's
+	   aria-checked + aria-label. Called at init and mid-transition.
+	──────────────────────────────────────────────────────────────────── */
+	function applyTheme(theme: string): void {
 		document.documentElement.dataset.theme = theme;
 		document.documentElement.classList.toggle('dark', theme === 'dark');
 		localStorage.setItem('theme', theme);
-		document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+		document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach((btn) => {
 			const isDark = theme === 'dark';
-			button.setAttribute('aria-checked', String(isDark));
-			button.setAttribute(
+			btn.setAttribute('aria-checked', String(isDark));
+			btn.setAttribute(
 				'aria-label',
 				isDark
-					? button.dataset.themeLabelLight || 'Switch to light theme'
-					: button.dataset.themeLabelDark || 'Switch to dark theme',
+					? (btn.dataset.themeLabelLight ?? 'Switch to light theme')
+					: (btn.dataset.themeLabelDark ?? 'Switch to dark theme'),
 			);
 		});
-	};
-	const animateThemeWave = (nextTheme) => {
+	}
+
+	/* ── transitionTheme ─────────────────────────────────────────────────
+	   "Solar Eclipse" immersive theme transition. Total: ≤600 ms.
+
+	   Phase 1 (0–220 ms) : radial clip-path wipe expands outward from the
+	                         center of buttonEl, covering the viewport.
+	   Phase 2 (220 ms)   : applyTheme() fires — page repaints behind the
+	                         fully-opaque overlay, no flash visible.
+	   Phase 3 (220–600ms): overlay fades to opacity 0, revealing the
+	                         recomposed page in the new theme.
+
+	   Overlay palette
+	   → dark  : sunset gradient (amber → crimson → midnight navy)
+	   → light : dawn gradient   (white → gold → warm cream)
+
+	   Stars (→ dark only): CSS dot-pattern layer fades in at 70 ms,
+	   fades out at 190 ms — a brief starfield glimpse during the wipe.
+
+	   onDone() is called after cleanup; use it to reset external state.
+	──────────────────────────────────────────────────────────────────── */
+	function transitionTheme(newTheme: string, buttonEl: HTMLElement, onDone: () => void): void {
+		const rect = buttonEl.getBoundingClientRect();
+		const originX = Math.round(rect.left + rect.width / 2);
+		const originY = Math.round(rect.top + rect.height / 2);
+
+		// Diagonal of the viewport guarantees wipe reaches every corner
+		const maxRadius = Math.ceil(Math.hypot(window.innerWidth, window.innerHeight) * 1.05);
+
+		const toDark = newTheme === 'dark';
+
+		// Gradient center is anchored to the button's screen position
+		const overlayBg = toDark
+			? // Sunset: amber core → crimson midtone → deep midnight
+				`radial-gradient(ellipse at ${originX}px ${originY}px, ` +
+				`#F6C057 0%, #E67E22 8%, #C0392B 22%, #1B1464 52%, #050B1A 100%)`
+			: // Dawn: white core → gold → warm cream
+				`radial-gradient(ellipse at ${originX}px ${originY}px, ` +
+				`#FFFDE7 0%, #FFF3CD 6%, #F6C057 18%, #F0E6D0 48%, #FAFAF7 100%)`;
+
+		// Build overlay element
+		const overlay = document.createElement('div');
+		overlay.className = 'theme-transition-overlay';
+		overlay.setAttribute('aria-hidden', 'true');
+		overlay.style.background = overlayBg;
+
+		// Stars sub-layer — only for the → dark transition
+		let stars: HTMLElement | null = null;
+		if (toDark) {
+			stars = document.createElement('div');
+			stars.className = 'theme-transition-overlay__stars';
+			overlay.appendChild(stars);
+		}
+
+		document.body.appendChild(overlay);
+
+		// html.theme-switching → the existing CSS rule fires `transition: none !important`
+		// on every descendant, preventing CSS transitions from fighting the GSAP overlay
 		document.documentElement.classList.add('theme-switching');
-		applyTheme(nextTheme);
-		window.setTimeout(() => {
+
+		// Establish GSAP initial state — never clearProps to show elements;
+		// use explicit set() per GSAP invariants
+		gsap.set(overlay, {
+			clipPath: `circle(0.1px at ${originX}px ${originY}px)`,
+			opacity: 1,
+			force3D: true,
+		});
+		if (stars !== null) {
+			gsap.set(stars, { opacity: 0, force3D: true });
+		}
+
+		const cleanup = (): void => {
+			overlay.remove();
 			document.documentElement.classList.remove('theme-switching');
-		}, 120);
-	};
-	const saved = localStorage.getItem('theme');
-	applyTheme(saved || 'dark');
-	document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+			onDone();
+		};
+
+		const tl = gsap.timeline({ onComplete: cleanup });
+
+		// Phase 1: radial wipe from button center outward (0 → 220 ms)
+		tl.to(overlay, {
+			clipPath: `circle(${maxRadius}px at ${originX}px ${originY}px)`,
+			duration: 0.22,
+			ease: 'power2.inOut',
+			force3D: true,
+			overwrite: 'auto',
+		});
+
+		// Phase 2: switch theme at the frame the overlay fully covers the screen
+		tl.call(() => applyTheme(newTheme));
+
+		// Phase 3: fade overlay out, revealing the recomposed page (220 → 600 ms)
+		tl.to(overlay, {
+			opacity: 0,
+			duration: 0.36,
+			ease: 'power2.out',
+			force3D: true,
+			overwrite: 'auto',
+		});
+
+		// Stars: fade in at 70 ms, fade out at 190 ms — safely before phase 3
+		if (stars !== null) {
+			const starsEl = stars; // capture for closure; avoids repeated null check
+			tl.to(
+				starsEl,
+				{ opacity: 0.9, duration: 0.1, ease: 'power1.in', force3D: true, overwrite: 'auto' },
+				0.07,
+			);
+			tl.to(
+				starsEl,
+				{ opacity: 0, duration: 0.1, ease: 'power1.out', force3D: true, overwrite: 'auto' },
+				0.19,
+			);
+		}
+	}
+
+	/* ── Init ────────────────────────────────────────────────────────────
+	   Syncs aria attributes and persists the default 'dark' theme for
+	   first-time visitors (belt-and-suspenders with the is:inline above).
+	──────────────────────────────────────────────────────────────────── */
+	applyTheme(localStorage.getItem('theme') ?? 'dark');
+
+	/* ── Click handlers ──────────────────────────────────────────────────
+	   `isTransitioning` guard prevents a second animation starting before
+	   the first completes (e.g., rapid double-clicks).
+	──────────────────────────────────────────────────────────────────── */
+	let isTransitioning = false;
+
+	document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach((btn) => {
 		btn.addEventListener('click', () => {
+			if (isTransitioning) return;
+			isTransitioning = true;
 			const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-			animateThemeWave(next);
+			transitionTheme(next, btn, () => {
+				isTransitioning = false;
+			});
 		});
 	});
 </script>
