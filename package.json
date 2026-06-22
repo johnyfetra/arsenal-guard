@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "dev:vercel": "npx --yes vercel dev --listen 4321",
+    "dev:vercel": "sh -c 'set -a; [ -f .env.local ] && . ./.env.local; set +a; npx --yes vercel dev --listen 4321'",
     "build": "astro build",
     "check": "astro check",
     "lint": "eslint .",

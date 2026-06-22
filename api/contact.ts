@@ -197,6 +197,10 @@ export async function POST(request: Request) {
 		return jsonResponse({ ok: true });
 	}
 
+	if (process.env.CONTACT_MOCK_SEND === 'true') {
+		return jsonResponse({ mocked: true, ok: true });
+	}
+
 	const apiKey = process.env.RESEND_API_KEY;
 	const to = process.env.CONTACT_TO_EMAIL ?? 'fetrajohny05@gmail.com';
 	const from = process.env.CONTACT_FROM_EMAIL ?? 'Arsenal Guard <onboarding@resend.dev>';

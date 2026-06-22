@@ -42,10 +42,12 @@ PUBLIC_PLAUSIBLE_DOMAIN=
 RESEND_API_KEY=
 CONTACT_TO_EMAIL=fetrajohny05@gmail.com
 CONTACT_FROM_EMAIL="Arsenal Guard <contact@arsenalguard.com>"
+CONTACT_MOCK_SEND=false
 ```
 
 `RESEND_API_KEY` activates live form submission through the `/api/contact` Vercel Function.
 Set `CONTACT_FROM_EMAIL` to an address on a domain verified in Resend.
+Set `CONTACT_MOCK_SEND=true` locally to test the form UI without sending a real email.
 
 ## Content
 
