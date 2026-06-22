@@ -2393,7 +2393,7 @@ section[id] {
 }
 
 .faq-item .faq-answer {
-	padding: 0 1.5rem 1.25rem;
+	padding: 1rem 1.5rem 1.25rem;
 	color: var(--muted-text);
 	line-height: 1.72;
 	border-top: 1px solid var(--border-soft);
