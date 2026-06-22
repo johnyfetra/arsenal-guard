@@ -38,6 +38,16 @@ const a11y = lang === 'fr'
 	if (!window.__arsenalLanguageMenuReady) {
 		window.__arsenalLanguageMenuReady = true;
 
+		// Save explicit language choice so auto-detect doesn't override it
+		document.querySelectorAll('.language-menu-option').forEach((link) => {
+			link.addEventListener('click', () => {
+				try {
+					const href = link.getAttribute('href') || '';
+					localStorage.setItem('arsenal-lang', href.startsWith('/en') ? 'en' : 'fr');
+				} catch {}
+			});
+		});
+
 		const closeLanguageMenus = (except) => {
 			document.querySelectorAll('[data-language-menu]').forEach((menu) => {
 				if (menu === except) return;

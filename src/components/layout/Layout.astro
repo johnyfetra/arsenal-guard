@@ -36,6 +36,20 @@ const { title, description, lang, path, type, schema } = Astro.props;
 			if (!reduceMotion && !preloaderSeen) {
 				document.documentElement.classList.add('ag-preloader-active');
 			}
+			// Auto-detect browser language on first visit (no explicit choice saved)
+			try {
+				const savedLang = localStorage.getItem('arsenal-lang');
+				if (!savedLang) {
+					const browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+					const preferEn = browserLang.startsWith('en');
+					const onEnPath = location.pathname.startsWith('/en');
+					if (preferEn && !onEnPath) {
+						location.replace('/en' + (location.pathname === '/' ? '/' : location.pathname));
+					} else {
+						localStorage.setItem('arsenal-lang', preferEn ? 'en' : 'fr');
+					}
+				}
+			} catch {}
 		</script>
 		<BaseHead title={title} description={description} lang={lang} path={path} type={type} schema={schema} />
 	</head>
