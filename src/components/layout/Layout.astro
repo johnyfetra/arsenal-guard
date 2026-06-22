@@ -79,10 +79,12 @@ const { title, description, lang, path, type, schema } = Astro.props;
 				<p class="ag-loader-count" data-ag-loader-count>0%</p>
 			</div>
 		</div>
-		<Header lang={lang} path={path} />
-		<main id="main" data-app-shell>
-			<slot />
-		</main>
+		<div class="page-shell">
+			<Header lang={lang} path={path} />
+			<main id="main" data-app-shell>
+				<slot />
+			</main>
+		</div>
 		<Footer lang={lang} />
 		<script is:inline>
 			const preloader = document.querySelector('[data-ag-preloader]');

@@ -72,6 +72,29 @@ body {
 		linear-gradient(242deg, rgba(15, 156, 131, 0.035), transparent 32rem), var(--page-bg);
 }
 
+/* ── Footer reveal — page-shell sits above sticky footer ──── */
+.page-shell {
+	position: relative;
+	z-index: 1;
+	isolation: isolate;
+	/* Opaque background so the sticky footer never shows through */
+	background:
+		radial-gradient(circle, rgba(255, 255, 255, 0.032) 1px, transparent 1px) center / 28px 28px,
+		linear-gradient(118deg, rgba(255, 106, 42, 0.07), transparent 28rem),
+		linear-gradient(242deg, rgba(24, 214, 178, 0.055), transparent 32rem),
+		var(--page-bg);
+	/* Bottom rounded corners + shadow — "card lifted off the footer" */
+	border-radius: 0 0 1.75rem 1.75rem;
+	box-shadow: 0 8px 40px rgba(0, 0, 0, 0.55);
+}
+
+:root[data-theme='light'] .page-shell {
+	background:
+		linear-gradient(118deg, rgba(230, 126, 34, 0.045), transparent 28rem),
+		linear-gradient(242deg, rgba(15, 156, 131, 0.035), transparent 32rem),
+		var(--page-bg);
+}
+
 html.ag-preloader-active,
 html.ag-preloader-active body {
 	overflow: hidden;
