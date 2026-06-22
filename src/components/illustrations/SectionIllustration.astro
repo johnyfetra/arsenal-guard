@@ -32,9 +32,13 @@ const labels = lang === 'fr'
 		bridge: ['Madagascar', 'UTC+3', 'Europe', 'FR'],
 		intake: ['Besoin', 'Périmètre', '24h', 'Devis'],
 		channel: ['Email', 'Message', 'Réponse 24h'],
+		methodBadge: 'LIVRÉ',
+		methodAreas: ['Login / Auth', 'Paiement', 'Inscription', 'Dashboard'],
+		methodStatus: ['Parcours validé', '1 bug critique', 'Formulaire testé', 'À couvrir'],
+		methodStatLabels: ['RAPPORT LIVRÉ', 'TESTS', 'BUGS CRITIQUES'],
 		kickers: {
 			risk: 'Flux de risque',
-			method: 'Flux QA',
+			method: 'Rapport de mission',
 			pipeline: 'Pipeline qualité',
 			ladder: 'Niveaux service',
 			intake: 'Cadrage mission',
@@ -50,9 +54,13 @@ const labels = lang === 'fr'
 		bridge: ['Madagascar', 'UTC+3', 'Europe', 'FR'],
 		intake: ['Need', 'Scope', '24h', 'Quote'],
 		channel: ['Email', 'Message', '24h reply'],
+		methodBadge: 'DELIVERED',
+		methodAreas: ['Login / Auth', 'Payment', 'Sign-up', 'Dashboard'],
+		methodStatus: ['Journey validated', '1 critical bug', 'Form tested', 'To cover'],
+		methodStatLabels: ['REPORT DELIVERED', 'TESTS', 'CRITICAL BUGS'],
 		kickers: {
 			risk: 'Risk flow',
-			method: 'QA flow',
+			method: 'Mission report',
 			pipeline: 'Quality pipeline',
 			ladder: 'Service ladder',
 			intake: 'Mission intake',
@@ -105,17 +113,62 @@ const ariaLabel = {
 
 	{variant === 'method-flow' && (
 		<g>
-			<path class="si-route" d="M74 172 H446"></path>
-			{labels.method.map((label, index) => (
-				<g class={`si-step si-step--${index + 1}`}>
-					<rect x={48 + index * 116} y="118" width="76" height="76" rx="8"></rect>
-					<circle cx={86 + index * 116} cy="156" r="15"></circle>
-					<text x={64 + index * 116} y="224">{label}</text>
-					<text class="si-step-num" x={78 + index * 116} y="161">0{index + 1}</text>
-				</g>
-			))}
-			<path class="si-scanline" d="M80 92 H438"></path>
-			<text class="si-kicker" x="44" y="46">{labels.kickers.method}</text>
+			{/* Card */}
+			<rect x="32" y="18" width="456" height="304" rx="14" class="si-doc" />
+
+			{/* Header */}
+			<text class="si-kicker" x="54" y="50">{labels.kickers.method}</text>
+			<rect x="372" y="34" width="86" height="22" rx="5" class="si-badge-ok" />
+			<text class="si-badge-text" x="415" y="49" text-anchor="middle">{labels.methodBadge}</text>
+
+			{/* Progress bar */}
+			<rect x="54" y="66" width="298" height="5" rx="2.5" class="si-progress-bg" />
+			<rect x="54" y="66" width="280" height="5" rx="2.5" class="si-progress-fill" />
+			<text class="si-percent-text" x="362" y="75">94%</text>
+
+			{/* Separator */}
+			<line x1="54" y1="84" x2="466" y2="84" class="si-separator" />
+
+			{/* Row 1 — Login/Auth (pass) */}
+			<rect x="54" y="94" width="196" height="64" rx="8" class="si-row si-row--pass" />
+			<circle cx="76" cy="126" r="9" class="si-status si-status--pass" />
+			<path d="M71 126 l4 5 8-10" class="si-check-sm" />
+			<text x="94" y="122" class="si-cell-label">{labels.methodAreas[0]}</text>
+			<text x="94" y="140" class="si-cell-sub">{labels.methodStatus[0]}</text>
+
+			{/* Row 1 — Paiement (warn) */}
+			<rect x="262" y="94" width="204" height="64" rx="8" class="si-row si-row--warn" />
+			<circle cx="284" cy="126" r="9" class="si-status si-status--warn" />
+			<text x="284" y="131" text-anchor="middle" class="si-exclaim">!</text>
+			<text x="302" y="122" class="si-cell-label">{labels.methodAreas[1]}</text>
+			<text x="302" y="140" class="si-cell-sub si-cell-sub--warn">{labels.methodStatus[1]}</text>
+
+			{/* Row 2 — Inscription (pass) */}
+			<rect x="54" y="168" width="196" height="64" rx="8" class="si-row si-row--pass" />
+			<circle cx="76" cy="200" r="9" class="si-status si-status--pass" />
+			<path d="M71 200 l4 5 8-10" class="si-check-sm" />
+			<text x="94" y="196" class="si-cell-label">{labels.methodAreas[2]}</text>
+			<text x="94" y="214" class="si-cell-sub">{labels.methodStatus[2]}</text>
+
+			{/* Row 2 — Dashboard (muted/pending) */}
+			<rect x="262" y="168" width="204" height="64" rx="8" class="si-row si-row--muted" />
+			<circle cx="284" cy="200" r="9" class="si-status si-status--muted" />
+			<circle cx="280" cy="200" r="2.5" class="si-dot-muted" />
+			<circle cx="284" cy="200" r="2.5" class="si-dot-muted" />
+			<circle cx="288" cy="200" r="2.5" class="si-dot-muted" />
+			<text x="302" y="196" class="si-cell-label">{labels.methodAreas[3]}</text>
+			<text x="302" y="214" class="si-cell-sub">{labels.methodStatus[3]}</text>
+
+			{/* Stats footer */}
+			<rect x="54" y="244" width="412" height="58" rx="8" class="si-stats-row" />
+			<text x="123" y="268" text-anchor="middle" class="si-stat-val">72h</text>
+			<text x="123" y="285" text-anchor="middle" class="si-stat-label">{labels.methodStatLabels[0]}</text>
+			<line x1="191" y1="254" x2="191" y2="290" class="si-stat-sep" />
+			<text x="260" y="268" text-anchor="middle" class="si-stat-val">12</text>
+			<text x="260" y="285" text-anchor="middle" class="si-stat-label">{labels.methodStatLabels[1]}</text>
+			<line x1="329" y1="254" x2="329" y2="290" class="si-stat-sep" />
+			<text x="397" y="268" text-anchor="middle" class="si-stat-val">3</text>
+			<text x="397" y="285" text-anchor="middle" class="si-stat-label">{labels.methodStatLabels[2]}</text>
 		</g>
 	)}
 
@@ -407,6 +460,224 @@ const ariaLabel = {
 	:global([data-theme='light']) .si-kicker,
 	:global([data-theme='light']) .si-step-num {
 		fill: #c86f12;
+	}
+
+	/* ── method-flow report card ─────────────────────── */
+	.si-badge-ok {
+		fill: rgba(24, 214, 178, 0.12);
+		stroke: rgba(24, 214, 178, 0.4);
+		stroke-width: 1;
+	}
+
+	.si-badge-text {
+		fill: #18d6b2;
+		font-size: 9px;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.si-progress-bg {
+		fill: rgba(255, 255, 255, 0.08);
+	}
+
+	.si-progress-fill {
+		fill: #18d6b2;
+	}
+
+	.si-percent-text {
+		fill: #18d6b2;
+		font-size: 10px;
+		font-weight: 700;
+	}
+
+	.si-separator {
+		stroke: rgba(255, 255, 255, 0.09);
+		stroke-width: 1;
+	}
+
+	.si-row {
+		stroke-width: 1;
+	}
+
+	.si-row--pass {
+		fill: rgba(24, 214, 178, 0.06);
+		stroke: rgba(24, 214, 178, 0.22);
+	}
+
+	.si-row--warn {
+		fill: rgba(255, 106, 42, 0.07);
+		stroke: rgba(255, 106, 42, 0.28);
+	}
+
+	.si-row--muted {
+		fill: rgba(255, 255, 255, 0.04);
+		stroke: rgba(255, 255, 255, 0.1);
+	}
+
+	.si-status {
+		stroke-width: 1.5;
+	}
+
+	.si-status--pass {
+		fill: rgba(24, 214, 178, 0.14);
+		stroke: #18d6b2;
+	}
+
+	.si-status--warn {
+		fill: rgba(255, 106, 42, 0.14);
+		stroke: #ff6a2a;
+	}
+
+	.si-status--muted {
+		fill: rgba(255, 255, 255, 0.06);
+		stroke: rgba(255, 255, 255, 0.28);
+	}
+
+	.si-check-sm {
+		fill: none;
+		stroke: #18d6b2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 2;
+	}
+
+	.si-exclaim {
+		fill: #ff9b5e;
+		font-size: 11px;
+		font-weight: 900;
+	}
+
+	.si-dot-muted {
+		fill: rgba(255, 255, 255, 0.3);
+	}
+
+	.si-cell-label {
+		fill: color-mix(in srgb, var(--page-text) 90%, transparent);
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	.si-cell-sub {
+		fill: color-mix(in srgb, var(--page-text) 48%, transparent);
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	.si-cell-sub--warn {
+		fill: #ff9b5e;
+	}
+
+	.si-stats-row {
+		fill: rgba(255, 255, 255, 0.04);
+		stroke: rgba(255, 255, 255, 0.1);
+		stroke-width: 1;
+	}
+
+	.si-stat-val {
+		fill: color-mix(in srgb, var(--page-text) 95%, transparent);
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 16px;
+		font-weight: 800;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	.si-stat-label {
+		fill: color-mix(in srgb, var(--page-text) 40%, transparent);
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 8px;
+		font-weight: 700;
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+	}
+
+	.si-stat-sep {
+		stroke: rgba(255, 255, 255, 0.1);
+		stroke-width: 1;
+	}
+
+	/* light theme overrides for report card */
+	:global([data-theme='light']) .si-badge-ok {
+		fill: rgba(0, 160, 130, 0.1);
+		stroke: rgba(0, 160, 130, 0.35);
+	}
+
+	:global([data-theme='light']) .si-badge-text {
+		fill: #007c64;
+	}
+
+	:global([data-theme='light']) .si-progress-bg {
+		fill: rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .si-progress-fill {
+		fill: #009e84;
+	}
+
+	:global([data-theme='light']) .si-percent-text {
+		fill: #007c64;
+	}
+
+	:global([data-theme='light']) .si-separator {
+		stroke: rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .si-row--pass {
+		fill: rgba(0, 160, 130, 0.06);
+		stroke: rgba(0, 160, 130, 0.2);
+	}
+
+	:global([data-theme='light']) .si-row--warn {
+		fill: rgba(230, 90, 20, 0.06);
+		stroke: rgba(230, 90, 20, 0.22);
+	}
+
+	:global([data-theme='light']) .si-row--muted {
+		fill: rgba(15, 31, 68, 0.04);
+		stroke: rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .si-status--pass {
+		fill: rgba(0, 160, 130, 0.12);
+		stroke: #009e84;
+	}
+
+	:global([data-theme='light']) .si-status--warn {
+		fill: rgba(230, 90, 20, 0.12);
+		stroke: #c85000;
+	}
+
+	:global([data-theme='light']) .si-status--muted {
+		fill: rgba(15, 31, 68, 0.05);
+		stroke: rgba(15, 31, 68, 0.25);
+	}
+
+	:global([data-theme='light']) .si-check-sm {
+		stroke: #007c64;
+	}
+
+	:global([data-theme='light']) .si-exclaim {
+		fill: #c85000;
+	}
+
+	:global([data-theme='light']) .si-dot-muted {
+		fill: rgba(15, 31, 68, 0.28);
+	}
+
+	:global([data-theme='light']) .si-stats-row {
+		fill: rgba(15, 31, 68, 0.04);
+		stroke: rgba(15, 31, 68, 0.1);
+	}
+
+	:global([data-theme='light']) .si-stat-sep {
+		stroke: rgba(15, 31, 68, 0.1);
 	}
 
 	@media (max-width: 768px) {
