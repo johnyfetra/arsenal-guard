@@ -17,7 +17,7 @@ const { lang } = Astro.props;
 const hero =
 	lang === 'fr'
 		? {
-				badge: 'QA expert dédié · Releases sécurisées · Sans engagement',
+				badge: '● Disponible · Chanel · Sodexo · 5 ans terrain',
 				title: ['Sécurisez votre produit', 'avant chaque livraison.'],
 				lead: "Un renfort QA expert teste vos parcours critiques, priorise les bugs et met en place les garde-fous E2E/CI dont votre équipe a besoin — sans recrutement, sans setup lourd, sans engagement long.",
 				primary: 'Sécuriser ma release',
@@ -39,7 +39,7 @@ const hero =
 				],
 			}
 		: {
-				badge: 'Dedicated QA expertise · Safer releases · No commitment',
+				badge: '● Available · Chanel · Sodexo · 5 yrs field QA',
 				title: ['Secure your product', 'before every release.'],
 				lead: 'A dedicated QA expert tests your critical journeys, prioritizes bugs and sets up the E2E/CI guardrails your team needs — without hiring, heavy setup or long commitment.',
 				primary: 'Secure my release',
@@ -71,7 +71,9 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 
 	<Container class="relative z-10 grid gap-12 lg:grid-cols-[minmax(0,1.02fr)_minmax(24rem,.78fr)] lg:items-center">
 		<div class="hero-command-copy">
-			<p class="hero-command-badge">{hero.badge}</p>
+			<p class="hero-command-badge">
+					<span class="hero-badge-dot" aria-hidden="true">●</span>{hero.badge.replace('● ', '')}
+				</p>
 			<h1 class="hero-command-title">
 				{
 					hero.title.map((line, index) => (
@@ -225,6 +227,8 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 
 	.hero-command-badge {
 		display: inline-flex;
+		align-items: center;
+		gap: 0.42rem;
 		width: fit-content;
 		border: 1px solid rgba(24, 214, 178, 0.26);
 		border-radius: 9999px;
@@ -236,6 +240,18 @@ const icons = [ShieldCheck, Bot, GitBranch, Activity];
 		letter-spacing: 0.12em;
 		padding: 0.55rem 0.85rem;
 		text-transform: uppercase;
+	}
+
+	.hero-badge-dot {
+		color: #4ade80;
+		font-size: 0.55rem;
+		animation: badge-pulse 2.4s ease-in-out infinite;
+		flex-shrink: 0;
+	}
+
+	@keyframes badge-pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.35; }
 	}
 
 	.hero-command-title {
