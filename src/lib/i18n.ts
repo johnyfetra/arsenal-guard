@@ -81,7 +81,7 @@ export const copy = {
 				"Toutes les entreprises n'ont pas besoin d'un QA à temps plein. Parfois, il suffit d'un regard externe ciblé — audit, tests manuels, couverture des parcours critiques — pour sécuriser une livraison sans recruter.",
 			primary: 'Demander un audit',
 			secondary: 'Voir les formules',
-			trust: "5+ ans d'expérience · Chanel, Sodexo et SaaS européens · Dès 350 € HT · Sans engagement",
+			trust: "5+ ans d'expérience · Chanel, Sodexo et SaaS européens · Dès 350 € · Sans engagement",
 		},
 		sections: {
 			value: 'Un QA à la demande, sans recrutement',
@@ -91,10 +91,10 @@ export const copy = {
 			faq: 'Questions fréquentes',
 			cta: 'Faites tester vos parcours critiques.',
 			ctaLead:
-				'Décrivez votre besoin en quelques lignes. Je reviens vers vous sous 24h avec un périmètre clair et un prix HT.',
+				'Décrivez votre besoin en quelques lignes. Je reviens vers vous sous 24h avec un périmètre clair et un prix .',
 		},
 		descriptions: {
-			home: "Arsenal Guard — test manuel, audit QA et automatisation E2E à la demande, sans engagement. Rapport priorisé sous 72h. Dès 350 € HT.",
+			home: "Arsenal Guard — test manuel, audit QA et automatisation E2E à la demande, sans engagement. Rapport priorisé sous 72h. Dès 350 €.",
 			services:
 				"Test manuel ponctuel, audit QA, automatisation E2E et forfaits mensuels — un QA senior à la demande pour les équipes qui veulent livrer sans recruter.",
 			about:
@@ -124,7 +124,7 @@ export const copy = {
 				"Not every company needs a full-time QA engineer. Sometimes a targeted external review — audit, manual testing, critical journey coverage — is all it takes to ship safely without hiring.",
 			primary: 'Request an audit',
 			secondary: 'See the plans',
-			trust: '5+ years experience · Chanel, Sodexo and European SaaS · From €350 excl. VAT · No commitment',
+			trust: '5+ years experience · Chanel, Sodexo and European SaaS · From €350 No commitment',
 		},
 		sections: {
 			value: 'QA on demand, no hiring required',
@@ -136,7 +136,7 @@ export const copy = {
 			ctaLead: 'Describe your need in a few lines. I get back to you within 24h with a clear scope and a price.',
 		},
 		descriptions: {
-			home: 'Arsenal Guard — manual testing, QA audit and E2E automation on demand, no commitment. Prioritized report in 72h. From €350 excl. VAT.',
+			home: 'Arsenal Guard — manual testing, QA audit and E2E automation on demand, no commitment. Prioritized report in 72h. From €350 .',
 			services:
 				'One-off manual testing, QA audit, E2E automation and monthly retainers — a senior QA on demand for teams that want to ship without hiring.',
 			about:
