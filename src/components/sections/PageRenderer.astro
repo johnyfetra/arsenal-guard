@@ -306,16 +306,25 @@ const ui = lang === 'fr'
 						</div>
 					</div>
 					<div class="grid gap-5 md:grid-cols-3">
-						{services.filter((s) => s.id !== 'test-manuel-ponctuel' && s.id !== 'audit-qa').map((item) => (
-							<article class="operation-card operation-card--compact" data-reveal>
+						{services.filter((s) => s.id !== 'test-manuel-ponctuel' && s.id !== 'audit-qa').map((item, idx) => (
+							<article class={`operation-card operation-card--tier operation-card--tier-${idx + 1}${item.id === 'qa-dedie' ? ' operation-card--flagship' : ''}`} data-reveal>
+								{item.id === 'qa-dedie' && (
+									<span class="operation-card-badge">{lang === 'fr' ? 'Recommandé' : 'Recommended'}</span>
+								)}
 								<p class="operation-card-kicker">{item.kicker}</p>
 								<h3>{item.title}</h3>
-								<p>{item.description}</p>
-								<div class="operation-card-meta">
-									<span>{item.duration}</span>
+								{item.perks && (
+									<ul class="operation-card-perks">
+										{item.perks.map((perk) => (
+											<li>{perk}</li>
+										))}
+									</ul>
+								)}
+								<div class="operation-card-price">
 									<strong>{item.price}</strong>
+									<span>{item.duration}</span>
 								</div>
-								<Button class="mt-6" href={`services/${item.id}`} lang={lang} variant="secondary">{ui.serviceButton}</Button>
+								<Button class="mt-auto" href={`services/${item.id}`} lang={lang} variant="secondary">{ui.serviceButton}</Button>
 							</article>
 						))}
 					</div>

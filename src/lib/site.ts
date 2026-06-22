@@ -11,6 +11,7 @@ export interface Service {
 	title: string;
 	kicker: string;
 	description: string;
+	perks?: string[];
 	duration: string;
 	price: string;
 	for: string;
@@ -164,10 +165,11 @@ export const services: Service[] = [
 	},
 	{
 		id: 'tests-automatises',
-		title: 'E2E Framework Setup + 3 tests',
-		kicker: 'Automatisation',
+		title: 'Framework tests opérationnel en 7 jours',
+		kicker: 'Socle E2E',
 		description:
-			'Bootstrap Cypress ou Playwright avec les premiers tests critiques, conventions et documentation équipe.',
+			'Cypress ou Playwright configuré, documenté, intégré CI. Conventions d\'équipe et 3 tests critiques inclus.',
+		perks: ['Framework Cypress ou Playwright', 'Conventions et docs d\'équipe', '3 tests critiques livrés'],
 		duration: '7 jours',
 		price: '1 600 €',
 		for: "Équipe qui veut démarrer proprement l'automatisation sans créer une suite fragile.",
@@ -197,12 +199,13 @@ export const services: Service[] = [
 	},
 	{
 		id: 'forfait-mensuel',
-		title: 'Forfait QA mensuel',
-		kicker: 'Run QA',
+		title: 'QA continu sans engagement',
+		kicker: 'Garde mensuelle',
 		description:
-			'Service QA récurrent sans engagement long: nouveaux tests, maintenance, support CI/CD et reporting qualité.',
+			'Tests, maintenance CI/CD et reporting qualité chaque mois. Volume flexible, zéro engagement long terme.',
+		perks: ['Nouveaux tests chaque sprint', 'Maintenance pipeline CI/CD', 'Rapport qualité mensuel'],
 		duration: '5 à 15 jours/mois',
-		price: 'À partir de 1 100 €/mois',
+		price: 'Dès 1 100 €/mois',
 		for: 'Startup ou SaaS qui livre souvent et veut un QA senior sans recrutement temps plein.',
 		deliverables: [
 			'3 à 5 nouveaux E2E par mois',
@@ -222,14 +225,15 @@ export const services: Service[] = [
 	},
 	{
 		id: 'qa-dedie',
-		title: 'Dedicated Senior QA',
-		kicker: 'Engagement dédié',
-		description: 'Un QA senior dédié à votre équipe pour les besoins soutenus, avec option supervision lead.',
-		duration: '20 jours/mois, minimum 3 mois',
+		title: 'Un QA intégré à votre équipe',
+		kicker: 'QA Dédié',
+		description: 'Un QA embarqué au quotidien dans votre squad. Leadership qualité, supervision lead en option.',
+		perks: ['Intégration équipe complète', 'Option supervision QA lead', 'Engagement 3 mois minimum'],
+		duration: '20 jours/mois',
 		price: '3 800 €/mois',
 		for: "Équipe scale-up qui a besoin d'un vrai ownership QA sur plusieurs sprints.",
 		deliverables: [
-			'QA senior intégré à vos rituels',
+			'QA intégré à vos rituels',
 			'Stratégie de test durable',
 			'Automation et manuel ciblé',
 			'Reporting risques release',
