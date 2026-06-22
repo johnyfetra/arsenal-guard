@@ -310,6 +310,6 @@ export const faq = [
 ];
 
 export const localizedServiceIntro: Record<Lang, string> = {
-	fr: "Quatre formules qui s'adaptent à votre rythme : test ponctuel, mission courte, forfait mensuel ou QA dédié quand la qualité devient un pilier produit.",
-	en: 'Four formats built around your pace: a one-off audit, a short mission, a monthly plan, or a dedicated QA partner when quality becomes a product pillar.',
+	fr: 'Un test ponctuel pour auditer votre livraison — une mission courte pour débloquer vite — un forfait mensuel pour livrer sereinement — un QA dédié quand la qualité prime.',
+	en: 'One-time testing to audit your release — a short mission to unblock fast — a monthly retainer for continuous delivery — dedicated QA when quality drives the product.',
 };
