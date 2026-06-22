@@ -120,22 +120,21 @@ const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'S
 				© 2026 {site.name} · {rights}
 			</p>
 			<p class="footer-made">{madeIn}</p>
-			<div class="footer-lang">
+			<div class="footer-lang-toggle" role="group" aria-label={lang === 'fr' ? 'Choisir la langue' : 'Select language'}>
 				<a
 					href={lang === 'fr' ? '/' : `/${localizedPath('fr', routeMap.home)}`}
-					class={`footer-lang-btn ${lang === 'fr' ? 'footer-lang-btn--active' : ''}`}
+					class={`footer-lang-opt${lang === 'fr' ? ' footer-lang-opt--active' : ''}`}
 					lang="fr"
-				>
-					FR
-				</a>
-				<span aria-hidden="true">/</span>
+					hreflang="fr"
+					aria-current={lang === 'fr' ? 'page' : undefined}
+				>FR</a>
 				<a
 					href={lang === 'en' ? '/' : `/en`}
-					class={`footer-lang-btn ${lang === 'en' ? 'footer-lang-btn--active' : ''}`}
+					class={`footer-lang-opt${lang === 'en' ? ' footer-lang-opt--active' : ''}`}
 					lang="en"
-				>
-					EN
-				</a>
+					hreflang="en"
+					aria-current={lang === 'en' ? 'page' : undefined}
+				>EN</a>
 			</div>
 		</div>
 	</Container>
@@ -342,28 +341,34 @@ const madeIn = lang === 'fr' ? 'Service basé à Antananarivo, Madagascar.' : 'S
 	color: rgba(255, 255, 255, 0.28);
 }
 
-.footer-lang {
-	display: flex;
+.footer-lang-toggle {
+	display: inline-flex;
 	align-items: center;
-	gap: 0.4rem;
+	gap: 0.15rem;
+	padding: 0.2rem;
+	border: 1px solid rgba(255, 255, 255, 0.10);
+	border-radius: 9999px;
 	font-family: 'JetBrains Mono', ui-monospace, monospace;
-	font-size: 0.72rem;
+	font-size: 0.65rem;
 	font-weight: 700;
-	color: rgba(255, 255, 255, 0.3);
+	letter-spacing: 0.09em;
 }
 
-.footer-lang-btn {
-	color: rgba(255, 255, 255, 0.45);
+.footer-lang-opt {
+	display: inline-block;
+	padding: 0.22rem 0.62rem;
+	border-radius: 9999px;
+	color: rgba(255, 255, 255, 0.38);
 	text-decoration: none;
-	transition: color 150ms ease;
-	letter-spacing: 0.08em;
+	transition: color 150ms ease, background 150ms ease;
 }
 
-.footer-lang-btn:hover {
-	color: rgba(255, 255, 255, 0.75);
+.footer-lang-opt:hover {
+	color: rgba(255, 255, 255, 0.72);
 }
 
-.footer-lang-btn--active {
+.footer-lang-opt--active {
+	background: rgba(246, 166, 74, 0.12);
 	color: #f39c12;
 }
 

@@ -99,6 +99,9 @@ html.ag-preloader-active [data-app-shell] {
 #main {
 	position: relative;
 	z-index: 1;
+	/* Force stacking context so animated sections (logo marquee transforms)
+	   never paint above the sticky footer's z-index: 0 layer */
+	isolation: isolate;
 }
 
 /* Optional "lifted card" radius on the last section before the footer.
