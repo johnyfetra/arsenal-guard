@@ -73,12 +73,13 @@ export const clientRefs = ['Chanel', 'Sodexo', 'Hexaglobe', 'Ecomundo', 'Les Ali
 export const services: Service[] = [
 	{
 		id: 'test-manuel-ponctuel',
-		title: 'QA Snapshot',
+		title: 'Recette Express',
 		kicker: 'Tests manuels',
 		description:
 			'Un testeur humain parcourt vos pages et documente chaque anomalie — sans prérequis technique, livré sous 48 à 72 heures.',
-		duration: '1 à 5 jours selon le tier',
-		price: 'À partir de 350 €',
+		perks: ['Parcours complet documenté', 'Rapport d\'anomalies illustré', 'Livraison 48–72 heures'],
+		duration: '1 à 5 jours',
+		price: 'Dès 350 €',
 		for: "Pour toute équipe ou organisation qui veut un regard externe sur son produit web : audit d'un site en production, validation avant une release, test d'un parcours ciblé, ou partenaire QA ponctuel à appeler quand le besoin se présente. Sans setup. Sans engagement.",
 		deliverables: [
 			'Rapport de bugs structuré PDF (Critique / Majeur / Mineur / Cosmétique)',
@@ -132,10 +133,11 @@ export const services: Service[] = [
 	},
 	{
 		id: 'audit-qa',
-		title: 'Express QA Audit',
+		title: 'Bilan QA Stratégique',
 		kicker: 'Audit ponctuel',
 		description:
 			'Audit rapide de votre plateforme: parcours critiques, couverture actuelle et recommandations actionnables.',
+		perks: ['Parcours critiques analysés', 'Couverture de tests évaluée', 'Recommandations prêtes à l\'emploi'],
 		duration: '3 jours',
 		price: '600 €',
 		for: 'CTO ou lead dev qui veut une photographie fiable du risque produit avant une release.',
