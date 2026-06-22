@@ -540,9 +540,9 @@ select option {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid transparent;
+	border: 1px solid color-mix(in srgb, var(--border-soft) 55%, transparent);
 	border-radius: 9999px;
-	background: transparent;
+	background: color-mix(in srgb, var(--panel-bg) 28%, transparent);
 	min-width: 3.6rem;
 	height: 2rem;
 	padding: 0 0.22rem;
@@ -551,8 +551,8 @@ select option {
 }
 
 .theme-switch:hover {
-	border-color: color-mix(in srgb, var(--border-soft) 80%, transparent);
-	background: color-mix(in srgb, var(--panel-bg) 38%, transparent);
+	border-color: color-mix(in srgb, var(--border-soft) 95%, transparent);
+	background: color-mix(in srgb, var(--panel-bg) 52%, transparent);
 }
 
 .theme-switch:active {
