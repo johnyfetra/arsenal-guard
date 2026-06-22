@@ -20,22 +20,38 @@ const labels =
 					{
 						icon: Waypoints,
 						phase: 'Je teste vos parcours',
-						text: "Je parcours vos pages comme un utilisateur réel : tunnel de commande, formulaire critique, espace client, parcours d'inscription. Les zones à risque en priorité absolue.",
+						items: [
+							'Tunnel de commande & formulaires critiques',
+							"Espace client, parcours d'inscription",
+							'Zones à risque en priorité absolue',
+						],
 					},
 					{
 						icon: Flag,
 						phase: 'Je livre un rapport',
-						text: 'Rapport structuré sous 72h : bugs Critique / Majeur / Mineur, captures annotées, recommandations claires. Pas un dump de tickets — un signal exploitable par votre équipe.',
+						items: [
+							'Sous 72h : Critique / Majeur / Mineur',
+							'Captures annotées & recommandations claires',
+							'Signal exploitable — pas un dump de tickets',
+						],
 					},
 					{
 						icon: ShieldCheck,
 						phase: "Je vous remets un plan d'action",
-						text: "Chaque bug est accompagné d'une estimation et d'une priorité. Votre équipe sait exactement quoi corriger en premier et pourquoi.",
+						items: [
+							'Chaque bug : estimation + priorité',
+							'Ordre de correction clair et justifié',
+							'Votre équipe sait exactement quoi faire',
+						],
 					},
 					{
 						icon: FileSearch,
 						phase: 'Vous pouvez aller plus loin',
-						text: 'Si vous souhaitez verrouiller les parcours critiques durablement, je mets en place des tests automatisés (Playwright / Cypress) ou une mission QA récurrente selon votre cadence.',
+						items: [
+							'Tests automatisés (Playwright / Cypress)',
+							'Mission QA récurrente selon votre cadence',
+							'Verrouillage durable des parcours critiques',
+						],
 					},
 				],
 			}
@@ -47,22 +63,38 @@ const labels =
 					{
 						icon: Waypoints,
 						phase: 'I test your journeys',
-						text: 'I walk through your pages as a real user: checkout flow, critical forms, account area, sign-up journey. High-risk zones are the absolute priority.',
+						items: [
+							'Checkout flow & critical forms',
+							'Account area, sign-up journey',
+							'High-risk zones as absolute priority',
+						],
 					},
 					{
 						icon: Flag,
 						phase: 'I deliver a report',
-						text: 'Structured report in 72h: Critical / Major / Minor bugs, annotated screenshots, clear recommendations. Not a ticket dump — an actionable signal for your team.',
+						items: [
+							'Within 72h: Critical / Major / Minor',
+							'Annotated screenshots & clear recommendations',
+							'Actionable signal — not a ticket dump',
+						],
 					},
 					{
 						icon: ShieldCheck,
 						phase: 'I give you an action plan',
-						text: 'Each bug comes with an estimate and a priority. Your team knows exactly what to fix first and why.',
+						items: [
+							'Each bug: estimate + priority',
+							'Clear, justified fix order',
+							'Your team knows exactly what to do',
+						],
 					},
 					{
 						icon: FileSearch,
 						phase: 'You can go further',
-						text: 'If you want to lock down critical journeys durably, I set up automated tests (Playwright / Cypress) or a recurring QA mission matched to your release cadence.',
+						items: [
+							'Automated tests (Playwright / Cypress)',
+							'Recurring QA mission at your cadence',
+							'Long-term coverage of critical journeys',
+						],
 					},
 				],
 			};
@@ -94,7 +126,11 @@ const labels =
 								</div>
 								<div>
 									<p class="timeline-phase">{step.phase}</p>
-									<h3>{step.text}</h3>
+									<ul class="timeline-items">
+										{step.items.map((item) => (
+											<li>{item}</li>
+										))}
+									</ul>
 								</div>
 							</div>
 						</div>

@@ -1710,13 +1710,37 @@ section[id] {
 	text-transform: uppercase;
 }
 
-.timeline-step h3 {
-	margin-top: 0.55rem;
+.timeline-items {
+	margin-top: 0.65rem;
 	padding-right: 1.2rem;
-	color: var(--page-text);
-	font-size: 1rem;
-	font-weight: 750;
-	line-height: 1.55;
+	list-style: none;
+	padding-left: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.38rem;
+}
+
+.timeline-items li {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.55rem;
+	color: color-mix(in srgb, var(--page-text) 72%, transparent);
+	font-size: 0.875rem;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+.timeline-items li::before {
+	content: '';
+	flex-shrink: 0;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #18d6b2;
+	box-shadow:
+		0 0 6px rgba(24, 214, 178, 0.7),
+		0 0 12px rgba(24, 214, 178, 0.3);
+	margin-top: 0.44em;
 }
 
 @media (min-width: 768px) {
