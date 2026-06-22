@@ -89,6 +89,35 @@ html.ag-preloader-active [data-app-shell] {
 		filter 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Chanel footer reveal ──────────────────────────────────────
+   footer: position:sticky; bottom:0; z-index:0  (see Footer.astro)
+   #main:  position:relative; z-index:1  → sits on top, scrolls up
+   Result: footer is always at viewport bottom, revealed as main lifts.
+   No JS required — native scroll, no animation.
+   ──────────────────────────────────────────────────────────── */
+
+#main {
+	position: relative;
+	z-index: 1;
+}
+
+/* Optional "lifted card" radius on the last section before the footer.
+   :where() has zero specificity — any class rule wins over this.
+   .about-final-call (2.5rem) and .next-mission-section (1.5rem) already
+   define their own border-radius and override this automatically.
+   CTASection, legal-section, form-command-section get 1.5rem by default. */
+:where(#main > section:last-child) {
+	border-radius: 1.5rem 1.5rem 0 0;
+}
+
+/* prefers-reduced-motion: the sticky scroll is native — always active.
+   Only suppress any hypothetical radius transition. */
+@media (prefers-reduced-motion: reduce) {
+	:where(#main > section:last-child) {
+		transition: none !important;
+	}
+}
+
 html.ag-preloader-zooming [data-app-shell],
 html.ag-preloader-done [data-app-shell] {
 	transform: scale(1);
