@@ -6,9 +6,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "dev:vercel": "sh -c 'set -a; [ -f .env.local ] && . ./.env.local; set +a; npx --yes vercel dev --listen 4321'",
-    "build": "astro build",
+    "dev": "node init && astro dev",
+    "dev:vercel": "node init && sh -c 'set -a; [ -f .env.local ] && . ./.env.local; set +a; npx --yes vercel dev --listen 4321'",
+    "build": "node init && astro build",
     "check": "astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
